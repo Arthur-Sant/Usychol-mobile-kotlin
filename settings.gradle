@@ -1,0 +1,2 @@
+rootProject.name = "USychol"
+include ':app'

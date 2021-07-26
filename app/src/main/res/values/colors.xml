@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_strong">#7849D4</color>
+    <color name="purple_light">#9275C4</color>
+    <color name="purple_strong_light">#E3D3FF</color>
+    <color name="purple_subtitle_light">#B7A4D8</color>
+
+    <color name="blue_strong">#00BEFF</color>
+    <color name="blue_light">#00DFFF</color>
+    <color name="blue_strong_light">#75E3EA</color>
+
+    <color name="dark_grey_button">#727272</color>
+    <color name="grey_placeholder">#979797</color>
+    <color name="grey_label">#737B7D</color>
+    <color name="grey_background_input">#F4F5F4</color>
+
+    <color name="white">#ffffff</color>
+
+    <color name="black_middle">#151522</color>
+    <color name="black_light">#333333</color>
+    <color name="black_strong_light">#626262</color>
+
+    <color name="yellow_plain">#F3B007</color>
+    <color name="yellow_plain_light">#FFE074</color>
+
+    <color name="green_plain">#1EC56F</color>
+    <color name="green_plain_light">#75FDB7</color>
+
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ButtonComponent">
+        <attr name="btn_title" format="string"/>
+        <attr name="btn_bg_color" format="color" />
+        <attr name="btn_text_color" format="color" />
+    </declare-styleable>
+</resources>

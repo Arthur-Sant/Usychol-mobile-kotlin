@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".SigninFragment">
+
+    <com.project.usychol.HeaderComponent
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:header_text_color="@color/purple_strong" />
+
+    <com.project.usychol.InputComponent
+        android:id="@+id/inputComponent"
+        android:layout_width="382dp"
+        android:layout_height="77dp"
+        android:layout_marginTop="177dp"
+        app:input_hint="@string/input_email_hint"
+        app:input_top_text="@string/input_email_text"
+        app:input_type="@string/input_email_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.project.usychol.InputComponent
+        android:layout_width="382dp"
+        android:layout_height="77dp"
+        android:layout_marginTop="46dp"
+        app:input_hint="@string/input_password_hint"
+        app:input_top_text="@string/input_password_text"
+        app:input_type="@string/input_type_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputComponent" />
+
+    <TextView
+        android:id="@+id/createAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="87dp"
+        android:text="Create a new account"
+        android:fontFamily="@font/inter_regular"
+        android:textSize="14dp"
+        android:textColor="@color/black_strong_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.project.usychol.ButtonComponent
+        android:id="@+id/btnSignin"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        app:btn_bg_color="@color/purple_strong"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:btn_text_color="@color/white"
+        app:btn_title="@string/btn_signin_title" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/landingFragment">
+
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="com.project.usychol.LandingFragment"
+        android:label="fragment_landing"
+        tools:layout="@layout/fragment_landing" >
+        <action
+            android:id="@+id/landingToSignin"
+            app:destination="@id/signinFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/signinFragment"
+        android:name="com.project.usychol.SigninFragment"
+        android:label="fragment_signin"
+        tools:layout="@layout/fragment_signin" >
+        <action
+            android:id="@+id/signinToSignup"
+            app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/signinToDashboard"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.project.usychol.SignupFragment"
+        android:label="fragment_signup"
+        tools:layout="@layout/fragment_signup" >
+        <action
+            android:id="@+id/signupToApproval"
+            app:destination="@id/fragmentApproval" />
+    </fragment>
+    <fragment
+        android:id="@+id/virtualManagerFragment"
+        android:name="com.project.usychol.VirtualManagerFragment"
+        android:label="fragment_virtual_manager"
+        tools:layout="@layout/fragment_virtual_manager" />
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.project.usychol.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+    <fragment
+        android:id="@+id/fragmentApproval"
+        android:name="com.project.usychol.FragmentApproval"
+        android:label="fragment_approval"
+        tools:layout="@layout/fragment_approval" >
+        <action
+            android:id="@+id/approvalToVirtualManager"
+            app:destination="@id/virtualManagerFragment" />
+    </fragment>
+</navigation>

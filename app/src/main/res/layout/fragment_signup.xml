@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".SignupFragment">
+
+    <com.project.usychol.HeaderComponent
+        android:id="@+id/headerComponent"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        app:header_text_color="@color/purple_strong"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="540dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.project.usychol.InputComponent
+                android:id="@+id/inputName"
+                android:layout_width="382dp"
+                android:layout_height="77dp"
+                app:input_hint="@string/input_name_hint"
+                app:input_top_text="@string/input_name_text"
+                app:input_type="@string/input_type_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.project.usychol.InputComponent
+                android:id="@+id/inputBirthday"
+                android:layout_width="382dp"
+                android:layout_height="77dp"
+                android:layout_marginTop="46dp"
+                app:input_hint="@string/input_birthday_hint"
+                app:input_top_text="@string/input_birthday_text"
+                app:input_type="@string/input_type_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputName" />
+
+            <com.project.usychol.InputComponent
+                android:id="@+id/inputIdNumber"
+                android:layout_width="382dp"
+                android:layout_height="77dp"
+                android:layout_marginTop="46dp"
+                app:input_hint="@string/input_id_number_hint"
+                app:input_top_text="@string/input_id_number_text"
+                app:input_type="@string/input_type_number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputBirthday" />
+
+            <com.project.usychol.InputComponent
+                android:id="@+id/inputDocument"
+                android:layout_width="382dp"
+                android:layout_height="77dp"
+                android:layout_marginTop="47dp"
+                app:input_hint="@string/input_document_hint"
+                app:input_top_text="@string/input_document_text"
+                app:input_type="@string/input_type_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputIdNumber" />
+
+            <com.project.usychol.InputComponent
+                android:id="@+id/inputEmail"
+                android:layout_width="382dp"
+                android:layout_height="77dp"
+                android:layout_marginTop="228dp"
+                app:input_hint="@string/input_email_hint"
+                app:input_top_text="@string/input_email_text"
+                app:input_type="@string/input_email_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/inputIdNumber" />
+
+            <com.project.usychol.InputComponent
+                android:layout_width="382dp"
+                android:layout_height="77dp"
+                android:layout_marginTop="46dp"
+                app:input_hint="@string/input_password_hint"
+                app:input_top_text="@string/input_password_text"
+                app:input_type="@string/input_type_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.551"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <com.project.usychol.ButtonComponent
+        android:id="@+id/btnSignup"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        app:btn_bg_color="@color/purple_strong"
+        app:btn_text_color="@color/white"
+        app:btn_title="@string/btn_signup_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
