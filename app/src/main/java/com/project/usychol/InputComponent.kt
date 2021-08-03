@@ -12,11 +12,13 @@ class InputComponent @JvmOverloads constructor(
     attrs: AttributeSet?,
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
+
     private var topText: String? = null
     private var textHint: String? = null
     private var inputType: String? = null
 
     private val binding = InputComponentBinding.inflate(LayoutInflater.from(context), this, true)
+
 
     init {
         setLayout(attrs)
@@ -37,6 +39,7 @@ class InputComponent @JvmOverloads constructor(
                 binding.topText.text = topText
             }
 
+
             val textHintSet = attributes.getResourceId(R.styleable.InputComponent_input_hint, 0)
 
             if(textHintSet != 0){
@@ -48,14 +51,17 @@ class InputComponent @JvmOverloads constructor(
 
             val inputTypeSet = attributes.getResourceId(R.styleable.InputComponent_input_type, 0)
 
+
             if(inputTypeSet != 0){
+
                 inputType = context.getString(inputTypeSet)
 
-                val currentInput = when(inputType) {
+                val currentInput: Int = when(inputType) {
                     "email" -> InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                     "password" -> InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    "name" -> InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
                     "text" -> InputType.TYPE_CLASS_TEXT
-                    "date" -> InputType.TYPE_CLASS_TEXT
+                    "date" -> InputType.TYPE_DATETIME_VARIATION_NORMAL
                     "number" -> InputType.TYPE_CLASS_NUMBER
                     else -> InputType.TYPE_CLASS_TEXT
                 }
@@ -68,3 +74,4 @@ class InputComponent @JvmOverloads constructor(
     }
 
 }
+

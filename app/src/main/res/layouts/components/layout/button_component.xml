@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="55dp"
-    tools:background="@drawable/button_purple_background">
+    tools:background="@drawable/button_background_purple">
 
     <TextView
         android:id="@+id/btn_ds_view"
@@ -14,8 +14,8 @@
         android:paddingBottom="6dp"
         android:paddingTop="6dp"
         tools:text="Start now"
-        android:textSize="22dp"
-        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textColor="@color/purple"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

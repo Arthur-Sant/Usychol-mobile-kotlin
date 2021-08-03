@@ -28,14 +28,14 @@ class HeaderComponent @JvmOverloads constructor(
             val textColorSet = attributes.getResourceId(R.styleable.HeaderComponent_header_text_color, 0)
 
             if(textColorSet != 0){
-                binding.textView.setTextColor(
+                binding.tvHeaderTitle.setTextColor(
                     (ContextCompat.getColor(
                         context,
                         textColorSet
                     ))
                 )
 
-                binding.textView2.setTextColor(
+                binding.tvHeaderSubtitle.setTextColor(
                     (ContextCompat.getColor(
                         context,
                         textColorSet

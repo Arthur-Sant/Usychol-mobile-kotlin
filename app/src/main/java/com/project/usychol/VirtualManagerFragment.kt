@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
-import com.project.usychol.databinding.FragmentSigninBinding
 import com.project.usychol.databinding.FragmentVirtualManagerBinding
 
 class VirtualManagerFragment : Fragment() {
@@ -18,8 +17,12 @@ class VirtualManagerFragment : Fragment() {
 
         val view: View = binding.root
 
-        binding.btnVirtual.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.signinToSignup)
+        binding.btnVirtualSignPlan.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.virtualToDashboard)
+        }
+
+        binding.btnVirtualNext.setOnClickListener{
+            Navigation.findNavController(view).navigate(R.id.virtualToDigital)
         }
 
         return view

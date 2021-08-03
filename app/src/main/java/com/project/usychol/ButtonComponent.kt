@@ -2,7 +2,6 @@ package com.project.usychol
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 
@@ -15,8 +14,8 @@ class ButtonComponent @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var title: String? = null;
-    private var bgColor: String? = null;
+    private var title: String? = null
+    private var bgColor: String? = null
 
     private val binding = ButtonComponentBinding.inflate(LayoutInflater.from(context), this, true)
 
@@ -33,10 +32,14 @@ class ButtonComponent @JvmOverloads constructor(
 
             val backgroundSet = attributes.getResourceId(R.styleable.ButtonComponent_btn_bg_color, 0)
             if(backgroundSet != 0) {
+
                 bgColor = context.getString(backgroundSet)
 
-                var drawable = if (bgColor == "#ffffffff") R.drawable.button_white_background else R.drawable.button_purple_background
-                Log.d("drawable", bgColor.toString())
+                val drawable = if(bgColor == "#ffffffff" || bgColor == "#ff626262"){
+                    R.drawable.button_background_white_to_black
+                }else{
+                    R.drawable.button_background_purple
+                }
                 setBackgroundResource(drawable)
             }
 

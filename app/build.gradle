@@ -31,19 +31,47 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
-        viewBinding = true
+        viewBinding true
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res/values/attributes',
+                            'src/main/res/values/colors',
+                            'src/main/res/values/strings',
+                            'src/main/res/values',
+
+                            'src/main/res/drawables/icons',
+                            'src/main/res/drawables/shapes',
+                            'src/main/res/drawables/images',
+                            'src/main/res/drawables',
+
+                            'src/main/res/layouts/activities',
+                            'src/main/res/layouts/fragments',
+                            'src/main/res/layouts/components',
+                            'src/main/res/layouts/components/list',
+                            'src/main/res/layouts',
+
+                            'src/main/res'
+                    ]
+        }
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    implementation 'com.google.android.material:material:1.5.0-alpha01'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

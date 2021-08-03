@@ -21,6 +21,10 @@ class SignupFragment : Fragment() {
             Navigation.findNavController(view).navigate(R.id.signupToApproval)
         }
 
+        binding.tvSiginupAlreadyAccount.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.signupToSignin)
+        }
+
         return view
     }
 }

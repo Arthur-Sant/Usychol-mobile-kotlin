@@ -25,8 +25,8 @@
             android:id="@+id/signinToSignup"
             app:destination="@id/signupFragment" />
         <action
-            android:id="@+id/signinToDashboard"
-            app:destination="@id/dashboardFragment" />
+            android:id="@+id/signinToVirtualManager"
+            app:destination="@id/virtualManagerFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -35,13 +35,27 @@
         tools:layout="@layout/fragment_signup" >
         <action
             android:id="@+id/signupToApproval"
-            app:destination="@id/fragmentApproval" />
+            app:destination="@id/fragmentApproval"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/signupToSignin"
+            app:destination="@id/signinFragment" />
     </fragment>
     <fragment
         android:id="@+id/virtualManagerFragment"
         android:name="com.project.usychol.VirtualManagerFragment"
         android:label="fragment_virtual_manager"
-        tools:layout="@layout/fragment_virtual_manager" />
+        tools:layout="@layout/fragment_virtual_manager" >
+        <action
+            android:id="@+id/virtualToDigital"
+            app:destination="@id/digitalPsychologistFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/virtualToDashboard"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.project.usychol.DashboardFragment"
@@ -53,7 +67,37 @@
         android:label="fragment_approval"
         tools:layout="@layout/fragment_approval" >
         <action
-            android:id="@+id/approvalToVirtualManager"
-            app:destination="@id/virtualManagerFragment" />
+            android:id="@+id/approvalToSignin"
+            app:destination="@id/virtualManagerFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/digitalPsychologistFragment"
+        android:name="com.project.usychol.DigitalPsychologistFragment"
+        android:label="fragment_digital_psychologist"
+        tools:layout="@layout/fragment_digital_psychologist" >
+        <action
+            android:id="@+id/digitalToDashboard"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/digitalToFull"
+            app:destination="@id/fullPsychologistFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/fullPsychologistFragment"
+        android:name="com.project.usychol.FullPsychologistFragment"
+        android:label="fragment_full_psychologist"
+        tools:layout="@layout/fragment_full_psychologist" >
+        <action
+            android:id="@+id/fullToVirtual"
+            app:destination="@id/virtualManagerFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/fullToDashboard"
+            app:destination="@id/dashboardFragment" />
     </fragment>
 </navigation>
