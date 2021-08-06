@@ -36,7 +36,7 @@ class ButtonComponent @JvmOverloads constructor(
                 bgColor = context.getString(backgroundSet)
 
                 val drawable = if(bgColor == "#ffffffff" || bgColor == "#ff626262"){
-                    R.drawable.button_background_white_to_black
+                    R.drawable.drop_down_backgroud
                 }else{
                     R.drawable.button_background_purple
                 }

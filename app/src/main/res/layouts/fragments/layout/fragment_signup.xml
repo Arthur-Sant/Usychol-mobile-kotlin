@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".SignupFragment">
+    tools:context=".ui.fragments.SignupFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                 <com.project.usychol.InputComponent
                     android:id="@+id/inputName"
                     android:layout_width="match_parent"
-                    android:layout_height="77dp"
+                    android:layout_height="wrap_content"
                     app:input_hint="@string/input_name_hint"
                     app:input_top_text="@string/input_name_text"
                     app:input_type="@string/input_type_password" />
@@ -55,7 +55,7 @@
                 <com.project.usychol.InputComponent
                     android:id="@+id/inputBirthday"
                     android:layout_width="match_parent"
-                    android:layout_height="77dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     app:input_hint="@string/input_birthday_hint"
                     app:input_top_text="@string/input_birthday_text"
@@ -64,7 +64,7 @@
                 <com.project.usychol.InputComponent
                     android:id="@+id/inputIdNumber"
                     android:layout_width="match_parent"
-                    android:layout_height="77dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     app:input_hint="@string/input_id_number_hint"
                     app:input_top_text="@string/input_id_number_text"
@@ -73,7 +73,7 @@
                 <com.project.usychol.InputComponent
                     android:id="@+id/inputDocument"
                     android:layout_width="match_parent"
-                    android:layout_height="77dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     app:input_hint="@string/input_document_hint"
                     app:input_top_text="@string/input_document_text"
@@ -82,15 +82,16 @@
                 <com.project.usychol.InputComponent
                     android:id="@+id/inputEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="77dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     app:input_hint="@string/input_email_hint"
                     app:input_top_text="@string/input_email_text"
                     app:input_type="@string/input_type_email" />
 
                 <com.project.usychol.InputComponent
+                    android:id="@+id/inputPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="77dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     app:input_hint="@string/input_password_hint"
                     app:input_top_text="@string/input_password_text" />

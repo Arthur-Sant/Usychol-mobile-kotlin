@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/landingFragment"
-        android:name="com.project.usychol.LandingFragment"
+        android:name="com.project.usychol.ui.fragments.LandingFragment"
         android:label="fragment_landing"
         tools:layout="@layout/fragment_landing" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/signinFragment"
-        android:name="com.project.usychol.SigninFragment"
+        android:name="com.project.usychol.ui.fragments.SigninFragment"
         android:label="fragment_signin"
         tools:layout="@layout/fragment_signin" >
         <action
@@ -27,10 +27,13 @@
         <action
             android:id="@+id/signinToVirtualManager"
             app:destination="@id/virtualManagerFragment" />
+        <action
+            android:id="@+id/signinToDashboard"
+            app:destination="@id/dashboardFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.project.usychol.SignupFragment"
+        android:name="com.project.usychol.ui.fragments.SignupFragment"
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup" >
         <action
@@ -44,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/virtualManagerFragment"
-        android:name="com.project.usychol.VirtualManagerFragment"
+        android:name="com.project.usychol.ui.fragments.VirtualManagerFragment"
         android:label="fragment_virtual_manager"
         tools:layout="@layout/fragment_virtual_manager" >
         <action
@@ -58,12 +61,19 @@
     </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.project.usychol.DashboardFragment"
+        android:name="com.project.usychol.ui.fragments.DashboardFragment"
         android:label="fragment_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/dashboardToProfile"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/dashboardToRegisterPatient"
+            app:destination="@id/registerPatientFragment" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentApproval"
-        android:name="com.project.usychol.FragmentApproval"
+        android:name="com.project.usychol.ui.fragments.FragmentApproval"
         android:label="fragment_approval"
         tools:layout="@layout/fragment_approval" >
         <action
@@ -74,7 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/digitalPsychologistFragment"
-        android:name="com.project.usychol.DigitalPsychologistFragment"
+        android:name="com.project.usychol.ui.fragments.DigitalPsychologistFragment"
         android:label="fragment_digital_psychologist"
         tools:layout="@layout/fragment_digital_psychologist" >
         <action
@@ -88,7 +98,7 @@
     </fragment>
     <fragment
         android:id="@+id/fullPsychologistFragment"
-        android:name="com.project.usychol.FullPsychologistFragment"
+        android:name="com.project.usychol.ui.fragments.FullPsychologistFragment"
         android:label="fragment_full_psychologist"
         tools:layout="@layout/fragment_full_psychologist" >
         <action
@@ -98,6 +108,24 @@
             app:exitAnim="@anim/to_left" />
         <action
             android:id="@+id/fullToDashboard"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.project.usychol.ui.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/profileToDashboard"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerPatientFragment"
+        android:name="com.project.usychol.ui.fragments.RegisterPatientFragment"
+        android:label="fragment_register_patient"
+        tools:layout="@layout/fragment_register_patient" >
+        <action
+            android:id="@+id/registerPatientToDashboard"
             app:destination="@id/dashboardFragment" />
     </fragment>
 </navigation>

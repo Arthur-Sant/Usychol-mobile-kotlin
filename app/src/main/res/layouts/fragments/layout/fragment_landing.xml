@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_purple_gradient"
-    tools:context=".LandingFragment">
+    tools:context=".ui.fragments.LandingFragment">
 
     <ScrollView
         android:fillViewport="true"
@@ -54,8 +54,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:btn_text_color="@color/purpleToWhite"
-                app:btn_bg_color="@color/whiteToBlackStrong"
+                app:btn_text_color="@color/purple"
+                app:btn_bg_color="@color/white"
                 app:btn_title="@string/btn_landing_title" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

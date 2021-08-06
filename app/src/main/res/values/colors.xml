@@ -11,8 +11,10 @@
 
     <color name="dark_grey_button">#727272</color>
     <color name="grey_placeholder">#979797</color>
+    <color name="grey_drop_down">#8C91A9</color>
     <color name="grey_label">#737B7D</color>
     <color name="grey_background_input">#F4F5F4</color>
+    <color name="grey_strong">#C1B0DD</color>
 
     <color name="white">#ffffff</color>
 

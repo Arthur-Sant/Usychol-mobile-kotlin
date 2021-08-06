@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.USychol">
-        <activity android:name=".MainActivity" android:theme="@style/Theme.Design.NoActionBar" >
+        <activity android:name=".MainActivity" android:theme="@style/Theme.MaterialComponents.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
