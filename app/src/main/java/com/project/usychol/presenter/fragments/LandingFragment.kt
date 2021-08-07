@@ -1,4 +1,4 @@
-package com.project.usychol.ui.fragments
+package com.project.usychol.presenter.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

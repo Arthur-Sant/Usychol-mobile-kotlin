@@ -12,5 +12,7 @@
          Status bar color.
         <item name="android:statusBarColor" tools:targetApi="l">@color/black_light</item>
          Customize your theme here.
+
+        <item name="colorControlNormal">#626262</item>
     </style>
 </resources>

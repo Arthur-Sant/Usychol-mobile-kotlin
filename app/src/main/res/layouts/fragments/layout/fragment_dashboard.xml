@@ -15,7 +15,7 @@
         app:layout_constraintHeight_min="300dp"
         app:layout_constraintHeight_max="500dp"
         android:elevation="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/listPatient"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewListPatient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -132,7 +132,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listPatient"
+        android:id="@+id/recyclerViewListPatient"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         tools:listitem="@layout/patient_list_components"

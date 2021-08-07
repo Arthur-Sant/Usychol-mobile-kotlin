@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/landingFragment"
-        android:name="com.project.usychol.ui.fragments.LandingFragment"
+        android:name="com.project.usychol.presenter.fragments.LandingFragment"
         android:label="fragment_landing"
         tools:layout="@layout/fragment_landing" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/signinFragment"
-        android:name="com.project.usychol.ui.fragments.SigninFragment"
+        android:name="com.project.usychol.presenter.fragments.SigninFragment"
         android:label="fragment_signin"
         tools:layout="@layout/fragment_signin" >
         <action
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.project.usychol.ui.fragments.SignupFragment"
+        android:name="com.project.usychol.presenter.fragments.SignupFragment"
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup" >
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/virtualManagerFragment"
-        android:name="com.project.usychol.ui.fragments.VirtualManagerFragment"
+        android:name="com.project.usychol.presenter.fragments.VirtualManagerFragment"
         android:label="fragment_virtual_manager"
         tools:layout="@layout/fragment_virtual_manager" >
         <action
@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.project.usychol.ui.fragments.DashboardFragment"
+        android:name="com.project.usychol.presenter.fragments.DashboardFragment"
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_dashboard" >
         <action
@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentApproval"
-        android:name="com.project.usychol.ui.fragments.FragmentApproval"
+        android:name="com.project.usychol.presenter.fragments.FragmentApproval"
         android:label="fragment_approval"
         tools:layout="@layout/fragment_approval" >
         <action
@@ -84,7 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/digitalPsychologistFragment"
-        android:name="com.project.usychol.ui.fragments.DigitalPsychologistFragment"
+        android:name="com.project.usychol.presenter.fragments.DigitalPsychologistFragment"
         android:label="fragment_digital_psychologist"
         tools:layout="@layout/fragment_digital_psychologist" >
         <action
@@ -98,7 +98,7 @@
     </fragment>
     <fragment
         android:id="@+id/fullPsychologistFragment"
-        android:name="com.project.usychol.ui.fragments.FullPsychologistFragment"
+        android:name="com.project.usychol.presenter.fragments.FullPsychologistFragment"
         android:label="fragment_full_psychologist"
         tools:layout="@layout/fragment_full_psychologist" >
         <action
@@ -112,7 +112,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.project.usychol.ui.fragments.ProfileFragment"
+        android:name="com.project.usychol.presenter.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -121,7 +121,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerPatientFragment"
-        android:name="com.project.usychol.ui.fragments.RegisterPatientFragment"
+        android:name="com.project.usychol.presenter.fragments.RegisterPatientFragment"
         android:label="fragment_register_patient"
         tools:layout="@layout/fragment_register_patient" >
         <action

@@ -1,4 +1,4 @@
-package com.project.usychol.ui.fragments
+package com.project.usychol.presenter.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentSigninBinding
-import com.project.usychol.viewMolder.SiginViewModel
+import com.project.usychol.viewModel.SiginViewModel
 
 class SigninFragment : Fragment() {
 

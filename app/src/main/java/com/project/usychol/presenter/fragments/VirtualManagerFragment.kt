@@ -1,4 +1,4 @@
-package com.project.usychol.ui.fragments
+package com.project.usychol.presenter.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -11,7 +11,7 @@ import androidx.navigation.Navigation
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentVirtualManagerBinding
 import com.project.usychol.domain.entities.PLan
-import com.project.usychol.viewMolder.PLanViewModel
+import com.project.usychol.viewModel.PLanViewModel
 
 class VirtualManagerFragment : Fragment() {
     override fun onCreateView(

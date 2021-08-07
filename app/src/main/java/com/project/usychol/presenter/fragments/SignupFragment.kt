@@ -1,4 +1,4 @@
-package com.project.usychol.ui.fragments
+package com.project.usychol.presenter.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -14,7 +14,7 @@ import com.google.gson.Gson
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentSignupBinding
 import com.project.usychol.domain.entities.Psychologist
-import com.project.usychol.viewMolder.SignupViewModel
+import com.project.usychol.viewModel.SignupViewModel
 
 class SignupFragment : Fragment() {
 
@@ -35,7 +35,7 @@ class SignupFragment : Fragment() {
         var gson = Gson()
 
         binding.btnSignup.setOnClickListener {
-            val psychologist: Psychologist = getDataFromPsychologist()
+            val psychologist: Psychologist = registerPsychologist()
 
             val jsonUser = gson.toJson(psychologist)
 
@@ -56,7 +56,7 @@ class SignupFragment : Fragment() {
         return view
     }
 
-    private fun getDataFromPsychologist(): Psychologist {
+    private fun registerPsychologist(): Psychologist {
 
         val psychologistName = binding.inputName.findViewById<EditText>(R.id.textInput).text
         val psychologistBirthday = binding.inputBirthday.findViewById<EditText>(R.id.textInput).text
