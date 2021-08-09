@@ -15,7 +15,8 @@ import com.project.usychol.viewModel.PLanViewModel
 
 class VirtualManagerFragment : Fragment() {
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentVirtualManagerBinding.inflate(inflater, container, false)
@@ -30,9 +31,12 @@ class VirtualManagerFragment : Fragment() {
             "07"
         )
 
-        val sharedPreferences = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE)
+        val sharedPreferences = requireActivity().getSharedPreferences(
+            getString(R.string.preference_file_key),
+            Context.MODE_PRIVATE
+        )
 
-        val userId = sharedPreferences.getInt("id", 0)
+        val userId = sharedPreferences.getInt(getString(R.string.salved_user_id_key),0)
 
         binding.btnVirtualSignPlan.setOnClickListener {
             viewModel.choosePsychologistPlan(userId, plan)

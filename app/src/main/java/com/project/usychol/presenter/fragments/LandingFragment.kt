@@ -20,16 +20,9 @@ class LandingFragment : Fragment() {
         val view: View = binding.root
 
         binding.btnSignin.setOnClickListener {
-            println("to na landing ainda")
             Navigation.findNavController(view).navigate(R.id.landingToSignin)
         }
 
         return view
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        println("morreu")
     }
 }

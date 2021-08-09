@@ -15,12 +15,14 @@
     <color name="grey_label">#737B7D</color>
     <color name="grey_background_input">#F4F5F4</color>
     <color name="grey_strong">#C1B0DD</color>
+<!--    <color name="grey_list">#B5A6CF</color>-->
 
     <color name="white">#ffffff</color>
 
     <color name="black_middle">#151522</color>
     <color name="black_light">#333333</color>
     <color name="black_strong_light">#626262</color>
+<!--    <color name="black_text">#5F5F5F</color>-->
 
     <color name="yellow_plain">#F3B007</color>
     <color name="yellow_plain_light">#FFE074</color>

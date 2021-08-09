@@ -36,7 +36,7 @@ class ButtonComponent @JvmOverloads constructor(
                 bgColor = context.getString(backgroundSet)
 
                 val drawable = if(bgColor == "#ffffffff" || bgColor == "#ff626262"){
-                    R.drawable.drop_down_backgroud
+                    R.drawable.button_background_white
                 }else{
                     R.drawable.button_background_purple
                 }
@@ -53,12 +53,7 @@ class ButtonComponent @JvmOverloads constructor(
             val textColorSet = attributes.getResourceId(R.styleable.ButtonComponent_btn_text_color, 0)
 
             if(textColorSet != 0){
-                binding.btnDsView.setTextColor(
-                    (ContextCompat.getColor(
-                        context,
-                        textColorSet
-                    ))
-                )
+                binding.btnDsView.setTextColor((ContextCompat.getColor(context, textColorSet)))
             }
 
             attributes.recycle()

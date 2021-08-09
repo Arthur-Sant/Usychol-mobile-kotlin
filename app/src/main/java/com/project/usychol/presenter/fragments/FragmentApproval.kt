@@ -20,7 +20,7 @@ class FragmentApproval : Fragment() {
         val view: View = binding.root
 
         Handler().postDelayed({
-                              Navigation.findNavController(view).navigate(R.id.approvalToSignin)
+            Navigation.findNavController(view).navigate(R.id.approvalToSignin)
         }, 2000)
 
         return view

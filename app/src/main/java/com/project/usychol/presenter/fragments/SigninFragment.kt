@@ -30,7 +30,7 @@ class SigninFragment : Fragment() {
 
         val view: View = binding.root
 
-        val shared = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE)
+        val shared = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
         val signinEmail = binding.etSigninEmail.findViewById<EditText>(R.id.textInput).text
         val signinPassword = binding.etSigninPassword.findViewById<EditText>(R.id.textInput).text
@@ -55,7 +55,7 @@ class SigninFragment : Fragment() {
 
         viewModel.userId.observe(viewLifecycleOwner, Observer { id ->
             shared.edit {
-                putInt("id", id)
+                putInt(getString(R.string.salved_user_id_key), id)
             }
         })
 

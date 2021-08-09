@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">USychol</string>
 
-    <string name="header_subtitle">Psychology has never been the same</string>
+    <string name="header_subtitle">Psychology has never been so digital</string>
+    
+    <string name="preference_file_key">App</string>
+
+    <string name="salved_patient_id_key">patientId</string>
+
+    <string name="salved_user_id_key">userId</string>
+
+    <string name="salved_report_id_key">userId</string>
 
 </resources>

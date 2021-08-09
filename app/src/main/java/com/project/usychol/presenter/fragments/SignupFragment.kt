@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -31,22 +32,24 @@ class SignupFragment : Fragment() {
 
         val view: View = binding.root
 
-        val sharedPreferences = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE)
-        var gson = Gson()
+        val sharedPreferences = requireActivity()
+            .getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
         binding.btnSignup.setOnClickListener {
-            val psychologist: Psychologist = registerPsychologist()
+            val psychologist: Psychologist? = registerPsychologist()
 
-            val jsonUser = gson.toJson(psychologist)
+            if(psychologist != null) {
 
-            sharedPreferences.edit {
-                putInt("id", psychologist.id!!)
-                putString("user", jsonUser)
+                sharedPreferences.edit {
+                    putInt(getString(R.string.salved_user_id_key), psychologist.id!!)
+                }
+
+                viewModel.registerPsychologist(psychologist)
+
+                Navigation.findNavController(view).navigate(R.id.signupToApproval)
+            }else{
+                Toast.makeText(activity, "fill in all fields", Toast.LENGTH_SHORT).show()
             }
-
-            viewModel.registerPsychologist(psychologist)
-
-            Navigation.findNavController(view).navigate(R.id.signupToApproval)
         }
 
         binding.tvSiginupAlreadyAccount.setOnClickListener {
@@ -56,7 +59,7 @@ class SignupFragment : Fragment() {
         return view
     }
 
-    private fun registerPsychologist(): Psychologist {
+    private fun registerPsychologist(): Psychologist? {
 
         val psychologistName = binding.inputName.findViewById<EditText>(R.id.textInput).text
         val psychologistBirthday = binding.inputBirthday.findViewById<EditText>(R.id.textInput).text
@@ -65,17 +68,25 @@ class SignupFragment : Fragment() {
         val psychologistEmail = binding.inputEmail.findViewById<EditText>(R.id.textInput).text
         val psychologistPassword = binding.inputPassword.findViewById<EditText>(R.id.textInput).text
 
-        return Psychologist(
-            null,
-            null,
-            psychologistName.toString(),
-            psychologistBirthday.toString(),
-            psychologistCrp.toString().toInt(),
-            psychologistCpf.toString(),
-            psychologistEmail.toString(),
-            psychologistPassword.toString(),
-            null
-        )
+        if(psychologistName.isNotEmpty() && psychologistBirthday.isNotEmpty()
+            && psychologistCpf.isNotEmpty() && psychologistCrp.isNotEmpty()
+            && psychologistEmail.isNotEmpty() && psychologistPassword.isNotEmpty()){
+
+                return Psychologist(
+                    null,
+                    null,
+                    psychologistName.toString(),
+                    psychologistBirthday.toString(),
+                    psychologistCrp.toString().toInt(),
+                    psychologistCpf.toString(),
+                    psychologistEmail.toString(),
+                    psychologistPassword.toString(),
+                    null
+                )
+        }
+
+        return null
+
     }
 
 }

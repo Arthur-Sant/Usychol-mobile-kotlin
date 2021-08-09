@@ -70,6 +70,9 @@
         <action
             android:id="@+id/dashboardToRegisterPatient"
             app:destination="@id/registerPatientFragment" />
+        <action
+            android:id="@+id/dashboardToPatientInformation"
+            app:destination="@id/patientInformationFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragmentApproval"
@@ -127,5 +130,65 @@
         <action
             android:id="@+id/registerPatientToDashboard"
             app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientInformationFragment"
+        android:name="com.project.usychol.presenter.fragments.PatientInformationFragment"
+        android:label="fragment_patient_information"
+        tools:layout="@layout/fragment_patient_information">
+        <action
+            android:id="@+id/patientInformationToDashboard"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/patientInformationToPatientProfile"
+            app:destination="@id/patientProfileFragment" />
+        <action
+            android:id="@+id/patientInformationToPatientReport"
+            app:destination="@id/patientReportFragment" />
+        <action
+            android:id="@+id/patientInformationToNewPatientReport"
+            app:destination="@id/newPatientReportFragment" />
+        <action
+            android:id="@+id/patientInformationToNewPatientActivity"
+            app:destination="@id/newPatientActivityFragment" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientProfileFragment"
+        android:name="com.project.usychol.presenter.fragments.PatientProfileFragment"
+        android:label="fragment_patient_profile"
+        tools:layout="@layout/fragment_patient_profile" >
+        <action
+            android:id="@+id/patientProfileToPatientInformation"
+            app:destination="@id/patientInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientReportFragment"
+        android:name="com.project.usychol.presenter.fragments.PatientReportFragment"
+        android:label="fragment_patient_report"
+        tools:layout="@layout/fragment_patient_report" >
+        <action
+            android:id="@+id/patientReportToPatientInformation"
+            app:destination="@id/patientInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPatientReportFragment"
+        android:name="com.project.usychol.presenter.fragments.NewPatientReportFragment"
+        android:label="fragment_new_patient_report"
+        tools:layout="@layout/fragment_new_patient_report" >
+        <action
+            android:id="@+id/newPatientReportToPatientInformation"
+            app:destination="@id/patientInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPatientActivityFragment"
+        android:name="com.project.usychol.presenter.fragments.NewPatientActivityFragment"
+        android:label="fragment_new_patient_activity"
+        tools:layout="@layout/fragment_new_patient_activity" >
+        <action
+            android:id="@+id/newPatientActivityToPatientInformation"
+            app:destination="@id/patientInformationFragment" />
     </fragment>
 </navigation>

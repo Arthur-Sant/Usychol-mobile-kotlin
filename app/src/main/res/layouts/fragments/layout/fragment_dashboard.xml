@@ -5,20 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".DashboardFragment">
+    tools:context=".presenter.fragments.DashboardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/background_purple_card"
-        app:layout_constraintHeight_min="300dp"
-        app:layout_constraintHeight_max="500dp"
         android:elevation="5dp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewListPatient"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="500dp"
+        app:layout_constraintHeight_min="300dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:id="@+id/btnUserProfile"
@@ -57,7 +58,7 @@
             app:layout_constraintTop_toTopOf="@id/btnUserProfile" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listPsychologistAppointment"
+            android:id="@+id/recyclerViewPsychologistReminder"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
@@ -84,8 +85,8 @@
                 android:id="@+id/imageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:contentDescription="@string/img_description_plus"
                 android:src="@drawable/icon_plus_purple"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -99,6 +100,7 @@
                 android:layout_marginEnd="16dp"
                 android:hint="@string/input_hint_create_reminder"
                 android:inputType="text"
+                android:background="@drawable/background_input_view"
                 android:lines="1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageButton2"
@@ -135,7 +137,7 @@
         android:id="@+id/recyclerViewListPatient"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:listitem="@layout/patient_list_components"
+        tools:listitem="@layout/patient_list_component"
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
