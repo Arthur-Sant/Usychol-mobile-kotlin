@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="img_description_next_plans">next</string>
+    <string name="img_description_have">have</string>
+    <string name="img_description_round_selected">round selected</string>
+    <string name="img_description_round">round</string>
+    <string name="img_description_edit">edit</string>
+    <string name="img_description_user">user profile</string>
+    <string name="img_description_plus">plus</string>
+    <string name="img_description_arrow">arrow</string>
+    <string name="img_description_plan">plan</string>
+    <string name="img_description_back">back</string>
+    <string name="img_description_search">search</string>
+</resources>

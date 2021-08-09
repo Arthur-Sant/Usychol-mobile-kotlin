@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tv_view_create_account">Create a new account</string>
+    <string name="tv_already_have_account">I already have an account</string>
+
+    <!-- String that flat screens have in common  -->
+    <string name="tv_your_plan">Choose your plan</string>
+    <string name="tv_month">/month</string>
+    <string name="tv_end_security">End to end security</string>
+
+    <!-- Virtual Manager Screen -->
+    <string name="tv_virtual_prince">$49,90</string>
+    <string name="tv_virtual">Virtual Manager</string>
+    <string name="tv_virtual_description">Organize and manage your clinic from wherever you are via Analytics Dash via the web or app</string>
+    <string name="tv_second_virtual_utilities">Manage your patients from wherever you are</string>
+    <string name="tv_third_virtual_utilities">Access to our alert system included in Analytics Dash</string>
+    <string name="tv_fourth_virtual_utilities">Access to our alert system included in Analytics Dash</string>
+
+    <!-- Digital Psychologist Screen-->
+    <string name="tv_digital_prince">$79,90</string>
+    <string name="tv_digital">Digital Psychologist</string>
+    <string name="tv_digital_description">Use interactive digital resources created or purchased with the patient whenever you want and have access to Psycho Dash 24h</string>
+    <string name="tv_second_digital_utilities">Create and purchase interactive digital assets whenever you want</string>
+    <string name="tv_third_digital_utilities">Create up to 15 patient profiles</string>
+    <string name="tv_fourth_digital_utilities">Access to Psycho Dash</string>
+
+    <!-- Full Psychologist Screen-->
+    <string name="tv_full_prince">$99,90</string>
+    <string name="tv_full">Full Psychologist</string>
+    <string name="tv_full_description">Unlock the power of both plans and get access to Analytics Dash and Psycho Dash 24/7</string>
+    <string name="tv_second_full_utilities">All features of the Virtual Manager plan</string>
+    <string name="tv_third_full_utilities">All features of the Digital Psychologist plan</string>
+    <string name="tv_fourth_full_utilities">Registration of up to 40 patients</string>
+
+    <string name="tv_tasks_day">Tasks of the day</string>
+    
+    <string name="tv_clinic_profile">Clinic Profile</string>
+    <string name="tv_user_card_subtitle">USychol Plan: Complete Psychologist</string>
+
+    <string name="tv_identification">Identification</string>
+    <string name="tv_plan">PLan</string>
+
+    <string name="tv_patient_registration">Patient Registration</string>
+
+    <string name="tv_performed_activities">Performed activities</string>
+
+    <string name="tv_latest_consultations">Latest consultations</string>
+    <string name="tv_patient_summary">Patient summary</string>
+
+    <string name="tv_anamnesis">Anamnesis</string>
+
+    <string name="tv_new_report">New report</string>
+    <string name="tv_new_activy">New activy</string>
+    <string name="tv_activy_name">Activy name</string>
+    <string name="tv_resume">Resume</string>
+    <string name="tv_description">Description</string>
+
+    <string name="tv_report">Report</string>
+</resources>

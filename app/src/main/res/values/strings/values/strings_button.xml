@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="btn_landing_title">Start now</string>
+    <string name="btn_signin_title">Sign in</string>
+    <string name="btn_signup_title">Sign up</string>
+    <string name="btn_sign_plan_title">Sign plan</string>
+    <string name="btn_create_report_title">Create</string>
+    <string name="btn_create_activity_title">Create</string>
+    <string name="btn_create_patient_title">Create</string>
+    <string name="btn_edit_profile">Edit profile information</string>
+    <string name="btn_change_plan">Change your plan</string>
+    <string name="btn_access_anamnesis">Access Anamnesis</string>
+    <string name="btn_create_activity">Create new activity</string>
+    <string name="btn_create_report">Create new report</string>
+    <string name="btn_edit_report">Edit report</string>
+    <string name="btn_edit_anamnesis">Edit anamnesis</string>
+</resources>

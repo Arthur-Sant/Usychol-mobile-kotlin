@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="ddl_patient_class_text_top">Patient Class</string>
+    <string name="ddl_patient_class_text">Select the patient class</string>
+
+    <string-array name="ddl_patient_class">
+        <item>Child</item>
+        <item>Teenager</item>
+    </string-array>
+
+    <string name="ddl_marital_status_text_top">Marital Status</string>
+    <string name="ddl_marital_status_text">Select the marital status</string>
+
+    <string-array name="ddl_marital_status">
+        <item>Married</item>
+        <item>Divorced</item>
+    </string-array>
+
+    <string name="ddl_activy_name_text_top">Activy template</string>
+    <string name="ddl_activy_name_text">Select an activy</string>
+
+    <string-array name="ddl_activy_name">
+        <item>Thought of the day</item>
+        <item>Let’s play again</item>
+    </string-array>
+
+    
+</resources>

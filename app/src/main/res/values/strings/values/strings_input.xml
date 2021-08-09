@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="input_type_email">email</string>
+    <string name="input_type_password">password</string>
+    <string name="input_type_date">date</string>
+    <string name="input_type_number">number</string>
+    <string name="input_type_text">text</string>
+    <string name="input_type_name">name</string>
+
+    <string name="input_email_text">E-mail</string>
+    <string name="input_email_hint">example@usychol.com</string>
+
+    <string name="input_password_text">Password</string>
+    <string name="input_password_hint">********</string>
+
+    <string name="input_id_number_text">CRP Registration Number</string>
+    <string name="input_id_number_hint">00000</string>
+
+    <string name="input_document_text">CPF</string>
+    <string name="input_document_hint">***-***-***-**</string>
+
+    <string name="input_name_text">Name</string>
+    <string name="input_name_hint">Name</string>
+
+    <string name="input_birthday_text">Birthday</string>
+    <string name="input_birthday_hint">January 01, 2021</string>
+
+    <string name="input_plan_hint">Plan</string>
+    <string name="input_plan_text">Plan`s name</string>
+    
+    <string name="input_payment_method_hint">Payment</string>
+    <string name="input_payment_method_text">Payment Method</string>
+    
+    <string name="input_expiration_day_hint">00</string>
+    <string name="input_expiration_day_text">Expiration Day</string>
+    
+    <string name="input_mother_name_text">Mother’s Name</string>
+    <string name="input_mother_name_hint">Mother’s Name</string>
+
+    <string name="input_father_name_hint">Father’s Name</string>
+    <string name="input_father_name_text">Father’s Name</string>
+    
+    <string name="input_consultation_evaluation_hint">Bom</string>
+    <string name="input_consultation_evaluation_text">Consultation evaluation</string>
+
+    <string name="input_report_day_text">Report`s day</string>
+
+    <string name="input_delivery_day_text">Delivery day</string>
+
+    <!-- -->
+    <string name="input_hint_create_reminder">Create Mender</string>
+    
+    <string name="input_hint_search_report">Search report</string>
+
+    <string name="input_hint_today">Today</string>
+</resources>

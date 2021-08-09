@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presenter.fragments.NewPatientReportFragment">
+
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/btnNewReportBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="13dp"
+                android:layout_marginRight="13dp"
+                android:contentDescription="@string/img_description_back"
+                android:background="@drawable/icon_left_arrow_purple"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.project.usychol.HeaderComponent
+                android:id="@+id/headerComponentNewReport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:header_text_color="@color/purple"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/tv_new_report"
+                android:textColor="@color/black_middle"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/headerComponentNewReport" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/btnCreateReport"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                app:layout_constraintVertical_bias="0.0">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/tv_activy_name"
+                    android:textColor="@color/grey_label"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/selectNewReportActivyName"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:boxBackgroundColor="@color/grey_background_input"
+                    app:boxStrokeColor="@color/purple"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="1dp"
+                    app:endIconTint="@color/purple">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/ddlNewReportActivyName"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/grey_background_input"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/inter_regular"
+                        android:inputType="none"
+                        android:maxLines="1"
+                        android:text="@string/ddl_activy_name_text"
+                        android:textColor="@color/grey_placeholder"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/tv_resume"
+                    android:textColor="@color/grey_label"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/inputResumeNewReport"
+                    android:layout_width="match_parent"
+                    android:layout_height="119dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/input_custom_state"
+                    android:hint="@string/input_hint_today"
+                    android:padding="16dp"
+                    android:textColorHint="@color/grey_placeholder"
+                    android:gravity="top|left"
+                    android:textSize="15sp"
+                    android:lines="6"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/grey_placeholder" />
+
+                <com.project.usychol.InputComponent
+                    android:id="@+id/inputConsultationNewReport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    app:input_hint="@string/input_hint_today"
+                    app:input_top_text="@string/input_consultation_evaluation_text"
+                    app:input_type="@string/input_type_text" />
+
+                <com.project.usychol.InputComponent
+                    android:id="@+id/inputDayNewReport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    app:input_hint="@string/input_birthday_hint"
+                    app:input_top_text="@string/input_report_day_text"
+                    app:input_type="@string/input_type_date" />
+
+            </LinearLayout>
+
+            <com.project.usychol.ButtonComponent
+                android:id="@+id/btnCreateReport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                app:btn_bg_color="@color/purple"
+                app:btn_text_color="@color/white"
+                app:btn_title="@string/btn_create_patient_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
