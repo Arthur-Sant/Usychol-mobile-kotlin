@@ -1,5 +1,7 @@
 package com.project.usychol.presenter.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +22,7 @@ class PatientReportFragment : Fragment() {
 
     private lateinit var binding: FragmentPatientReportBinding
     private lateinit var patientReportViewModel: PatientReportViewModel
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,9 +35,13 @@ class PatientReportFragment : Fragment() {
 
         patientReportViewModel = ViewModelProvider(this).get(PatientReportViewModel::class.java)
 
-        patientReportViewModel.getAllActivy()
+        sharedPreferences = requireActivity().getSharedPreferences(
+            getString(R.string.preference_file_key),
+            Context.MODE_PRIVATE
+        )
 
-        startPatientObservation()
+        startReportObservation()
+        startActivyObservation()
 
         binding.btnPatientProfileBack.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.patientReportToPatientInformation)
@@ -43,7 +50,17 @@ class PatientReportFragment : Fragment() {
         return view
     }
 
-    private fun startPatientObservation(){
+    private fun startReportObservation(){
+        val id = sharedPreferences.getInt(getString(R.string.salved_report_id_key), 0)
+
+        patientReportViewModel.getReportData(id)
+
+
+    }
+
+    private fun startActivyObservation(){
+        patientReportViewModel.getAllActivy()
+
         patientReportViewModel.listActivy.observe(viewLifecycleOwner, Observer { listActivy ->
             if(listActivy != null){
                 renderListActivy(listActivy)

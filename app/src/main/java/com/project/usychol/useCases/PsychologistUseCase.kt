@@ -18,4 +18,8 @@ class PsychologistUseCase(private val psychologistRepository: PsychologistReposi
     }
 
     fun findById(id: Int): Psychologist? = psychologistRepository.findById(id)
+
+    fun updateUser(id: Int, psychologist: Psychologist){
+        psychologistRepository.update(id, psychologist)
+    }
 }

@@ -8,7 +8,7 @@ data class Psychologist(
     var crpRegistration: Int,
     var cpf: String,
     var email: String,
-    var password: String,
+    var password: String?,
     var plan: PLan?
 ){
     init {

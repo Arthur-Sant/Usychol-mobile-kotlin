@@ -9,13 +9,12 @@ import com.project.usychol.useCases.PatientUseCase
 
 class RegisterPatientViewModel : ViewModel() {
 
-    private val patientDados = PatientDB()
-    private val patientDAO = PatientImplementation(patientDados)
+    private val patientDB = PatientDB()
+    private val patientDAO = PatientImplementation(patientDB)
     private val patientRepository = PatientRepository(patientDAO)
     private val patientUseCase = PatientUseCase(patientRepository)
 
     fun registerPatient(patient: Patient){
         patientUseCase.createPatient(patient)
     }
-
 }

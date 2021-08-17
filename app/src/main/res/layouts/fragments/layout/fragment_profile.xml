@@ -219,8 +219,8 @@
                     android:id="@+id/inputUserPLanName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:input_hint="@string/input_document_hint"
-                    app:input_top_text="@string/input_document_text"
+                    app:input_hint="@string/input_plan_hint"
+                    app:input_top_text="@string/input_plan_text"
                     app:input_type="@string/input_type_text" />
 
                 <com.project.usychol.InputComponent

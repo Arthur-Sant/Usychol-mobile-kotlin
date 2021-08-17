@@ -4,14 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.usychol.data.repositories.ActivyRepository
+import com.project.usychol.data.repositories.PatientRepository
 import com.project.usychol.data.repositories.ReportRepository
 import com.project.usychol.db.ActivyDB
+import com.project.usychol.db.PatientDB
 import com.project.usychol.db.ReportDB
 import com.project.usychol.domain.entities.Activy
 import com.project.usychol.domain.entities.Report
 import com.project.usychol.implementations.ActivyImplementation
+import com.project.usychol.implementations.PatientImplementation
 import com.project.usychol.implementations.ReportImplementation
 import com.project.usychol.useCases.ActivyUseCase
+import com.project.usychol.useCases.PatientUseCase
 import com.project.usychol.useCases.ReportUseCase
 
 class PatientReportViewModel : ViewModel() {
@@ -19,7 +23,7 @@ class PatientReportViewModel : ViewModel() {
     private val reportDB = ReportDB()
     private val reportDAO = ReportImplementation(reportDB)
     private val reportRepository = ReportRepository(reportDAO)
-    private val reportUseCases = ReportUseCase(reportRepository)
+    private val reportUseCase = ReportUseCase(reportRepository)
 
     private val activyDB = ActivyDB()
     private val activyDAO = ActivyImplementation(activyDB)
@@ -30,11 +34,23 @@ class PatientReportViewModel : ViewModel() {
     val listActivy: LiveData<List<Activy>>
     get () = _listActivy
 
+    private val _reportData = MutableLiveData<Report>()
+    val reportData: LiveData<Report>
+    get () = _reportData
+
     fun getAllActivy(){
         val listActivys: List<Activy>? = activyUseCase.getAllActivy()
 
         if(listActivys != null){
             _listActivy.value = listActivys
+        }
+    }
+
+    fun getReportData(id: Int){
+        val report: Report? = reportUseCase.getReportById(id)
+
+        if(report != null){
+            _reportData.value = report
         }
     }
 

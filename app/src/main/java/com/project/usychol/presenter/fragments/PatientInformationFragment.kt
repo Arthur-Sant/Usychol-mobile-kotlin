@@ -45,7 +45,10 @@ class PatientInformationFragment : Fragment() {
         patientInformationViewModel = ViewModelProvider(this).get(PatientInformationViewModel::class.java)
 
         patientInformationViewModel.getAllPatientsReports(patientId, psychologistId)
+        patientInformationViewModel.getPatientName(patientId)
 
+
+        startObservationPatientName()
         startObservationPatientReports()
 
         binding.btnPatientInformationBack.setOnClickListener {
@@ -64,6 +67,12 @@ class PatientInformationFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun startObservationPatientName(){
+        patientInformationViewModel.patientName.observe(viewLifecycleOwner, Observer { name ->
+            binding.tvPatientName.text = name
+        })
     }
 
     private fun startObservationPatientReports(){

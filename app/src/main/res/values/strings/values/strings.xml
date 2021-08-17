@@ -9,6 +9,6 @@
 
     <string name="salved_user_id_key">userId</string>
 
-    <string name="salved_report_id_key">userId</string>
+    <string name="salved_report_id_key">reportId</string>
 
 </resources>

@@ -9,6 +9,12 @@ class PatientUseCase(private val patientRepository: PatientRepository) {
         patientRepository.create(patient)
     }
 
-    fun getAllPatients(psychologistId: Int): List<Patient>? = patientRepository.findAll(psychologistId)
+    fun getAllPatients(psychologistId: Int): List<Patient>? {
+        return patientRepository.findAll(psychologistId)
+    }
+
+    fun getPatientById(id: Int): Patient?{
+        return patientRepository.findById(id)
+    }
 
 }

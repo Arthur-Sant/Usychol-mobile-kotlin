@@ -9,6 +9,10 @@ class ReportUseCase (private val reportRepository: ReportRepository){
         reportRepository.create(report)
     }
 
+    fun getReportById(id: Int): Report? {
+        return reportRepository.findById(id)
+    }
+
     fun getAllByPatient(patientId: Int, psychologistId: Int): List<Report>? {
         return reportRepository.findAllByPatientId(patientId, psychologistId)
     }

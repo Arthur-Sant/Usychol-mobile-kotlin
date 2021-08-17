@@ -11,5 +11,8 @@ class PatientRepository(private val patientDAO: PatientDAO) {
 
     fun findAll(psychologistId: Int): List<Patient>? = patientDAO.findAll(psychologistId)
 
+    fun findById(id: Int): Patient?{
+        return patientDAO.findById(id)
+    }
 
 }

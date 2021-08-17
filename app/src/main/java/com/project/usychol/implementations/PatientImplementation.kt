@@ -13,4 +13,8 @@ class PatientImplementation (private val patientDados: PatientDB): PatientDAO {
         return patientDados.findAll(psychologistId)
     }
 
+    override fun findById(id: Int): Patient? {
+        return patientDados.findById(id)
+    }
+
 }

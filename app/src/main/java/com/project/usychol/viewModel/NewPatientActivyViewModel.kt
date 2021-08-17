@@ -17,4 +17,5 @@ class NewPatientActivyViewModel : ViewModel(){
     fun createActivy(activy: Activy){
         activyUseCase.createActivy(activy)
     }
+
 }

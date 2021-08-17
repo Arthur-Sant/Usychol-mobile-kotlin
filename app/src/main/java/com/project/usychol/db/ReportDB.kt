@@ -67,5 +67,11 @@ class ReportDB {
 
     }
 
+    fun findById(id: Int): Report? {
+        return arrayReportList.find {
+            it.id == id
+        }
+    }
+
 
 }

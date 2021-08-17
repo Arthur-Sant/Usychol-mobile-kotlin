@@ -40,11 +40,18 @@ class SignupFragment : Fragment() {
 
             if(psychologist != null) {
 
+                val gson = Gson()
+
+                val text = gson.toJson(psychologist)
+
+                println(text)
+
                 sharedPreferences.edit {
                     putInt(getString(R.string.salved_user_id_key), psychologist.id!!)
+                    putString("userData", text)
                 }
 
-                viewModel.registerPsychologist(psychologist)
+//                viewModel.registerPsychologist(psychologist)
 
                 Navigation.findNavController(view).navigate(R.id.signupToApproval)
             }else{
@@ -70,7 +77,7 @@ class SignupFragment : Fragment() {
 
         if(psychologistName.isNotEmpty() && psychologistBirthday.isNotEmpty()
             && psychologistCpf.isNotEmpty() && psychologistCrp.isNotEmpty()
-            && psychologistEmail.isNotEmpty() && psychologistPassword.isNotEmpty()){
+            && psychologistEmail.isNotEmpty() && psychologistPassword.isNotEmpty()) {
 
                 return Psychologist(
                     null,
@@ -83,10 +90,10 @@ class SignupFragment : Fragment() {
                     psychologistPassword.toString(),
                     null
                 )
+        }else{
+            return null
+
         }
-
-        return null
-
     }
 
 }

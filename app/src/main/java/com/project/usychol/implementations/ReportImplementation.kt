@@ -9,6 +9,10 @@ class ReportImplementation(private val reportDB: ReportDB): ReportDAO {
         reportDB.create(report)
     }
 
+    override fun findById(id: Int): Report? {
+        return reportDB.findById(id)
+    }
+
     override fun findAllByPatient(patientId: Int, psychologistId: Int): List<Report> {
         return reportDB.findAllByPatientId(patientId, psychologistId)
     }

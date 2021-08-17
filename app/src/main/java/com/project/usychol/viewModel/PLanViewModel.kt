@@ -8,8 +8,8 @@ import com.project.usychol.implementations.PsychologistImplementation
 import com.project.usychol.useCases.PsychologistUseCase
 
 class PLanViewModel : ViewModel(){
-    private val psychologistDados = PsychologistDB()
-    private val psychologistDAO = PsychologistImplementation(psychologistDados)
+    private val psychologistDB = PsychologistDB()
+    private val psychologistDAO = PsychologistImplementation(psychologistDB)
     private val psychologistRepository = PsychologistRepository(psychologistDAO)
     private val psychologistUseCases = PsychologistUseCase(psychologistRepository)
 

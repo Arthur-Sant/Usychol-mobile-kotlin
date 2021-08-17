@@ -12,8 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.google.gson.Gson
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentSigninBinding
+import com.project.usychol.domain.entities.Psychologist
 import com.project.usychol.viewModel.SiginViewModel
 
 class SigninFragment : Fragment() {
@@ -40,24 +42,40 @@ class SigninFragment : Fragment() {
         }
 
         binding.btnSignin.setOnClickListener{
-            viewModel.loginUser(signinEmail.toString(), signinPassword.toString())
+            val gson = Gson()
+            val text = shared.getString("userData", "")
+            val psychologist = gson.fromJson(text, Psychologist::class.java)
+
+            if(psychologist.email == signinEmail.toString()
+                && psychologist.password == signinPassword.toString()) {
+
+                if(psychologist.plan != null){
+                    Navigation.findNavController(view).navigate(R.id.signinToDashboard)
+                }else{
+                    Navigation.findNavController(view).navigate(R.id.signinToVirtualManager)
+                }
+
+            }else{
+                Toast.makeText(activity, "Incorrect Username or Password", Toast.LENGTH_SHORT).show()
+            }
+//            viewModel.loginUser(signinEmail.toString(), signinPassword.toString())
         }
 
-        viewModel.loginSituation.observe(viewLifecycleOwner, Observer { situation ->
-            when(situation){
-                "logged" -> Navigation.findNavController(view).navigate(R.id.signinToDashboard)
-                "logged in but no plan" -> Navigation.findNavController(view).navigate(R.id.signinToVirtualManager)
-                else -> {
-                    Toast.makeText(activity, "Incorrect Username or Password", Toast.LENGTH_SHORT).show()
-                }
-             }
-        })
-
-        viewModel.userId.observe(viewLifecycleOwner, Observer { id ->
-            shared.edit {
-                putInt(getString(R.string.salved_user_id_key), id)
-            }
-        })
+//        viewModel.loginSituation.observe(viewLifecycleOwner, Observer { situation ->
+//            when(situation){
+//                "logged" -> Navigation.findNavController(view).navigate(R.id.signinToDashboard)
+//                "logged in but no plan" -> Navigation.findNavController(view).navigate(R.id.signinToVirtualManager)
+//                else -> {
+//                    Toast.makeText(activity, "Incorrect Username or Password", Toast.LENGTH_SHORT).show()
+//                }
+//             }
+//        })
+//
+//        viewModel.userId.observe(viewLifecycleOwner, Observer { id ->
+//            shared.edit {
+//                putInt(getString(R.string.salved_user_id_key), id)
+//            }
+//        })
 
         return view
     }

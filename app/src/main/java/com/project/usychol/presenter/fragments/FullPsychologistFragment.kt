@@ -6,11 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.edit
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.google.gson.Gson
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentFullPsychologistBinding
 import com.project.usychol.domain.entities.PLan
+import com.project.usychol.domain.entities.Psychologist
 import com.project.usychol.viewModel.PLanViewModel
 
 class FullPsychologistFragment : Fragment() {
@@ -36,6 +39,14 @@ class FullPsychologistFragment : Fragment() {
             Context.MODE_PRIVATE
         )
 
+        val gson = Gson()
+
+        val psychologistGson = gson.fromJson(sharedPreferences.getString("userData", ""), Psychologist::class.java)
+
+        psychologistGson.plan = plan
+
+        val text = gson.toJson(psychologistGson)
+
         val userId = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
 
         binding.btnFullNext.setOnClickListener {
@@ -43,7 +54,12 @@ class FullPsychologistFragment : Fragment() {
         }
 
         binding.btnFullSignPlan.setOnClickListener {
-            viewModel.choosePsychologistPlan(userId, plan)
+//            viewModel.choosePsychologistPlan(userId, plan)
+
+            sharedPreferences.edit {
+                putString("userData", text)
+            }
+
             Navigation.findNavController(view).navigate(R.id.fullToDashboard)
         }
 

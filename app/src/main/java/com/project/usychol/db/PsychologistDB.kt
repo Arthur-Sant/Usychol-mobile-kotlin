@@ -1,9 +1,10 @@
 package com.project.usychol.db
 
+import android.content.SharedPreferences
 import com.project.usychol.domain.entities.PLan
 import com.project.usychol.domain.entities.Psychologist
 
-class PsychologistDB{
+class PsychologistDB {
 
     private var arrayPsychologistsList = ArrayList<Psychologist>()
 

@@ -81,4 +81,8 @@ class PatientDB {
     fun findAll(psychologistId: Int) = arrayPatientsList.filter {
         it.psychologistId == psychologistId
     }
+
+    fun findById(id: Int) = arrayPatientsList.find {
+        it.id == id
+    }
 }
