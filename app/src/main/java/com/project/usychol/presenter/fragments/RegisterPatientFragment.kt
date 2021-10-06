@@ -2,7 +2,6 @@ package com.project.usychol.presenter.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.view.ContextMenu
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,6 @@ import androidx.navigation.Navigation
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentRegisterPatientBinding
 import com.project.usychol.domain.entities.Patient
-import com.project.usychol.domain.entities.Psychologist
 import com.project.usychol.viewModel.RegisterPatientViewModel
 
 class RegisterPatientFragment : Fragment() {

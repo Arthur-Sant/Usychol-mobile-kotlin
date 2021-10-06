@@ -1,15 +1,28 @@
 package com.project.usychol.data.dao
 
 import com.project.usychol.domain.entities.Patient
+import com.project.usychol.domain.entities.User
 
 interface PatientDAO {
-    fun create(patient: Patient)
+    fun create(
+        userId: String,
+        patient: Patient,
+        res: (Patient?) -> Unit
+    )
 
-    fun findAll(psychologistId: Int): List<Patient>?
-//
-//    fun findByEmail(email: String): Psychologist?
-//
-//    fun update(id: Int, psychologist: Psychologist)
-//
-    fun findById(id: Int): Patient?
+    fun findAll(
+        userId: String,
+        res: (ArrayList<Patient>?) -> Unit
+    )
+
+    fun update(
+        userId: String,
+        id: String,
+        patient: Patient,
+        res: (Patient?) -> Unit
+    )
+
+    fun findById(userId: String, id: String, res: (Patient?) -> Unit)
+
+    fun delete(userId: String, id: String, res: (Patient?) -> Unit)
 }

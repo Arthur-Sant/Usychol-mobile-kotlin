@@ -40,11 +40,11 @@ class PatientInformationFragment : Fragment() {
         )
 
         val patientId = sharedPreferences.getInt(getString(R.string.salved_patient_id_key), 0)
-        val psychologistId = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
+        val userId = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
 
         patientInformationViewModel = ViewModelProvider(this).get(PatientInformationViewModel::class.java)
 
-        patientInformationViewModel.getAllPatientsReports(patientId, psychologistId)
+        patientInformationViewModel.getAllPatientsReports(patientId, userId)
         patientInformationViewModel.getPatientName(patientId)
 
 
@@ -78,7 +78,6 @@ class PatientInformationFragment : Fragment() {
     private fun startObservationPatientReports(){
         patientInformationViewModel.listPatientReport
             .observe(viewLifecycleOwner, Observer { listPatientReports ->
-                println(listPatientReports)
                 if(listPatientReports.isNotEmpty()){
                     renderListPatientReport(listPatientReports)
                 }

@@ -3,49 +3,45 @@ package com.project.usychol.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.project.usychol.db.PatientDB
 import com.project.usychol.data.repositories.PatientRepository
-import com.project.usychol.data.repositories.ReportRepository
-import com.project.usychol.db.ReportDB
+import com.project.usychol.data.repositories.ReminderRepository
 import com.project.usychol.domain.entities.Patient
-import com.project.usychol.domain.entities.Report
+import com.project.usychol.domain.entities.Reminder
 import com.project.usychol.implementations.PatientImplementation
-import com.project.usychol.implementations.ReportImplementation
+import com.project.usychol.implementations.ReminderImplementation
 import com.project.usychol.useCases.PatientUseCase
-import com.project.usychol.useCases.ReportUseCase
+import com.project.usychol.useCases.ReminderUseCase
 
 class DashboardViewModel : ViewModel() {
-    private val patientDB = PatientDB()
-    private val patientDAO = PatientImplementation(patientDB)
+    private val patientDAO = PatientImplementation()
     private val patientRepository = PatientRepository(patientDAO)
     private val patientUseCases = PatientUseCase(patientRepository)
 
-    private val reportDB = ReportDB()
-    private val reportDAO = ReportImplementation(reportDB)
-    private val reportRepository = ReportRepository(reportDAO)
-    private val reportUseCases = ReportUseCase(reportRepository)
+    private val reminderDAO = ReminderImplementation()
+    private val reminderRepository = ReminderRepository(reminderDAO)
+    private val reminderUseCases = ReminderUseCase(reminderRepository)
 
-    private val _listPsychologistReminder = MutableLiveData<List<Report>>()
-    val listPsychologistReminder: LiveData<List<Report>>
-    get () = _listPsychologistReminder
+    private val _listUserReminder = MutableLiveData<List<Reminder>>()
+    val listUserReminder: LiveData<List<Reminder>>
+    get () = _listUserReminder
 
     private val _listPatient = MutableLiveData<List<Patient>>()
     val listPatient: LiveData<List<Patient>>
     get () = _listPatient
 
-     fun getAllPatients(psychologistId: Int) {
-        val patients = patientUseCases.getAllPatients(psychologistId)
+     fun getAllPatients(userId: Int) {
+        val patients = patientUseCases.getAllPatients(userId)
 
          if(patients != null){
              _listPatient.postValue(patients)
          }
     }
 
-    fun getAllPsychologistReminder(psychologistId: Int){
-        val psychologistReminder: List<Report>? = reportUseCases.getAllByPsychologist(psychologistId)
+    fun getAllUserReminder(){
+        val reminders: List<Reminder>? = reminderUseCases.findAll()
 
-        if(psychologistReminder != null){
-            _listPsychologistReminder.value = psychologistReminder
+        if(reminders != null){
+            _listUserReminder.value = reminders
         }
     }
 

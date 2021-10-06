@@ -17,4 +17,8 @@ class PatientUseCase(private val patientRepository: PatientRepository) {
         return patientRepository.findById(id)
     }
 
+    fun updatePatientData(patient: Patient){
+        patientRepository.update(patient)
+    }
+
 }

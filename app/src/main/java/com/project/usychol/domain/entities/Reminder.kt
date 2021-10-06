@@ -2,22 +2,17 @@ package com.project.usychol.domain.entities
 
 import com.google.gson.annotations.SerializedName
 
-data class Patient (
+data class Reminder(
     var id: String?,
+    var title: String = "",
+    var startAt: String = "",
+    var endAt: String = "",
 
     @SerializedName("profilePicture")
     var image: String?,
 
-    var name: String,
-    var appointmentCount: Int,
-    var patientClass: String,
-    var motherName: String,
-    var patientSummary: String,
-    var fatherName: String,
-    var maritalStatus: String,
     var age: String?,
-    var fromUser: String,
-    var reports: ArrayList<Report>?
+    var fromUser: String?,
 ){
     init {
         if(id == null){
@@ -25,3 +20,4 @@ data class Patient (
         }
     }
 }
+

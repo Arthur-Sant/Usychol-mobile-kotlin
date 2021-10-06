@@ -18,6 +18,7 @@ import com.project.usychol.adapters.PatientAdapter
 import com.project.usychol.adapters.ReminderAdapter
 import com.project.usychol.databinding.FragmentDashboardBinding
 import com.project.usychol.domain.entities.Patient
+import com.project.usychol.domain.entities.Reminder
 import com.project.usychol.domain.entities.Report
 import com.project.usychol.viewModel.DashboardViewModel
 
@@ -41,13 +42,13 @@ class DashboardFragment : Fragment() {
 
         sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
-        val psychologistId = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
+        val userId = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
 
-        dashboardViewModel.getAllPatients(psychologistId)
-        dashboardViewModel.getAllPsychologistReminder(psychologistId)
+        dashboardViewModel.getAllPatients(userId)
+        dashboardViewModel.getAllUserReminder()
 
         startPatientObservation()
-        startPsychologistReminderObservation()
+        startuserReminderObservation()
 
         binding.btnRegisterPatient.setOnClickListener{
             Navigation.findNavController(view).navigate(R.id.dashboardToRegisterPatient)
@@ -87,18 +88,18 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    private fun startPsychologistReminderObservation(){
-        dashboardViewModel.listPsychologistReminder.observe(viewLifecycleOwner, Observer { listReminder ->
+    private fun startuserReminderObservation(){
+        dashboardViewModel.listUserReminder.observe(viewLifecycleOwner, Observer { listReminder ->
             if(listReminder.isNotEmpty()){
-                renderListPsychologistReminder(listReminder)
+                renderListuserReminder(listReminder)
             }
         })
     }
 
-    private fun renderListPsychologistReminder(listReminder: List<Report>){
+    private fun renderListuserReminder(listReminder: List<Reminder>){
         val reminderAdapter = ReminderAdapter(requireContext(), listReminder)
 
-        binding.recyclerViewPsychologistReminder.apply {
+        binding.recyclerViewUserReminder.apply {
             adapter = reminderAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             itemAnimator = DefaultItemAnimator()

@@ -16,13 +16,11 @@ import com.project.usychol.useCases.ReportUseCase
 
 class NewPatientReportViewModel : ViewModel() {
 
-    private val reportDB = ReportDB()
-    private val reportDAO = ReportImplementation(reportDB)
+    private val reportDAO = ReportImplementation()
     private val reportRepository = ReportRepository(reportDAO)
     private val reportUseCases = ReportUseCase(reportRepository)
 
-    private val activyDB = ActivyDB()
-    private val activyDAO = ActivyImplementation(activyDB)
+    private val activyDAO = ActivyImplementation()
     private val activyRepository = ActivyRepository(activyDAO)
     private val activyUseCase = ActivyUseCase(activyRepository)
 

@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.usychol.R
 import com.project.usychol.adapters.viewHolder.PsychologistReminderViewHolder
+import com.project.usychol.domain.entities.Reminder
 import com.project.usychol.domain.entities.Report
 
 class ReminderAdapter(
     private val context: Context,
-    private val listPsychologistReminder: List<Report>
+    private val listPsychologistReminder: List<Reminder>
     ) : RecyclerView.Adapter<PsychologistReminderViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PsychologistReminderViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
@@ -26,8 +27,8 @@ class ReminderAdapter(
         val reminder = listPsychologistReminder[position]
         holder.apply {
             tvReportPatientName.text = "Arthur Santiago"
-            tvReportPatientAge.text = reminder.patientId.toString()
-            tvReportPatientTime.text = reminder.reportDay
+            tvReportPatientAge.text = reminder.age.toString()
+            tvReportPatientTime.text = reminder.startAt
         }
     }
 

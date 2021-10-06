@@ -1,27 +1,29 @@
 package com.project.usychol.presenter.fragments
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.edit
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.google.gson.Gson
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentSignupBinding
-import com.project.usychol.domain.entities.Psychologist
+import com.project.usychol.domain.entities.User
 import com.project.usychol.viewModel.SignupViewModel
+
 
 class SignupFragment : Fragment() {
 
     private lateinit var viewModel: SignupViewModel
     private lateinit var binding: FragmentSignupBinding
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,22 +38,11 @@ class SignupFragment : Fragment() {
             .getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
         binding.btnSignup.setOnClickListener {
-            val psychologist: Psychologist? = registerPsychologist()
+            val user: User? = registerUser()
 
-            if(psychologist != null) {
+            if(user != null) {
 
-                val gson = Gson()
-
-                val text = gson.toJson(psychologist)
-
-                println(text)
-
-                sharedPreferences.edit {
-                    putInt(getString(R.string.salved_user_id_key), psychologist.id!!)
-                    putString("userData", text)
-                }
-
-//                viewModel.registerPsychologist(psychologist)
+                viewModel.registerUser(user)
 
                 Navigation.findNavController(view).navigate(R.id.signupToApproval)
             }else{
@@ -66,28 +57,29 @@ class SignupFragment : Fragment() {
         return view
     }
 
-    private fun registerPsychologist(): Psychologist? {
+    private fun registerUser(): User? {
 
-        val psychologistName = binding.inputName.findViewById<EditText>(R.id.textInput).text
-        val psychologistBirthday = binding.inputBirthday.findViewById<EditText>(R.id.textInput).text
-        val psychologistCrp = binding.inputIdNumber.findViewById<EditText>(R.id.textInput).text
-        val psychologistCpf = binding.inputDocument.findViewById<EditText>(R.id.textInput).text
-        val psychologistEmail = binding.inputEmail.findViewById<EditText>(R.id.textInput).text
-        val psychologistPassword = binding.inputPassword.findViewById<EditText>(R.id.textInput).text
+        val userName = binding.inputName.findViewById<EditText>(R.id.textInput).text
+        val userBirthday = binding.inputBirthday.findViewById<EditText>(R.id.textInput).text
+        val userCrp = binding.inputIdNumber.findViewById<EditText>(R.id.textInput).text
+        val userCpf = binding.inputDocument.findViewById<EditText>(R.id.textInput).text
+        val userEmail = binding.inputEmail.findViewById<EditText>(R.id.textInput).text
+        val userPassword = binding.inputPassword.findViewById<EditText>(R.id.textInput).text
 
-        if(psychologistName.isNotEmpty() && psychologistBirthday.isNotEmpty()
-            && psychologistCpf.isNotEmpty() && psychologistCrp.isNotEmpty()
-            && psychologistEmail.isNotEmpty() && psychologistPassword.isNotEmpty()) {
+        if(userName.isNotEmpty() && userBirthday.isNotEmpty()
+            && userCpf.isNotEmpty() && userCrp.isNotEmpty()
+            && userEmail.isNotEmpty() && userPassword.isNotEmpty()) {
 
-                return Psychologist(
+                return User(
                     null,
                     null,
-                    psychologistName.toString(),
-                    psychologistBirthday.toString(),
-                    psychologistCrp.toString().toInt(),
-                    psychologistCpf.toString(),
-                    psychologistEmail.toString(),
-                    psychologistPassword.toString(),
+                    userName.toString(),
+                    userBirthday.toString(),
+                    userCrp.toString().toInt(),
+                    userCpf.toString(),
+                    userEmail.toString(),
+                    userPassword.toString(),
+                    null,
                     null
                 )
         }else{

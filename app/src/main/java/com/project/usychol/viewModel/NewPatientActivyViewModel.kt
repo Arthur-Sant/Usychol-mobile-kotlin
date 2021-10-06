@@ -9,8 +9,7 @@ import com.project.usychol.useCases.ActivyUseCase
 
 class NewPatientActivyViewModel : ViewModel(){
 
-    private val activyDB = ActivyDB()
-    private val activyDAO = ActivyImplementation(activyDB)
+    private val activyDAO = ActivyImplementation()
     private val activyRepository = ActivyRepository(activyDAO)
     private val activyUseCase = ActivyUseCase(activyRepository)
 

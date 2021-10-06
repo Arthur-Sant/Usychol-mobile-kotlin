@@ -1,14 +1,41 @@
 package com.project.usychol.data.dao
 
-import com.project.usychol.domain.entities.Psychologist
 import com.project.usychol.domain.entities.Report
 
 interface ReportDAO {
-    fun create(report: Report)
+    fun create(
+        userId: String,
+        patientId: String,
+        report: Report,
+        res: (Report?) -> Unit
+    )
 
-    fun findById(id: Int): Report?
+    fun findById(
+        userId: String,
+        patientId: String,
+        id: String,
+        res: (Report?) -> Unit
+    )
 
-    fun findAllByPatient(patientId: Int, psychologistId: Int): List<Report>?
+    fun update(
+        userId: String,
+        patientId: String,
+        id: String,
+        report: Report,
+        res: (Report?) -> Unit
+    )
 
-    fun findAllByPsychologist(psychologistId: Int): List<Report>?
+    fun delete(
+        userId: String,
+        patientId: String,
+        id: String,
+        res: (Report?) -> Unit
+    )
+
+    fun findAll(
+        userId: String,
+        patientId: String,
+        res: (ArrayList<Report>?) -> Unit
+    )
+
 }

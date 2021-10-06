@@ -54,8 +54,6 @@ class PatientReportFragment : Fragment() {
         val id = sharedPreferences.getInt(getString(R.string.salved_report_id_key), 0)
 
         patientReportViewModel.getReportData(id)
-
-
     }
 
     private fun startActivyObservation(){

@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.usychol.db.PsychologistDB
-import com.project.usychol.data.repositories.PsychologistRepository
-import com.project.usychol.implementations.PsychologistImplementation
-import com.project.usychol.useCases.PsychologistUseCase
+import com.project.usychol.data.repositories.UserRepository
+import com.project.usychol.implementations.UserImplementation
+import com.project.usychol.useCases.UserUseCase
 
 class SiginViewModel : ViewModel() {
 
     private val psychologistDB = PsychologistDB()
-    private val psychologistDAO = PsychologistImplementation(psychologistDB)
-    private val psychologistRepository = PsychologistRepository(psychologistDAO)
-    private val psychologistUseCases = PsychologistUseCase(psychologistRepository)
+    private val psychologistDAO = UserImplementation(psychologistDB)
+    private val psychologistRepository = UserRepository(psychologistDAO)
+    private val psychologistUseCases = UserUseCase(psychologistRepository)
 
     private var _loginSituation = MutableLiveData<String>()
     val loginSituation: LiveData<String>

@@ -1,20 +1,33 @@
 package com.project.usychol.presenter.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.EditText
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentPatientProfileBinding
-import com.project.usychol.databinding.FragmentRegisterPatientBinding
+import com.project.usychol.viewModel.PatientProfileViewModel
 
 class PatientProfileFragment : Fragment() {
 
-    private var _binding: FragmentPatientProfileBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentPatientProfileBinding
+
+    private lateinit var patientProfileViewModel: PatientProfileViewModel
+
+    private lateinit var inputName: EditText
+    private lateinit var inputBirthday: EditText
+    private lateinit var selectClass: EditText
+    private lateinit var inputMotherName: EditText
+    private lateinit var inputFatherName: EditText
+    private lateinit var selectMaritalStatus: EditText
 
     override fun onResume() {
         super.onResume()
@@ -35,15 +48,53 @@ class PatientProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentPatientProfileBinding.inflate(inflater, container, false)
+        binding = FragmentPatientProfileBinding.inflate(inflater, container, false)
 
         val view: View = binding.root
+
+         val sharedPreferences = requireActivity().getSharedPreferences(
+             getString(R.string.preference_file_key),
+             Context.MODE_PRIVATE
+         )
+
+        val id = sharedPreferences.getInt(getString(R.string.salved_patient_id_key), 0)
+
+        patientProfileViewModel = ViewModelProvider(this).get(PatientProfileViewModel::class.java)
+
+        patientProfileViewModel.getPatientData(id)
+
+        startObservationPatientData()
 
         binding.btnPatientProfileBack.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.patientProfileToPatientInformation)
         }
 
+        binding.btnEditPatientProfile.setOnClickListener {
+
+        }
 
         return view
+    }
+
+    private fun Any.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this.toString())
+
+    fun startObservationPatientData(){
+        val tvName = binding.tvPatientProfileName
+        inputName = binding.inputPatientProfileName.findViewById(R.id.textInput)
+        inputBirthday = binding.inputPatientProfileBirthday.findViewById(R.id.textInput)
+        selectClass = binding.selectPatientProfileClass.editText!!
+        inputMotherName = binding.inputPatientProfileMotherName.findViewById(R.id.textInput)
+        inputFatherName = binding.inputPatientProfileFatherName.findViewById(R.id.textInput)
+        selectMaritalStatus = binding.selectMaritalPatientProfileStatus.editText!!
+
+        patientProfileViewModel.patient.observe(viewLifecycleOwner, Observer { patient ->
+            tvName.text = patient.name
+            inputName.text = patient.name.toEditable()
+            inputBirthday.text = patient.birthday.toEditable()
+            selectClass.text = patient.type.toEditable()
+            inputMotherName.text = patient.momName.toEditable()
+            inputFatherName.text = patient.fatherName.toEditable()
+            selectMaritalStatus.text = patient.maritalStatus.toEditable()
+        })
     }
 }

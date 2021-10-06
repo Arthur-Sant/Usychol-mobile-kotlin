@@ -47,11 +47,11 @@ class NewPatientReportFragment : Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val psychologistId = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
+        val userId = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
         val patientId = sharedPreferences.getInt(getString(R.string.salved_patient_id_key), 0)
 
         binding.btnCreateReport.setOnClickListener {
-            val report = createReport(patientId, psychologistId)
+            val report = createReport(patientId, userId)
 
             if(report != null){
                 newPatientReportViewModel.createReport(report)
@@ -72,7 +72,7 @@ class NewPatientReportFragment : Fragment() {
         Navigation.findNavController(view).navigate(R.id.newPatientReportToPatientInformation)
     }
 
-    private fun createReport(patientId: Int, psychologistId: Int): Report?{
+    private fun createReport(patientId: Int, userId: Int): Report?{
 
         val selectNewReportActivyName = binding.selectNewReportActivyName.editText!!.text
         val inputResumeNewReport = binding.inputResumeNewReport.text
@@ -88,7 +88,7 @@ class NewPatientReportFragment : Fragment() {
                 inputResumeNewReport.toString(),
                 inputConsultationNewReport.toString(),
                 inputDayNewReport.toString(),
-                psychologistId,
+                userId,
                 patientId
                 )
         }else{
