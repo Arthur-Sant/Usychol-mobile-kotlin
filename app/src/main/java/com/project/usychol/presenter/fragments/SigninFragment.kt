@@ -56,7 +56,7 @@ class SigninFragment : Fragment() {
 
         viewModel.userId.observe(viewLifecycleOwner, Observer { id ->
             shared.edit {
-                putInt(getString(R.string.salved_user_id_key), id)
+                putString(getString(R.string.salved_user_id_key), id)
             }
         })
 

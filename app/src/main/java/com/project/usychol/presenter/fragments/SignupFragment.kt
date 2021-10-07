@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.project.usychol.R
@@ -36,6 +38,12 @@ class SignupFragment : Fragment() {
 
         val sharedPreferences = requireActivity()
             .getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+
+        viewModel.userId.observe(viewLifecycleOwner, Observer { id ->
+            sharedPreferences.edit {
+                putString(getString(R.string.salved_user_id_key), id)
+            }
+        })
 
         binding.btnSignup.setOnClickListener {
             val user: User? = registerUser()
@@ -72,14 +80,12 @@ class SignupFragment : Fragment() {
 
                 return User(
                     null,
-                    null,
                     userName.toString(),
-                    userBirthday.toString(),
-                    userCrp.toString().toInt(),
+                    userCrp.toString(),
                     userCpf.toString(),
                     userEmail.toString(),
                     userPassword.toString(),
-                    null,
+                    userBirthday.toString(),
                     null
                 )
         }else{

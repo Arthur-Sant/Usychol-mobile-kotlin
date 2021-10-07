@@ -51,7 +51,7 @@ class ProfileFragment : Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val id = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
+        val id = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
 
         val viewModelFactory = ProfileViewModelFactory(id)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ProfileViewModel::class.java)
@@ -87,7 +87,7 @@ class ProfileFragment : Fragment() {
 
     private fun Any.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this.toString())
 
-    private fun getUserDataModel(id: Int): User? {
+    private fun getUserDataModel(id: String): User? {
         return if(inputUserName.text.isNotEmpty()
             && inputUserEmail.text.isNotEmpty()
             && inputUserBirthday.text.isNotEmpty()
@@ -96,14 +96,12 @@ class ProfileFragment : Fragment() {
 
             User(
                 id,
-                null,
                 inputUserName.text.toString(),
-                inputUserBirthday.text.toString(),
-                inputUserCRPNumber.text.toString().toInt(),
+                inputUserCRPNumber.text.toString(),
                 inputUserCPF.text.toString(),
                 inputUserEmail.text.toString(),
                 null,
-                null,
+                inputUserBirthday.text.toString(),
                 null
             )
         }else{
@@ -139,8 +137,8 @@ class ProfileFragment : Fragment() {
         viewModel.user.observe(viewLifecycleOwner, Observer { user ->
             inputUserName.text = user.name.toEditable()
             inputUserEmail.text = user.email.toEditable()
-            inputUserBirthday.text = user.birthday.toEditable()
-            inputUserCRPNumber.text = user.crpRegistration.toEditable()
+            inputUserBirthday.text = user.age.toEditable()
+            inputUserCRPNumber.text = user.crp.toEditable()
             inputUserCPF.text = user.cpf.toEditable()
             inputUserPLanName.text = user.plan!!.name.toEditable()
             inputUserPlanPayment.text = user.plan!!.paymentMethod.toEditable()

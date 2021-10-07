@@ -42,9 +42,9 @@ class DashboardFragment : Fragment() {
 
         sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
-        val userId = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
+        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")
 
-        dashboardViewModel.getAllPatients(userId)
+        dashboardViewModel.getAllPatients(userId!!)
         dashboardViewModel.getAllUserReminder()
 
         startPatientObservation()

@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.usychol.data.repositories.ActivyRepository
 import com.project.usychol.data.repositories.ReportRepository
-import com.project.usychol.db.ActivyDB
-import com.project.usychol.db.ReportDB
 import com.project.usychol.domain.entities.Activy
 import com.project.usychol.domain.entities.Report
 import com.project.usychol.implementations.ActivyImplementation
@@ -36,11 +34,11 @@ class NewPatientReportViewModel : ViewModel() {
                 it.template
             }
 
-            _listActivy.value = listActivyTemplate
+            _listActivy.postValue(listActivyTemplate)
         }
     }
 
-    fun createReport(report: Report){
-        reportUseCases.createReport(report)
+    fun createReport(userId: String, patientId: String, report: Report){
+        reportUseCases.createReport(userId, patientId, report)
     }
 }

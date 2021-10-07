@@ -57,11 +57,12 @@ class PatientProfileFragment : Fragment() {
              Context.MODE_PRIVATE
          )
 
-        val id = sharedPreferences.getInt(getString(R.string.salved_patient_id_key), 0)
+        val id = sharedPreferences.getString(getString(R.string.salved_patient_id_key), "")!!
+        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
 
         patientProfileViewModel = ViewModelProvider(this).get(PatientProfileViewModel::class.java)
 
-        patientProfileViewModel.getPatientData(id)
+        patientProfileViewModel.getPatientData(userId, id)
 
         startObservationPatientData()
 
@@ -90,9 +91,9 @@ class PatientProfileFragment : Fragment() {
         patientProfileViewModel.patient.observe(viewLifecycleOwner, Observer { patient ->
             tvName.text = patient.name
             inputName.text = patient.name.toEditable()
-            inputBirthday.text = patient.birthday.toEditable()
-            selectClass.text = patient.type.toEditable()
-            inputMotherName.text = patient.momName.toEditable()
+            inputBirthday.text = patient.age?.toEditable()
+            selectClass.text = patient.patientClass.toEditable()
+            inputMotherName.text = patient.motherName.toEditable()
             inputFatherName.text = patient.fatherName.toEditable()
             selectMaritalStatus.text = patient.maritalStatus.toEditable()
         })

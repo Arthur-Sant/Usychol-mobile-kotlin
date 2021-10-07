@@ -3,17 +3,15 @@ package com.project.usychol.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.project.usychol.db.PsychologistDB
 import com.project.usychol.data.repositories.UserRepository
 import com.project.usychol.domain.entities.PLan
 import com.project.usychol.domain.entities.User
 import com.project.usychol.implementations.UserImplementation
 import com.project.usychol.useCases.UserUseCase
 
-class ProfileViewModel(private var id: Int) : ViewModel(){
+class ProfileViewModel(private var id: String) : ViewModel(){
 
-    private val psychologistDB = PsychologistDB()
-    private val psychologistDAO = UserImplementation(psychologistDB)
+    private val psychologistDAO = UserImplementation()
     private val psychologistRepository = UserRepository(psychologistDAO)
     private val psychologistUseCases = UserUseCase(psychologistRepository)
 
@@ -37,7 +35,7 @@ class ProfileViewModel(private var id: Int) : ViewModel(){
         psychologistUseCases.updateUser(user)
     }
 
-    fun updateUserPlanData(userId: Int, plan: PLan){
+    fun updateUserPlanData(userId: String, plan: PLan){
         psychologistUseCases.choosePlan(userId, plan)
     }
 }

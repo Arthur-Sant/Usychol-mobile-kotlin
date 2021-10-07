@@ -3,36 +3,34 @@ package com.project.usychol.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.project.usychol.db.PsychologistDB
 import com.project.usychol.data.repositories.UserRepository
 import com.project.usychol.implementations.UserImplementation
 import com.project.usychol.useCases.UserUseCase
 
 class SiginViewModel : ViewModel() {
 
-    private val psychologistDB = PsychologistDB()
-    private val psychologistDAO = UserImplementation(psychologistDB)
-    private val psychologistRepository = UserRepository(psychologistDAO)
-    private val psychologistUseCases = UserUseCase(psychologistRepository)
+    private val userDAO = UserImplementation()
+    private val userRepository = UserRepository(userDAO)
+    private val userUseCases = UserUseCase(userRepository)
 
     private var _loginSituation = MutableLiveData<String>()
     val loginSituation: LiveData<String>
         get () = _loginSituation
 
-    private var _userId = MutableLiveData<Int>()
-    val userId: LiveData<Int>
+    private var _userId = MutableLiveData<String>()
+    val userId: LiveData<String>
         get () = _userId
 
     fun loginUser(email: String, password: String){
-        val psychologist = psychologistUseCases.findByEmail(email)
+        val user = userUseCases.findByEmail(email)
 
-        if(psychologist != null) {
+        if(user != null) {
 
-            if (psychologist.email == email && psychologist.password == password) {
+            if (user.email == email && user.password == password) {
 
-                _userId.value = psychologist.id
+                _userId.value = user.id
 
-                when(psychologist.plan) {
+                when(user.plan) {
                     null -> _loginSituation.value = "logged in but no plan"
                     else -> _loginSituation.value = "logged"
                 }

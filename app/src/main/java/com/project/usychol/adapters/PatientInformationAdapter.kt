@@ -11,7 +11,7 @@ import com.project.usychol.domain.entities.Report
 class PatientInformationAdapter(
     private val context: Context,
     private val listPatientReport: List<Report>,
-    private val getPatientReportId: ((reportId: Int) -> Unit)
+    private val getPatientReportId: ((reportId: String) -> Unit)
 ) : RecyclerView.Adapter<PatientReportViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PatientReportViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
@@ -27,7 +27,7 @@ class PatientInformationAdapter(
         val patientReport = listPatientReport[position]
 
         holder.apply {
-            tvPatientReportDate.text = patientReport.reportDay
+            tvPatientReportDate.text = patientReport.date
 
             itemView.setOnClickListener {
                 getPatientReportId(patientReport.id!!)

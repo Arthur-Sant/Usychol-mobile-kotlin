@@ -39,13 +39,13 @@ class PatientInformationFragment : Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val patientId = sharedPreferences.getInt(getString(R.string.salved_patient_id_key), 0)
-        val userId = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
+        val patientId = sharedPreferences.getString(getString(R.string.salved_patient_id_key), "")
+        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")
 
         patientInformationViewModel = ViewModelProvider(this).get(PatientInformationViewModel::class.java)
 
-        patientInformationViewModel.getAllPatientsReports(patientId, userId)
-        patientInformationViewModel.getPatientName(patientId)
+        patientInformationViewModel.getAllPatientsReports(patientId!!, userId!!)
+        patientInformationViewModel.getPatientName(userId, patientId)
 
 
         startObservationPatientName()
@@ -62,16 +62,22 @@ class PatientInformationFragment : Fragment() {
         binding.btnCreateActivityPatient.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.patientInformationToNewPatientActivity)
         }
+
         binding.btnCreatePatientReport.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.patientInformationToNewPatientReport)
+        }
+
+        binding.btnEditSummary.setOnClickListener {
+            binding.tvPatientSummary.isEnabled = true
         }
 
         return view
     }
 
     private fun startObservationPatientName(){
-        patientInformationViewModel.patientName.observe(viewLifecycleOwner, Observer { name ->
-            binding.tvPatientName.text = name
+        patientInformationViewModel.patientName.observe(viewLifecycleOwner, Observer { patient ->
+            binding.tvPatientName.text = patient[0]
+            binding.tvPatientSummary.text = patient[1]
         })
     }
 
@@ -97,9 +103,9 @@ class PatientInformationFragment : Fragment() {
     private fun adapter(listPatientReport: List<Report>): PatientInformationAdapter {
 
         val adapter = PatientInformationAdapter( requireContext(), listPatientReport,
-            fun (reportId: Int){
+            fun (reportId: String){
                 sharedPreferences.edit {
-                    putInt(getString(R.string.salved_report_id_key), reportId)
+                    putString(getString(R.string.salved_report_id_key), reportId)
                 }
 
                 Navigation.findNavController(binding.root).navigate(R.id.patientInformationToPatientReport)

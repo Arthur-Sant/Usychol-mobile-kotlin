@@ -47,14 +47,14 @@ class NewPatientReportFragment : Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val userId = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
-        val patientId = sharedPreferences.getInt(getString(R.string.salved_patient_id_key), 0)
+        val patientId = sharedPreferences.getString(getString(R.string.salved_patient_id_key), "")
+        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")
 
         binding.btnCreateReport.setOnClickListener {
-            val report = createReport(patientId, userId)
+            val report = createReport(patientId!!)
 
             if(report != null){
-                newPatientReportViewModel.createReport(report)
+                newPatientReportViewModel.createReport(userId!!, patientId, report)
                 backPatientInformationScreen(view)
             }else{
                 Toast.makeText(activity, "fill in all fields", Toast.LENGTH_SHORT).show()
@@ -72,7 +72,7 @@ class NewPatientReportFragment : Fragment() {
         Navigation.findNavController(view).navigate(R.id.newPatientReportToPatientInformation)
     }
 
-    private fun createReport(patientId: Int, userId: Int): Report?{
+    private fun createReport(patientId: String): Report?{
 
         val selectNewReportActivyName = binding.selectNewReportActivyName.editText!!.text
         val inputResumeNewReport = binding.inputResumeNewReport.text
@@ -84,11 +84,11 @@ class NewPatientReportFragment : Fragment() {
 
             Report(
                 null,
-                selectNewReportActivyName.toString(),
+                null,
                 inputResumeNewReport.toString(),
-                inputConsultationNewReport.toString(),
                 inputDayNewReport.toString(),
-                userId,
+                inputConsultationNewReport.toString().toInt(),
+                inputDayNewReport.toString(),
                 patientId
                 )
         }else{

@@ -5,8 +5,8 @@ import com.project.usychol.domain.entities.PLan
 import com.project.usychol.domain.entities.User
 
 class UserUseCase(private val userRepository: UserRepository) {
-     fun createUser(user: User){
-        userRepository.create(user)
+     fun createUser(user: User): String{
+        return userRepository.create(user).toString()
     }
 
     fun findByEmail(email: String): User? {

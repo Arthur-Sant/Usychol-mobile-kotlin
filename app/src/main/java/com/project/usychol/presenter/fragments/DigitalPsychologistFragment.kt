@@ -37,14 +37,14 @@ class DigitalPsychologistFragment : Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val userId = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
+        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")
 
         binding.btnDigitalNext.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.digitalToFull)
         }
 
         binding.btnDigitalSignPlan.setOnClickListener {
-            viewModel.choosePsychologistPlan(userId, plan)
+            viewModel.choosePsychologistPlan(userId!!, plan)
             Navigation.findNavController(view).navigate(R.id.digitalToDashboard)
         }
 

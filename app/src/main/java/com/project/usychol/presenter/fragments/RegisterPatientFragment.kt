@@ -51,17 +51,17 @@ class RegisterPatientFragment : Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val psychologistId = sharedPreferences.getInt(getString(R.string.salved_user_id_key), 0)
+        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
 
         binding.btnRegisterPatientBack.setOnClickListener {
             backToDashboardScreen(view)
         }
 
         binding.btnCreatePatient.setOnClickListener {
-            val patient = registerPatient(psychologistId)
+            val patient = registerPatient(userId)
 
             if(patient != null){
-                viewModel.registerPatient(patient)
+                viewModel.registerPatient(userId, patient)
                 backToDashboardScreen(view)
             }else{
                 Toast.makeText(activity, "fill in all fields", Toast.LENGTH_SHORT).show()
@@ -71,7 +71,7 @@ class RegisterPatientFragment : Fragment() {
         return view
     }
 
-    private fun registerPatient(psychologistId: Int): Patient? {
+    private fun registerPatient(userId: String): Patient? {
 
         val inputPatientName = binding.inputPatientName.findViewById<EditText>(R.id.textInput).text
         val inputPatientBirthday = binding.inputPatientBirthday.findViewById<EditText>(R.id.textInput).text
@@ -88,13 +88,15 @@ class RegisterPatientFragment : Fragment() {
                 null,
                 null,
                 inputPatientName.toString(),
-                inputPatientBirthday.toString(),
+                0,
                 selectPatientClass.toString(),
                 inputPatientMotherName.toString(),
+                "opaaaaaa",
                 inputPatientFatherName.toString(),
                 selectMaritalPatientClass.toString(),
-                null,
-                psychologistId
+                inputPatientBirthday.toString(),
+                userId,
+                null
             )
         }else{
             return null

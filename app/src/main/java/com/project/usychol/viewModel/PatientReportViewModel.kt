@@ -4,18 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.usychol.data.repositories.ActivyRepository
-import com.project.usychol.data.repositories.PatientRepository
 import com.project.usychol.data.repositories.ReportRepository
-import com.project.usychol.db.ActivyDB
-import com.project.usychol.db.PatientDB
-import com.project.usychol.db.ReportDB
 import com.project.usychol.domain.entities.Activy
 import com.project.usychol.domain.entities.Report
 import com.project.usychol.implementations.ActivyImplementation
-import com.project.usychol.implementations.PatientImplementation
 import com.project.usychol.implementations.ReportImplementation
 import com.project.usychol.useCases.ActivyUseCase
-import com.project.usychol.useCases.PatientUseCase
 import com.project.usychol.useCases.ReportUseCase
 
 class PatientReportViewModel : ViewModel() {
@@ -40,15 +34,15 @@ class PatientReportViewModel : ViewModel() {
         val listActivys: List<Activy>? = activyUseCase.getAllActivy()
 
         if(listActivys != null){
-            _listActivy.value = listActivys
+            _listActivy.postValue(listActivys)
         }
     }
 
-    fun getReportData(id: Int){
-        val report: Report? = reportUseCase.getReportById(id)
+    fun getReportData(userId: String, patientId: String, id: String){
+        val report: Report? = reportUseCase.getReportById(userId, patientId, id)
 
         if(report != null){
-            _reportData.value = report
+            _reportData.postValue(report)
         }
     }
 

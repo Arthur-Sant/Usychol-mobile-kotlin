@@ -175,7 +175,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/tvPatientSummary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -185,12 +185,12 @@
                 android:textColor="@color/black_strong_light"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="14sp"
+                android:enabled="false"
                 app:layout_constraintBottom_toTopOf="@+id/btnAccessPatientProfile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-                app:layout_constraintVertical_bias="0.0"
-                android:text="The patient demonstrates hyperactivity and loss of focus in their daily tasks. He reported feelings of loneliness and longing for his parents for having gone to live at the school at an early age."/>
+                app:layout_constraintVertical_bias="0.0" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btnAccessPatientProfile"

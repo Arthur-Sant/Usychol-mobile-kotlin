@@ -5,8 +5,12 @@ import com.project.usychol.domain.entities.PLan
 import com.project.usychol.domain.entities.User
 
 class UserRepository(private val userDAO: UserDAO) {
-    fun create(user: User){
-        userDAO.create(user){}
+    fun create(user: User): String?{
+        var id: String? = null
+        userDAO.create(user){
+            id = it!!.id
+        }
+        return id
     }
 
     fun findByEmail(email: String): User?{

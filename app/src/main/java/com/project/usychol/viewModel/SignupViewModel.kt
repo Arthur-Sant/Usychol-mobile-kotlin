@@ -1,9 +1,8 @@
 package com.project.usychol.viewModel
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.project.usychol.db.PsychologistDB
 import com.project.usychol.data.repositories.UserRepository
 import com.project.usychol.domain.entities.User
 import com.project.usychol.implementations.UserImplementation
@@ -11,17 +10,15 @@ import com.project.usychol.useCases.UserUseCase
 
 class SignupViewModel: ViewModel() {
 
-    private val psychologistDB = PsychologistDB()
-    private val psychologistDAO = UserImplementation(psychologistDB)
-    private val psychologistRepository = UserRepository(psychologistDAO)
-    private val psychologistUseCases = UserUseCase(psychologistRepository)
+    private val userDAO = UserImplementation()
+    private val userRepository = UserRepository(userDAO)
+    private val userUseCases = UserUseCase(userRepository)
 
-//    Uri.parse("file:///android_asset/images/jack_road.jpg"))
-    // codigo guardado pra qaundo for pegar o caminho da imagem
+    private var _userId = MutableLiveData<String>()
+    val userId: LiveData<String>
+        get () = _userId
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    fun registerPsychologist(user: User){
-
-        psychologistUseCases.createUser(user)
+    fun registerUser(user: User){
+        userUseCases.createUser(user)
     }
 }
