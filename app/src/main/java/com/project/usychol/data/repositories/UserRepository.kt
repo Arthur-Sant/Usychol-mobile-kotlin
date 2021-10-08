@@ -14,7 +14,8 @@ class UserRepository(private val userDAO: UserDAO) {
     }
 
     fun findByEmail(email: String): User?{
-        return userDAO.findByEmail(email)
+        var user = userDAO.findByEmail(email)
+        return user
     }
 
     fun update(user: User){

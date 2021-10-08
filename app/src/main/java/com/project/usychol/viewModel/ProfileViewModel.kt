@@ -24,7 +24,8 @@ class ProfileViewModel(private var id: String) : ViewModel(){
     }
 
     private fun getDataFromPsychologist(){
-        val psychologist = psychologistUseCases.findById(id)
+        val psychologist = psychologistUseCases.findById("2")
+        println(psychologist)
 
         if(psychologist != null) {
             _user.postValue(psychologist)

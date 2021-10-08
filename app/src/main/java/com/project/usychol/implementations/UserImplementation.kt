@@ -1,5 +1,6 @@
 package com.project.usychol.implementations
 
+import android.util.Log
 import com.project.usychol.api.interfaces.UserEndpoint
 import com.project.usychol.api.utils.Connection
 import com.project.usychol.data.dao.UserDAO
@@ -9,6 +10,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.lang.Exception
+import kotlin.concurrent.thread
 
 class UserImplementation(): UserDAO {
     private var retrotifClient: Retrofit
@@ -26,12 +29,10 @@ class UserImplementation(): UserDAO {
 
                 if (response.body() != null && response.body()!!.size > 0)
                     list.addAll(response.body()!!.toList())
-
                 res(list)
             }
 
             override fun onFailure(call: Call<ArrayList<User>>, t: Throwable) {
-                println(t)
                 res(null)
             }
 
@@ -112,10 +113,11 @@ class UserImplementation(): UserDAO {
 
     override fun findByEmail(email: String): User? {
         var userByEmail: User? = null
-        this.findAll { users ->
-           userByEmail = users!!.find{ user ->
-               user.email == email
-           }
+
+        findAll { users ->
+            userByEmail = users?.find{
+                it.email == email
+            }
         }
 
         return userByEmail
