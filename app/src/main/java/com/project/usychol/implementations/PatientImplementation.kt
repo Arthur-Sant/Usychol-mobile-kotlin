@@ -22,8 +22,8 @@ class PatientImplementation (): PatientDAO {
         endpoint.postPatient(userId, patient).enqueue(object: Callback<Patient> {
             override fun onResponse(call: Call<Patient>, response: Response<Patient>) {
 
-                if (response?.body() != null)
-                    res(response?.body())
+                if (response.body() != null)
+                    res(response.body())
                 else {
                     res(null)
                 }
@@ -41,7 +41,7 @@ class PatientImplementation (): PatientDAO {
             override fun onResponse(call: Call<ArrayList<Patient>>, response: Response<ArrayList<Patient>>) {
                 val list = ArrayList<Patient>()
 
-                if (response?.body() != null && response.body()!!.size > 0)
+                if (response.body() != null && response.body()!!.size > 0)
                     list.addAll(response.body()!!.toList())
 
                 res(list)
@@ -58,8 +58,8 @@ class PatientImplementation (): PatientDAO {
         endpoint.putPatientById(userId, id, patient).enqueue(object: Callback<Patient> {
             override fun onResponse(call: Call<Patient>, response: Response<Patient>) {
 
-                if (response?.body() != null)
-                    res(response?.body())
+                if (response.body() != null)
+                    res(response.body())
                 else {
                     res(null)
                 }
@@ -76,8 +76,8 @@ class PatientImplementation (): PatientDAO {
         endpoint.getPatientById(userId, id).enqueue(object: Callback<Patient> {
             override fun onResponse(call: Call<Patient>, response: Response<Patient>) {
 
-                if (response?.body() != null)
-                    res(response?.body())
+                if (response.body() != null)
+                    res(response.body())
                 else {
                     res(null)
                 }
@@ -94,8 +94,8 @@ class PatientImplementation (): PatientDAO {
         endpoint.deletePatient(userId, id).enqueue(object: Callback<Patient> {
             override fun onResponse(call: Call<Patient>, response: Response<Patient>) {
 
-                if (response?.body() != null)
-                    res(response?.body())
+                if (response.body() != null)
+                    res(response.body())
                 else {
                     res(null)
                 }

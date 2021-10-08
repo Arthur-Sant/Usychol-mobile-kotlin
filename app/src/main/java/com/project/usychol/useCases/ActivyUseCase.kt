@@ -9,7 +9,7 @@ class ActivyUseCase(private val activyRepository: ActivyRepository) {
         activyRepository.create(activy)
     }
 
-    fun getAllActivy(): List<Activy>?{
-        return activyRepository.findAll()
+    fun getAllActivy(){
+
     }
 }

@@ -8,7 +8,6 @@ class ActivyRepository(private val activyDAO: ActivyDAO) {
         activyDAO.create(activy)
     }
 
-    fun findAll(): List<Activy>?{
-        return activyDAO.findAll()
+    fun findAll(){
     }
 }

@@ -24,7 +24,7 @@ class UserImplementation(): UserDAO {
             override fun onResponse(call: Call<ArrayList<User>>, response: Response<ArrayList<User>>) {
                 val list = ArrayList<User>()
 
-                if (response?.body() != null && response.body()!!.size > 0)
+                if (response.body() != null && response.body()!!.size > 0)
                     list.addAll(response.body()!!.toList())
 
                 res(list)

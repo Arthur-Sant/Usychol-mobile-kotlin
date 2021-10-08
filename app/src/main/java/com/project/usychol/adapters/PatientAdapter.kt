@@ -11,7 +11,7 @@ import com.project.usychol.domain.entities.Patient
 class PatientAdapter(
     private val context: Context,
     private val listPatients: List<Patient>,
-    private val getPatientId: ((patientId: Int) -> Unit)
+    private val getPatientId: ((patientId: String) -> Unit)
     ) : RecyclerView.Adapter<PatientViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PatientViewHolder {

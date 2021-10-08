@@ -99,7 +99,6 @@ class ReportImplementation(): ReportDAO {
     override fun findAll(
         userId: String,
         patientId: String,
-        id: String,
         res: (ArrayList<Report>?) -> Unit
     ) {
         endpoint.getReports(userId, patientId).enqueue(object: Callback<ArrayList<Report>> {

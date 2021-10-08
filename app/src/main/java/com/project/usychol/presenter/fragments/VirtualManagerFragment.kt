@@ -39,7 +39,7 @@ class VirtualManagerFragment : Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val userId = sharedPreferences.getInt(getString(R.string.salved_user_id_key),0)
+        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key),"")!!
 
         binding.btnVirtualSignPlan.setOnClickListener {
             viewModel.choosePsychologistPlan(userId, plan)

@@ -27,15 +27,15 @@ class NewPatientReportViewModel : ViewModel() {
         get () = _listActivy
 
     fun getAllActivy(){
-        val listActivys: List<Activy>? = activyUseCase.getAllActivy()
-
-        if(listActivys != null) {
-            val listActivyTemplate = listActivys.map {
-                it.template
-            }
-
-            _listActivy.postValue(listActivyTemplate)
-        }
+//        val listActivys: List<Activy>? = activyUseCase.getAllActivy()
+//
+//        if(listActivys != null) {
+//            val listActivyTemplate = listActivys.map {
+//                it.template
+//            }
+//
+//            _listActivy.postValue(listActivyTemplate)
+//        }
     }
 
     fun createReport(userId: String, patientId: String, report: Report){

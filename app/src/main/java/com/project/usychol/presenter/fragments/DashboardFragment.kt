@@ -71,10 +71,10 @@ class DashboardFragment : Fragment() {
     }
 
     private fun renderListPatient(listPatient: List<Patient>){
-        val patientAdapter = PatientAdapter(requireContext(), listPatient, fun (patientId: Int){
+        val patientAdapter = PatientAdapter(requireContext(), listPatient, fun (patientId: String){
 
             sharedPreferences.edit {
-                putInt(getString(R.string.salved_patient_id_key), patientId)
+                putString(getString(R.string.salved_patient_id_key), patientId)
             }
 
             Navigation.findNavController(binding.root)

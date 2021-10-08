@@ -31,11 +31,11 @@ class PatientReportViewModel : ViewModel() {
     get () = _reportData
 
     fun getAllActivy(){
-        val listActivys: List<Activy>? = activyUseCase.getAllActivy()
-
-        if(listActivys != null){
-            _listActivy.postValue(listActivys)
-        }
+//        val listActivys: List<Activy>? = activyUseCase.getAllActivy()
+//
+//        if(listActivys != null){
+//            _listActivy.postValue(listActivys)
+//        }
     }
 
     fun getReportData(userId: String, patientId: String, id: String){
