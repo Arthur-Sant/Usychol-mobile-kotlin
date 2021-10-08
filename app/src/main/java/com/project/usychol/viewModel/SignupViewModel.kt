@@ -19,6 +19,6 @@ class SignupViewModel: ViewModel() {
         get () = _userId
 
     fun registerUser(user: User){
-        userUseCases.createUser(user)
+        userUseCases.deleteUser("16")
     }
 }

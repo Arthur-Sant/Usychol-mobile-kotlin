@@ -22,4 +22,8 @@ class UserUseCase(private val userRepository: UserRepository) {
     fun updateUser(user: User){
         userRepository.update(user)
     }
+
+    fun deleteUser(id: String){
+        userRepository.delete(id)
+    }
 }

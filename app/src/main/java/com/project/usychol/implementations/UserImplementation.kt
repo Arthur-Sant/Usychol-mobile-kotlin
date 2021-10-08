@@ -31,6 +31,7 @@ class UserImplementation(): UserDAO {
             }
 
             override fun onFailure(call: Call<ArrayList<User>>, t: Throwable) {
+                println(t)
                 res(null)
             }
 
@@ -112,7 +113,7 @@ class UserImplementation(): UserDAO {
     override fun findByEmail(email: String): User? {
         var userByEmail: User? = null
         this.findAll { users ->
-           userByEmail = users?.find { user ->
+           userByEmail = users!!.find{ user ->
                user.email == email
            }
         }
