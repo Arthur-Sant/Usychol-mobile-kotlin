@@ -121,6 +121,9 @@
         <action
             android:id="@+id/profileToDashboard"
             app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/profileFragmentToSigninFragment"
+            app:destination="@id/signinFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerPatientFragment"
@@ -151,9 +154,6 @@
         <action
             android:id="@+id/patientInformationToNewPatientActivity"
             app:destination="@id/newPatientActivityFragment" />
-        <argument
-            android:name="id"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/patientProfileFragment"

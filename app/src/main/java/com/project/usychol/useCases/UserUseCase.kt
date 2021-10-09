@@ -13,7 +13,7 @@ class UserUseCase(private val userRepository: UserRepository) {
         return userRepository.findByEmail(email)
     }
 
-    fun choosePlan(userId: String, pLan: PLan){
+    fun choosePlan(userId: String, pLan: String){
         userRepository.updatePlan(userId, pLan)
     }
 

@@ -25,11 +25,7 @@ class FullPsychologistFragment : Fragment() {
 
         val viewModel = ViewModelProvider(this).get(PLanViewModel::class.java)
 
-        val plan = PLan(
-            "Full Psychologist",
-            "Credit card",
-            "07"
-        )
+        val plan = "Full Psychologist"
 
         val sharedPreferences = requireActivity().getSharedPreferences(
             getString(R.string.preference_file_key),

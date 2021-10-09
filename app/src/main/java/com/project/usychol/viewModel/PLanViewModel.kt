@@ -11,7 +11,7 @@ class PLanViewModel : ViewModel(){
     private val psychologistRepository = UserRepository(psychologistDAO)
     private val psychologistUseCases = UserUseCase(psychologistRepository)
 
-    fun choosePsychologistPlan(userId: String, plan: PLan){
+    fun choosePsychologistPlan(userId: String, plan: String){
         psychologistUseCases.choosePlan(userId, plan)
     }
 }

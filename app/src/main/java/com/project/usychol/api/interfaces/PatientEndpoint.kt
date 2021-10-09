@@ -22,7 +22,7 @@ interface PatientEndpoint {
         @Body body: Patient
     ): Call<Patient>
 
-    @POST("/users/{uderId}/patients")
+    @POST("/users/{userId}/patients")
     fun postPatient(
         @Path("userId")userId: String,
         @Body body: Patient

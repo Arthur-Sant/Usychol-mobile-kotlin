@@ -8,10 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.google.gson.Gson
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentVirtualManagerBinding
-import com.project.usychol.domain.entities.PLan
 import com.project.usychol.viewModel.PLanViewModel
 
 class VirtualManagerFragment : Fragment() {
@@ -26,13 +24,7 @@ class VirtualManagerFragment : Fragment() {
 
         val viewModel = ViewModelProvider(this).get(PLanViewModel::class.java)
 
-        val gson = Gson()
-
-        val plan = PLan(
-            "Virtual Psychologist",
-            "Credit card",
-            "07"
-        )
+        val plan = "Virtual Psychologist"
 
         val sharedPreferences = requireActivity().getSharedPreferences(
             getString(R.string.preference_file_key),

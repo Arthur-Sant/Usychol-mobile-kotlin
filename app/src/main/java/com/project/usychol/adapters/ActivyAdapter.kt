@@ -8,7 +8,7 @@ import com.project.usychol.R
 import com.project.usychol.adapters.viewHolder.ActivyViewHolder
 import com.project.usychol.domain.entities.Activy
 
-class ActivyAdapter(private val context: Context, private val listActivity: List<Activy>)
+class ActivyAdapter(private val context: Context)
     : RecyclerView.Adapter<ActivyViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
@@ -21,10 +21,10 @@ class ActivyAdapter(private val context: Context, private val listActivity: List
     }
 
     override fun onBindViewHolder(holder: ActivyViewHolder, position: Int) {
-        val activy = listActivity[position]
-        holder.tvReportActivyTemplate.text = activy.template
+//        val activy = listActivity[position]
+        holder.tvReportActivyTemplate.text = "Thought of the day"
     }
 
-    override fun getItemCount(): Int = listActivity.size
+    override fun getItemCount(): Int = 3
 
 }

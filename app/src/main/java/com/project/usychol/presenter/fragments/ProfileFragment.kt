@@ -15,10 +15,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentProfileBinding
-import com.project.usychol.domain.entities.PLan
 import com.project.usychol.domain.entities.User
+import com.project.usychol.implementations.UserImplementation
 import com.project.usychol.viewModel.ProfileViewModel
-import com.project.usychol.viewModel.viewModelFactory.ProfileViewModelFactory
 
 class ProfileFragment : Fragment() {
 
@@ -36,6 +35,8 @@ class ProfileFragment : Fragment() {
     private lateinit var inputUserPLanName: EditText
     private lateinit var inputUserPlanPayment: EditText
     private lateinit var inputUserPlanExpirationDay: EditText
+    private lateinit var password: String
+    private lateinit var plan: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,10 +54,10 @@ class ProfileFragment : Fragment() {
 
         val id = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
 
-        val viewModelFactory = ProfileViewModelFactory(id)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ProfileViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+//        viewModel.getDataFromPsychologist(id)
 
-        startObservationUserData()
+        startObservationUserData(id)
 
         binding.apply {
             btnProfileBack.setOnClickListener{
@@ -66,7 +67,8 @@ class ProfileFragment : Fragment() {
             btnEditProfile.setOnClickListener {
                 val user = getUserDataModel(id)
                 if(user != null){
-                    viewModel.updateUserData(user)
+//                    viewModel.updateUserData(user)
+                    UserImplementation().update(id, user){}
                 }else{
                     Toast.makeText(activity, "fill in all data fields", Toast.LENGTH_SHORT).show()
                 }
@@ -79,6 +81,11 @@ class ProfileFragment : Fragment() {
                 }else{
                     Toast.makeText(activity, "fill in all plan fields", Toast.LENGTH_SHORT).show()
                 }
+            }
+
+            btnDeleteUser.setOnClickListener {
+                UserImplementation().delete(id){}
+                Navigation.findNavController(view).navigate(R.id.profileFragmentToSigninFragment)
             }
         }
 
@@ -100,31 +107,31 @@ class ProfileFragment : Fragment() {
                 inputUserCRPNumber.text.toString(),
                 inputUserCPF.text.toString(),
                 inputUserEmail.text.toString(),
-                null,
+                password,
                 inputUserBirthday.text.toString(),
-                null
+                plan
             )
         }else{
             null
         }
     }
 
-    private fun getUserPlanDataModel(): PLan? {
-        return if(inputUserPLanName.text.isNotEmpty()
-            && inputUserPlanPayment.text.isNotEmpty()
-            && inputUserPlanExpirationDay.text.isNotEmpty()) {
+    private fun getUserPlanDataModel(): String? {
+        return if(inputUserPLanName.text.isNotEmpty()){
+//            && inputUserPlanPayment.text.isNotEmpty()
+//            && inputUserPlanExpirationDay.text.isNotEmpty()) {
 
-            PLan(
-                inputUserPLanName.text.toString(),
-                inputUserPlanPayment.text.toString(),
-                inputUserPlanExpirationDay.text.toString()
-            )
+//            PLan(
+                inputUserPLanName.text.toString()
+//                inputUserPlanPayment.text.toString(),
+//                inputUserPlanExpirationDay.text.toString()
+//            )
         }else{
             null
         }
     }
 
-    private fun startObservationUserData(){
+    private fun startObservationUserData(id: String){
         inputUserName = binding.inputUserName.findViewById(R.id.textInput)
         inputUserEmail = binding.inputUserEmail.findViewById(R.id.textInput)
         inputUserBirthday = binding.inputUserBirthday.findViewById(R.id.textInput)
@@ -133,16 +140,23 @@ class ProfileFragment : Fragment() {
         inputUserPLanName = binding.inputUserPLanName.findViewById(R.id.textInput)
         inputUserPlanPayment = binding.inputUserPlanPayment.findViewById(R.id.textInput)
         inputUserPlanExpirationDay = binding.inputUserPlanExpirationDay.findViewById(R.id.textInput)
+        val tvUserCardSubtitle = binding.tvUserCardSubtitle
 
-        viewModel.user.observe(viewLifecycleOwner, Observer { user ->
-            inputUserName.text = user.name.toEditable()
-            inputUserEmail.text = user.email.toEditable()
-            inputUserBirthday.text = user.age.toEditable()
-            inputUserCRPNumber.text = user.crp.toEditable()
-            inputUserCPF.text = user.cpf.toEditable()
-            inputUserPLanName.text = user.plan!!.name.toEditable()
-            inputUserPlanPayment.text = user.plan!!.paymentMethod.toEditable()
-            inputUserPlanExpirationDay.text = user.plan!!.expirationDay.toEditable()
-        })
+//        viewModel.user.observe(viewLifecycleOwner, Observer { user ->
+        UserImplementation().findById(id){ user ->
+            if(user != null) {
+                inputUserName.text = user.name.toEditable()
+                inputUserEmail.text = user.email.toEditable()
+                inputUserBirthday.text = user.age.toEditable()
+                inputUserCRPNumber.text = user.crp.toEditable()
+                inputUserCPF.text = user.cpf.toEditable()
+                password = user.password.toString()
+                plan = user.plan.toString()
+                inputUserPLanName.text = user.plan!!.toEditable()
+                inputUserPlanPayment.text = "Creadit Card".toEditable()
+                inputUserPlanExpirationDay.text = "07".toEditable()
+                tvUserCardSubtitle.text = "USychol Plan: ${user.plan}"
+            }
+        }
     }
 }

@@ -102,6 +102,8 @@
                 android:inputType="text"
                 android:background="@drawable/background_input_view"
                 android:lines="1"
+                android:textColor="@color/grey_placeholder"
+                android:textColorHint="@color/grey_placeholder"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageButton2"
                 app:layout_constraintHorizontal_bias="0.5"

@@ -8,7 +8,7 @@ data class User(
     var email: String,
     var password: String?,
     var age: String,
-    var plan: PLan?
+    var plan: String?
 ){
     init {
         if(id == null){

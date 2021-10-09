@@ -14,6 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentPatientProfileBinding
+import com.project.usychol.domain.entities.Patient
+import com.project.usychol.domain.entities.Report
+import com.project.usychol.implementations.PatientImplementation
 import com.project.usychol.viewModel.PatientProfileViewModel
 
 class PatientProfileFragment : Fragment() {
@@ -28,6 +31,8 @@ class PatientProfileFragment : Fragment() {
     private lateinit var inputMotherName: EditText
     private lateinit var inputFatherName: EditText
     private lateinit var selectMaritalStatus: EditText
+    private var patientSummary: String? = null
+    private var arrayReport: ArrayList<Report>? = null
 
     override fun onResume() {
         super.onResume()
@@ -60,18 +65,33 @@ class PatientProfileFragment : Fragment() {
         val id = sharedPreferences.getString(getString(R.string.salved_patient_id_key), "")!!
         val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
 
-        patientProfileViewModel = ViewModelProvider(this).get(PatientProfileViewModel::class.java)
+//        patientProfileViewModel = ViewModelProvider(this).get(PatientProfileViewModel::class.java)
 
-        patientProfileViewModel.getPatientData(userId, id)
+//        patientProfileViewModel.getPatientData(userId, id)
 
-        startObservationPatientData()
+        startObservationPatientData(userId, id)
 
         binding.btnPatientProfileBack.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.patientProfileToPatientInformation)
         }
 
         binding.btnEditPatientProfile.setOnClickListener {
+            val patient = Patient(
+                id,
+                null,
+                inputName.text.toString(),
+                4,
+                selectClass.text.toString(),
+                inputMotherName.text.toString(),
+                patientSummary.toString(),
+                inputFatherName.text.toString(),
+                selectMaritalStatus.text.toString(),
+                inputBirthday.text.toString(),
+                userId,
+                arrayReport
+            )
 
+            PatientImplementation().update(userId, id, patient){}
         }
 
         return view
@@ -79,7 +99,7 @@ class PatientProfileFragment : Fragment() {
 
     private fun Any.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this.toString())
 
-    fun startObservationPatientData(){
+    fun startObservationPatientData(userId: String, id: String){
         val tvName = binding.tvPatientProfileName
         inputName = binding.inputPatientProfileName.findViewById(R.id.textInput)
         inputBirthday = binding.inputPatientProfileBirthday.findViewById(R.id.textInput)
@@ -88,14 +108,20 @@ class PatientProfileFragment : Fragment() {
         inputFatherName = binding.inputPatientProfileFatherName.findViewById(R.id.textInput)
         selectMaritalStatus = binding.selectMaritalPatientProfileStatus.editText!!
 
-        patientProfileViewModel.patient.observe(viewLifecycleOwner, Observer { patient ->
-            tvName.text = patient.name
-            inputName.text = patient.name.toEditable()
-            inputBirthday.text = patient.age?.toEditable()
-            selectClass.text = patient.patientClass.toEditable()
-            inputMotherName.text = patient.motherName.toEditable()
-            inputFatherName.text = patient.fatherName.toEditable()
-            selectMaritalStatus.text = patient.maritalStatus.toEditable()
-        })
+//        patientProfileViewModel.patient.observe(viewLifecycleOwner, Observer { patient ->
+          PatientImplementation().findById(userId, id){ patient ->
+              if(patient != null) {
+                  tvName.text = patient.name
+                  patientSummary = patient.patientSummary
+                  inputName.text = patient.name.toEditable()
+                  inputBirthday.text = patient.age?.toEditable()
+                  selectClass.text = patient.patientClass.toEditable()
+                  inputMotherName.text = patient.motherName.toEditable()
+                  inputFatherName.text = patient.fatherName.toEditable()
+                  selectMaritalStatus.text = patient.maritalStatus.toEditable()
+                  arrayReport = patient.reports
+              }
+        }
+
     }
 }

@@ -80,9 +80,9 @@ class RegisterPatientFragment : Fragment() {
         val inputPatientFatherName = binding.inputPatientFatherName.findViewById<EditText>(R.id.textInput).text
         val selectMaritalPatientClass = binding.selectMaritalPatientStatus.editText!!.text
 
-        if(inputPatientName.isNullOrEmpty() && inputPatientBirthday.isNullOrEmpty()
-        && selectPatientClass.isNullOrEmpty() && inputPatientMotherName.isNullOrEmpty()
-            && inputPatientFatherName.isNullOrEmpty() && selectMaritalPatientClass.isNullOrEmpty()) {
+        if(!inputPatientName.isNullOrEmpty() && !inputPatientBirthday.isNullOrEmpty()
+        && !selectPatientClass.isNullOrEmpty() && !inputPatientMotherName.isNullOrEmpty()
+            && !inputPatientFatherName.isNullOrEmpty() && !selectMaritalPatientClass.isNullOrEmpty()) {
 
             return Patient(
                 null,

@@ -9,34 +9,29 @@ import com.project.usychol.domain.entities.User
 import com.project.usychol.implementations.UserImplementation
 import com.project.usychol.useCases.UserUseCase
 
-class ProfileViewModel(private var id: String) : ViewModel(){
+class ProfileViewModel() : ViewModel(){
 
-    private val psychologistDAO = UserImplementation()
-    private val psychologistRepository = UserRepository(psychologistDAO)
-    private val psychologistUseCases = UserUseCase(psychologistRepository)
+    private val userDAO = UserImplementation()
+    private val userRepository = UserRepository(userDAO)
+    private val userUseCases = UserUseCase(userRepository)
 
     private var _user = MutableLiveData<User>()
     val user: LiveData<User>
     get () = _user
 
-    init {
-        getDataFromPsychologist()
-    }
+    fun getDataFromPsychologist(id: String){
+        val user = userUseCases.findById(id)
 
-    private fun getDataFromPsychologist(){
-        val psychologist = psychologistUseCases.findById("2")
-        println(psychologist)
-
-        if(psychologist != null) {
-            _user.postValue(psychologist)
+        if(user != null) {
+            _user.postValue(user!!)
         }
     }
 
     fun updateUserData(user: User){
-        psychologistUseCases.updateUser(user)
+        userUseCases.updateUser(user)
     }
 
-    fun updateUserPlanData(userId: String, plan: PLan){
-        psychologistUseCases.choosePlan(userId, plan)
+    fun updateUserPlanData(userId: String, plan: String){
+        userUseCases.choosePlan(userId, plan)
     }
 }

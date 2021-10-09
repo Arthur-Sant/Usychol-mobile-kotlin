@@ -19,6 +19,8 @@ class SignupViewModel: ViewModel() {
         get () = _userId
 
     fun registerUser(user: User){
-        userUseCases.createUser(user)
+        userDAO.create(user){
+            _userId.postValue(it?.id.toString())
+        }
     }
 }

@@ -19,6 +19,8 @@
 
     <color name="white">#ffffff</color>
 
+    <color name="red_button">#FF0000</color>
+
     <color name="black_middle">#151522</color>
     <color name="black_light">#333333</color>
     <color name="black_strong_light">#626262</color>

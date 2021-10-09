@@ -48,7 +48,7 @@
     <string name="input_delivery_day_text">Delivery day</string>
 
     <!-- -->
-    <string name="input_hint_create_reminder">Create Mender</string>
+    <string name="input_hint_create_reminder">Create Reminder</string>
     
     <string name="input_hint_search_report">Search report</string>
 

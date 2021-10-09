@@ -8,8 +8,11 @@ class UserRepository(private val userDAO: UserDAO) {
     fun create(user: User): String?{
         var id: String? = null
         userDAO.create(user){
-            id = it!!.id
+            println(it)
+            id = it?.id.toString()
         }
+
+
         return id
     }
 
@@ -23,7 +26,7 @@ class UserRepository(private val userDAO: UserDAO) {
         userDAO.update(id!!, user){}
     }
 
-    fun updatePlan(userId: String, plan: PLan){
+    fun updatePlan(userId: String, plan: String){
         userDAO.findById(userId){ user ->
             if(user != null) {
                 user.plan = plan
@@ -34,6 +37,8 @@ class UserRepository(private val userDAO: UserDAO) {
 
     fun findById(id: String): User? {
         var user: User? = null
+        println(id)
+        println("cheguei")
         userDAO.findById(id){
             user = it
         }

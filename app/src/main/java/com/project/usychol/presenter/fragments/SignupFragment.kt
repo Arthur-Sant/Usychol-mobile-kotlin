@@ -17,6 +17,7 @@ import androidx.navigation.Navigation
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentSignupBinding
 import com.project.usychol.domain.entities.User
+import com.project.usychol.implementations.UserImplementation
 import com.project.usychol.viewModel.SignupViewModel
 
 
@@ -32,25 +33,30 @@ class SignupFragment : Fragment() {
     ): View? {
         binding = FragmentSignupBinding.inflate(inflater, container, false)
 
-        viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
 
         val view: View = binding.root
 
         val sharedPreferences = requireActivity()
             .getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
-        viewModel.userId.observe(viewLifecycleOwner, Observer { id ->
-            sharedPreferences.edit {
-                putString(getString(R.string.salved_user_id_key), id)
-            }
-        })
+//        viewModel.userId.observe(viewLifecycleOwner, Observer { id ->
+//            sharedPreferences.edit {
+//                putString(getString(R.string.salved_user_id_key), id)
+//            }
+//        })
 
         binding.btnSignup.setOnClickListener {
             val user: User? = registerUser()
 
             if(user != null) {
+                UserImplementation().create(user){
+                    sharedPreferences.edit {
+                        putString(getString(R.string.salved_user_id_key), it!!.id)
+                    }
+                }
 
-                viewModel.registerUser(user)
+//                viewModel.registerUser(user)
 
                 Navigation.findNavController(view).navigate(R.id.signupToApproval)
             }else{

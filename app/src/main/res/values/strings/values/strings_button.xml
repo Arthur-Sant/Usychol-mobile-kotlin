@@ -14,4 +14,5 @@
     <string name="btn_create_report">Create new report</string>
     <string name="btn_edit_report">Edit report</string>
     <string name="btn_edit_anamnesis">Edit anamnesis</string>
+    <string name="btn_delete">Delete</string>
 </resources>

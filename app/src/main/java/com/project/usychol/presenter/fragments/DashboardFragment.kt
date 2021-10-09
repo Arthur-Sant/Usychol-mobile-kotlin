@@ -19,7 +19,8 @@ import com.project.usychol.adapters.ReminderAdapter
 import com.project.usychol.databinding.FragmentDashboardBinding
 import com.project.usychol.domain.entities.Patient
 import com.project.usychol.domain.entities.Reminder
-import com.project.usychol.domain.entities.Report
+import com.project.usychol.implementations.PatientImplementation
+import com.project.usychol.implementations.ReminderImplementation
 import com.project.usychol.viewModel.DashboardViewModel
 
 class DashboardFragment : Fragment() {
@@ -38,16 +39,16 @@ class DashboardFragment : Fragment() {
 
         val view: View = binding.root
 
-        dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
+//        dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
         sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
-        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")
+        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
 
-        dashboardViewModel.getAllPatients(userId!!)
-        dashboardViewModel.getAllUserReminder()
+//        dashboardViewModel.getAllPatients(userId!!)
+//        dashboardViewModel.getAllUserReminder()
 
-        startPatientObservation()
+        startPatientObservation(userId)
         startuserReminderObservation()
 
         binding.btnRegisterPatient.setOnClickListener{
@@ -62,23 +63,28 @@ class DashboardFragment : Fragment() {
 
     }
 
-    private fun startPatientObservation(){
-        dashboardViewModel.listPatient.observe(viewLifecycleOwner, Observer { listPatient ->
-            if(listPatient.isNotEmpty()){
-                renderListPatient(listPatient)
+    private fun startPatientObservation(id: String){
+//        dashboardViewModel.listPatient.observe(viewLifecycleOwner, Observer { listPatient ->
+//            if(listPatient.isNotEmpty()){
+//                renderListPatient(listPatient)
+//            }
+//        })
+
+        PatientImplementation().findAll(id) {
+            if(it != null){
+                renderListPatient(it)
             }
-        })
+        }
     }
 
-    private fun renderListPatient(listPatient: List<Patient>){
+    private fun renderListPatient(listPatient: ArrayList<Patient>){
         val patientAdapter = PatientAdapter(requireContext(), listPatient, fun (patientId: String){
 
             sharedPreferences.edit {
                 putString(getString(R.string.salved_patient_id_key), patientId)
             }
 
-            Navigation.findNavController(binding.root)
-                .navigate(DashboardFragmentDirections.dashboardToPatientInformation(patientId))
+            Navigation.findNavController(binding.root).navigate(R.id.dashboardToPatientInformation)
         })
 
         binding.recyclerViewListPatient.apply {
@@ -89,11 +95,13 @@ class DashboardFragment : Fragment() {
     }
 
     private fun startuserReminderObservation(){
-        dashboardViewModel.listUserReminder.observe(viewLifecycleOwner, Observer { listReminder ->
-            if(listReminder.isNotEmpty()){
-                renderListuserReminder(listReminder)
+//        dashboardViewModel.listUserReminder.observe(viewLifecycleOwner, Observer { listReminder ->
+            ReminderImplementation().findAll {
+                if (it != null) {
+                    renderListuserReminder(it)
+                }
             }
-        })
+//        })
     }
 
     private fun renderListuserReminder(listReminder: List<Reminder>){

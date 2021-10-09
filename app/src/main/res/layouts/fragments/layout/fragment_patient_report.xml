@@ -43,7 +43,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tvPatientProfileName"
+                    android:id="@+id/tvPatientReportName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -92,7 +92,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imgSelectImage" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/tvPatientReportDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -114,7 +114,7 @@
                 android:contentDescription="@string/img_description_user"
                 android:src="@drawable/icon_person"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                app:layout_constraintTop_toBottomOf="@+id/tvPatientReportDate" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -217,11 +217,14 @@
             <EditText
                 android:id="@+id/inputPatientReportConsultation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="32dp"
+                android:inputType="number"
+                android:textColor="@color/grey_placeholder"
+                android:textColorHint="@color/grey_placeholder"
                 android:background="@drawable/input_custom_state"
                 app:layout_constraintBottom_toTopOf="@+id/btnEditPatientReport"
                 app:layout_constraintEnd_toEndOf="parent"
