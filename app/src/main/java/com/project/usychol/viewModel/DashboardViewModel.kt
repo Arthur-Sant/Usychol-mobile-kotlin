@@ -30,18 +30,19 @@ class DashboardViewModel : ViewModel() {
     get () = _listPatient
 
      fun getAllPatients(userId: String) {
-        val patients = patientUseCases.getAllPatients(userId)
-         if(patients != null){
-             _listPatient.value = patients
-         }
+         Thread{
+             patientUseCases.getAllPatients(userId){
+                 _listPatient.postValue(it)
+             }
+         }.start()
     }
 
     fun getAllUserReminder(){
-        val reminders: List<Reminder>? = reminderUseCases.findAll()
-
-        if(reminders != null){
-            _listUserReminder.value = reminders
-        }
+        Thread{
+            reminderUseCases.findAll(){
+                _listUserReminder.postValue(it)
+            }
+        }.start()
     }
 
 }

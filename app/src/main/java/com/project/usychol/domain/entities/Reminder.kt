@@ -1,23 +1,21 @@
 package com.project.usychol.domain.entities
 
-import com.google.gson.annotations.SerializedName
+import com.google.firebase.firestore.DocumentId
 
-data class Reminder(
+class Reminder(
+    @DocumentId
     var id: String?,
     var title: String = "",
     var startAt: String = "",
     var endAt: String = "",
-
-    @SerializedName("profilePicture")
-    var image: String?,
-
-    var age: String?,
     var fromUser: String?,
 ){
-    init {
-        if(id == null){
-            id = (1..10000).random().toString()
-        }
-    }
+    constructor():this(
+        null,
+        "",
+        "",
+        "",
+        null
+    )
 }
 

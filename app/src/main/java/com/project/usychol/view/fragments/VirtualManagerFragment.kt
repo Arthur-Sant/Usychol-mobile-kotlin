@@ -1,4 +1,4 @@
-package com.project.usychol.presenter.fragments
+package com.project.usychol.view.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.project.usychol.R
@@ -35,13 +37,19 @@ class VirtualManagerFragment : Fragment() {
 
         binding.btnVirtualSignPlan.setOnClickListener {
             viewModel.choosePsychologistPlan(userId, plan)
-
-            Navigation.findNavController(view).navigate(R.id.virtualToDashboard)
         }
 
         binding.btnVirtualNext.setOnClickListener{
             Navigation.findNavController(view).navigate(R.id.virtualToDigital)
         }
+
+        viewModel.task.observe(viewLifecycleOwner, Observer { task ->
+            if(task) {
+                Navigation.findNavController(view).navigate(R.id.virtualToDashboard)
+            }else{
+                Toast.makeText(requireContext(), "it was not possible to choose the plan", Toast.LENGTH_SHORT).show()
+            }
+        })
 
         return view
     }

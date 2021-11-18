@@ -19,19 +19,51 @@ class ProfileViewModel() : ViewModel(){
     val user: LiveData<User>
     get () = _user
 
-    fun getDataFromPsychologist(id: String){
-        val user = userUseCases.findById(id)
+    private var _messageError = MutableLiveData<String>()
+    val messageError: LiveData<String>
+    get() = _messageError
 
-        if(user != null) {
-            _user.postValue(user!!)
-        }
+    fun getDataFromPsychologist(id: String){
+        Thread {
+            userUseCases.findById(id) { user ->
+                if (user != null) {
+                    _user.postValue(user)
+                }
+            }
+        }.start()
     }
 
     fun updateUserData(user: User){
-        userUseCases.updateUser(user)
+        Thread {
+            userUseCases.updateUser(user) { error ->
+                if(error != null){
+                    _messageError.postValue(error)
+                }else{
+                    _messageError.postValue("User updated successfully")
+                }
+            }
+        }.start()
     }
 
     fun updateUserPlanData(userId: String, plan: String){
-        userUseCases.choosePlan(userId, plan)
+        Thread {
+            userUseCases.choosePlan(userId, plan) {
+                if(it) {
+                    _messageError.postValue("Plan updated successfully")
+                }
+            }
+        }.start()
+    }
+
+    fun deleteUser(userId: String){
+        Thread{
+            userUseCases.deleteUser(userId){
+                if(it != null){
+                    _messageError.postValue(it)
+                }else{
+                    _messageError.postValue("User deleted successfully")
+                }
+            }
+        }.start()
     }
 }

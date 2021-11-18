@@ -1,4 +1,4 @@
-package com.project.usychol.presenter.fragments
+package com.project.usychol.view.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentRegisterPatientBinding
 import com.project.usychol.domain.entities.Patient
@@ -51,7 +53,9 @@ class RegisterPatientFragment : Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
+        val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
+//        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
 
         binding.btnRegisterPatientBack.setOnClickListener {
             backToDashboardScreen(view)
@@ -61,13 +65,21 @@ class RegisterPatientFragment : Fragment() {
             val patient = registerPatient(userId)
 
             if(patient != null){
-                viewModel.registerPatient(userId, patient)
-                backToDashboardScreen(view)
+                viewModel.registerPatient(patient)
             }else{
                 Toast.makeText(activity, "fill in all fields", Toast.LENGTH_SHORT).show()
             }
 
         }
+
+        viewModel.patientId.observe(viewLifecycleOwner, Observer { id ->
+            if(id != null){
+                backToDashboardScreen(view)
+                Toast.makeText(requireContext(), "Patient registered successfully", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(requireContext(), "Unable to register user", Toast.LENGTH_SHORT).show()
+            }
+        })
         return view
     }
 
@@ -85,7 +97,6 @@ class RegisterPatientFragment : Fragment() {
             && !inputPatientFatherName.isNullOrEmpty() && !selectMaritalPatientClass.isNullOrEmpty()) {
 
             return Patient(
-                null,
                 null,
                 inputPatientName.toString(),
                 0,

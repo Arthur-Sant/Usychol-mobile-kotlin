@@ -1,4 +1,4 @@
-package com.project.usychol.presenter.fragments
+package com.project.usychol.view.fragments
 
 import android.content.Context
 import android.os.Build
@@ -14,10 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.google.android.material.snackbar.Snackbar
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentSignupBinding
 import com.project.usychol.domain.entities.User
-import com.project.usychol.implementations.UserImplementation
 import com.project.usychol.viewModel.SignupViewModel
 
 
@@ -33,32 +33,18 @@ class SignupFragment : Fragment() {
     ): View? {
         binding = FragmentSignupBinding.inflate(inflater, container, false)
 
-//        viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
 
         val view: View = binding.root
 
         val sharedPreferences = requireActivity()
             .getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
-//        viewModel.userId.observe(viewLifecycleOwner, Observer { id ->
-//            sharedPreferences.edit {
-//                putString(getString(R.string.salved_user_id_key), id)
-//            }
-//        })
-
         binding.btnSignup.setOnClickListener {
             val user: User? = registerUser()
 
             if(user != null) {
-                UserImplementation().create(user){
-                    sharedPreferences.edit {
-                        putString(getString(R.string.salved_user_id_key), it!!.id)
-                    }
-                }
-
-//                viewModel.registerUser(user)
-
-                Navigation.findNavController(view).navigate(R.id.signupToApproval)
+                viewModel.registerUser(user)
             }else{
                 Toast.makeText(activity, "fill in all fields", Toast.LENGTH_SHORT).show()
             }
@@ -67,6 +53,14 @@ class SignupFragment : Fragment() {
         binding.tvSiginupAlreadyAccount.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.signupToSignin)
         }
+
+        viewModel.messageError.observe(viewLifecycleOwner, Observer { message ->
+            Toast.makeText(requireContext(),  message, Toast.LENGTH_SHORT ).show()
+
+            if(message.contains("Successfully")){
+                Navigation.findNavController(view).navigate(R.id.signupToApproval)
+            }
+        })
 
         return view
     }
@@ -96,7 +90,6 @@ class SignupFragment : Fragment() {
                 )
         }else{
             return null
-
         }
     }
 

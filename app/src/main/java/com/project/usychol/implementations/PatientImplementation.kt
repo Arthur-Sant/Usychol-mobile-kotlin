@@ -1,111 +1,66 @@
 package com.project.usychol.implementations
 
-import com.project.usychol.api.interfaces.PatientEndpoint
-import com.project.usychol.api.utils.Connection
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.project.usychol.data.dao.PatientDAO
 import com.project.usychol.domain.entities.Patient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 
 class PatientImplementation (): PatientDAO {
-    private var retrotifClient: Retrofit
-    private var endpoint: PatientEndpoint
+    private val database = Firebase.firestore
+    private val collectionPath = "patients"
 
-    init {
-        retrotifClient = Connection.getRetrofitInstance()
-        endpoint = retrotifClient.create(PatientEndpoint::class.java)
+    override fun create(patient: Patient, returnId: (String?) -> Unit) {
+        database.collection(collectionPath).add(patient)
+            .addOnSuccessListener {
+                val id = it.id
+                returnId(id)
+            }
+            .addOnFailureListener {
+                returnId(null)
+            }
     }
 
-    override fun create(userId: String, patient: Patient, res: (Patient?) -> Unit) {
-        endpoint.postPatient(userId, patient).enqueue(object: Callback<Patient> {
-            override fun onResponse(call: Call<Patient>, response: Response<Patient>) {
-
-                if (response.body() != null)
-                    res(response.body())
-                else {
-                    res(null)
-                }
+    override fun findAll(userId: String, returnPatients: (List<Patient>?) -> Unit) {
+        database.collection(collectionPath)
+            .whereEqualTo("fromUser", userId)
+            .get()
+            .addOnSuccessListener {
+                val patients = it.toObjects(Patient::class.java).toList()
+                returnPatients(patients)
             }
-
-            override fun onFailure(call: Call<Patient>, t: Throwable) {
-                res(null)
+            .addOnFailureListener {
+                returnPatients(null)
             }
-
-        })
     }
 
-    override fun findAll(userId: String, res: (ArrayList<Patient>?) -> Unit) {
-        endpoint.getPatients(userId).enqueue(object: Callback<ArrayList<Patient>> {
-            override fun onResponse(call: Call<ArrayList<Patient>>, response: Response<ArrayList<Patient>>) {
-                val list = ArrayList<Patient>()
-
-                if (response.body() != null && response.body()!!.size > 0)
-                    list.addAll(response.body()!!.toList())
-
-                res(list)
+    override fun update(id: String, patient: Patient, returnError: (String?) -> Unit) {
+        database.collection(collectionPath).document(id).set(patient)
+            .addOnSuccessListener {
+                returnError(null)
             }
-
-            override fun onFailure(call: Call<ArrayList<Patient>>, t: Throwable) {
-                res(null)
+            .addOnFailureListener {
+                returnError(it.localizedMessage)
             }
-
-        })
     }
 
-    override fun update(userId: String, id: String, patient: Patient, res: (Patient?) -> Unit) {
-        endpoint.putPatientById(userId, id, patient).enqueue(object: Callback<Patient> {
-            override fun onResponse(call: Call<Patient>, response: Response<Patient>) {
-
-                if (response.body() != null)
-                    res(response.body())
-                else {
-                    res(null)
-                }
+    override fun findById(id: String, returnPatient: (Patient?) -> Unit) {
+        database.collection(collectionPath).document(id).get()
+            .addOnSuccessListener {
+                val patient = it.toObject(Patient::class.java)
+                returnPatient(patient)
             }
-
-            override fun onFailure(call: Call<Patient>, t: Throwable) {
-                res(null)
+            .addOnFailureListener {
+                returnPatient(null)
             }
-
-        })
     }
 
-    override fun findById(userId: String, id: String, res: (Patient?) -> Unit){
-        endpoint.getPatientById(userId, id).enqueue(object: Callback<Patient> {
-            override fun onResponse(call: Call<Patient>, response: Response<Patient>) {
-
-                if (response.body() != null)
-                    res(response.body())
-                else {
-                    res(null)
-                }
+    override fun delete(id: String, returnError: (String?) -> Unit) {
+        database.collection(collectionPath).document(id).delete()
+            .addOnSuccessListener {
+                returnError(null)
             }
-
-            override fun onFailure(call: Call<Patient>, t: Throwable) {
-                res(null)
+            .addOnFailureListener { error ->
+                returnError(error.localizedMessage)
             }
-
-        })
     }
-
-    override fun delete(userId: String, id: String, res: (Patient?) -> Unit) {
-        endpoint.deletePatient(userId, id).enqueue(object: Callback<Patient> {
-            override fun onResponse(call: Call<Patient>, response: Response<Patient>) {
-
-                if (response.body() != null)
-                    res(response.body())
-                else {
-                    res(null)
-                }
-            }
-
-            override fun onFailure(call: Call<Patient>, t: Throwable) {
-                res(null)
-            }
-
-        })
-    }
-
 }

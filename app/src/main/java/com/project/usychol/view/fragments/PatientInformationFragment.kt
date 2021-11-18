@@ -1,4 +1,4 @@
-package com.project.usychol.presenter.fragments
+package com.project.usychol.view.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.edit
 import androidx.lifecycle.Observer
+import androidx.core.content.edit
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -17,14 +17,12 @@ import com.project.usychol.R
 import com.project.usychol.adapters.PatientInformationAdapter
 import com.project.usychol.databinding.FragmentPatientInformationBinding
 import com.project.usychol.domain.entities.Report
-import com.project.usychol.implementations.PatientImplementation
-import com.project.usychol.implementations.ReportImplementation
 import com.project.usychol.viewModel.PatientInformationViewModel
 
 class PatientInformationFragment : Fragment() {
 
     private lateinit var binding: FragmentPatientInformationBinding
-    private lateinit var patientInformationViewModel: PatientInformationViewModel
+    private lateinit var viewModel: PatientInformationViewModel
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
@@ -44,14 +42,14 @@ class PatientInformationFragment : Fragment() {
         val patientId = sharedPreferences.getString(getString(R.string.salved_patient_id_key), "")!!
         val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
 
-//        patientInformationViewModel = ViewModelProvider(this).get(PatientInformationViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(PatientInformationViewModel::class.java)
 
-//        patientInformationViewModel.getAllPatientsReports(patientId!!, userId!!)
-//        patientInformationViewModel.getPatientName(userId, patientId)
+//        viewModel.getAllPatientsReports(patientId!!, userId!!)
+        viewModel.getPatientName(patientId)
 
 
-        startObservationPatient(userId, patientId)
-        startObservationPatientReports(userId, patientId)
+        startObservationPatient()
+//        startObservationPatientReports(userId, patientId)
 
         binding.btnPatientInformationBack.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.patientInformationToDashboard)
@@ -76,23 +74,19 @@ class PatientInformationFragment : Fragment() {
         return view
     }
 
-    private fun startObservationPatient(userId: String, patientId: String){
-//        patientInformationViewModel.patientName.observe(viewLifecycleOwner, Observer { patient ->
-          PatientImplementation().findById(userId, patientId) {
-              binding.tvPatientName.text = it?.name
-              binding.tvPatientSummary.text = it?.patientSummary
-          }
-//        })
+    private fun startObservationPatient(){
+        viewModel.patientData.observe(viewLifecycleOwner, Observer { patient ->
+              binding.tvPatientName.text = patient[0]
+              binding.tvPatientSummary.text = patient[1]
+        })
     }
 
-    private fun startObservationPatientReports(userId: String, patientId: String){
-//        patientInformationViewModel.listPatientReport
-//            .observe(viewLifecycleOwner, Observer { listPatientReports ->
-        ReportImplementation().findAll(userId, patientId){
+    private fun startObservationPatientReports(){
+        viewModel.listPatientReport.observe(viewLifecycleOwner, Observer{
             if(it != null){
                 renderListPatientReport(it)
             }
-        }
+        })
     }
 
     private fun renderListPatientReport(listPatientReport: List<Report>){

@@ -5,7 +5,7 @@ import com.project.usychol.domain.entities.Reminder
 interface ReminderDAO{
     fun create(reminder: Reminder, res: (Reminder?) -> Unit)
 
-    fun findAll(res: (ArrayList<Reminder>?) -> Unit)
+    fun findAll(res: (List<Reminder>?) -> Unit)
 
     fun update(id: String, reminder: Reminder, res: (Reminder?) -> Unit)
 

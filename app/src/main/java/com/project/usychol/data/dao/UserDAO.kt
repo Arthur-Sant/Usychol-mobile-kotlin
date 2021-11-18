@@ -1,20 +1,17 @@
 package com.project.usychol.data.dao
 
-import com.project.usychol.domain.entities.PLan
 import com.project.usychol.domain.entities.User
 
 interface UserDAO {
-    fun create(body: User, res: (User?) -> Unit)
+    fun create(body: User, returnError: (String?) -> Unit)
 
-    fun findAll(res: (ArrayList<User>?) -> Unit)
+    fun authenticateUser(email: String, password: String, returnUserStatus: (String) -> Unit)
 
-    fun findByEmail(email: String): User?
+    fun update(id: String, body: User, returnError: (String?) -> Unit)
 
-    fun update(id: String, body: User, res: (User?) -> Unit)
+    fun findById(id: String, returnUser: (User?) -> Unit)
 
-    fun updatePlan(userId: String, body: User)
+    fun delete(id: String, returnError: (String?) -> Unit)
 
-    fun findById(id: String, res: (User?) -> Unit)
-
-    fun delete(id: String, res: (User?) -> Unit)
+    fun updatePLan(userId: String, plan: String, performedTask: (Boolean) -> Unit)
 }

@@ -18,13 +18,13 @@ class PatientProfileViewModel : ViewModel() {
     val patient: LiveData<Patient>
     get() = _patient
 
-    fun getPatientData( userId: String, id: String){
-        val patientData: Patient? = patientUseCase.getPatientById(userId, id)
-        _patient.postValue(patientData!!)
-    }
-
-    fun updatePatientData(userId: String, patient: Patient){
-        patientUseCase.updatePatientData(userId ,patient)
-    }
+//    fun getPatientData( userId: String, id: String){
+//        val patientData: Patient? = patientUseCase.getPatientById(userId, id)
+//        _patient.postValue(patientData!!)
+//    }
+//
+//    fun updatePatientData(userId: String, patient: Patient){
+//        patientUseCase.updatePatientData(userId ,patient)
+//    }
 
 }

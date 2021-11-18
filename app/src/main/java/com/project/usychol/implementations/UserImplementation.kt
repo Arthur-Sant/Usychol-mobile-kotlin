@@ -1,129 +1,99 @@
 package com.project.usychol.implementations
 
-import android.util.Log
-import com.project.usychol.api.interfaces.UserEndpoint
-import com.project.usychol.api.utils.Connection
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.project.usychol.data.dao.UserDAO
-import com.project.usychol.domain.entities.PLan
 import com.project.usychol.domain.entities.User
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import java.lang.Exception
-import kotlin.concurrent.thread
 
 class UserImplementation(): UserDAO {
-    private var retrotifClient: Retrofit
-    private var endpoint: UserEndpoint
+    private val mAuth = FirebaseAuth.getInstance()
+    private val database = Firebase.firestore
+    private val collectionPath = "users"
+    private val uid = mAuth.currentUser?.uid.toString()
 
-    init {
-        retrotifClient = Connection.getRetrofitInstance()
-        endpoint = retrotifClient.create(UserEndpoint::class.java)
+    override fun findById(id: String, returnUser: (User?) -> Unit) {
+        database.collection(collectionPath).document(uid).get()
+            .addOnSuccessListener {
+                val user = it.toObject(User::class.java)
+                    returnUser(user)
+            }
+            .addOnFailureListener {
+                returnUser(null)
+            }
     }
 
-    override fun findAll(res: (ArrayList<User>?) -> Unit) {
-        endpoint.getUsers().enqueue(object: Callback<ArrayList<User>> {
-            override fun onResponse(call: Call<ArrayList<User>>, response: Response<ArrayList<User>>) {
-                val list = ArrayList<User>()
-
-                if (response.body() != null && response.body()!!.size > 0)
-                    list.addAll(response.body()!!.toList())
-                res(list)
+    override fun update(id: String, body: User, returnError: (String?) -> Unit) {
+        database.collection(collectionPath).document(uid).set(body)
+            .addOnSuccessListener {
+                returnError(null)
             }
-
-            override fun onFailure(call: Call<ArrayList<User>>, t: Throwable) {
-                res(null)
+            .addOnFailureListener {
+                returnError(it.localizedMessage)
             }
-
-        })
     }
 
-    override fun findById(id: String, res: (User?) -> Unit) {
-        endpoint.getUserById(id).enqueue(object: Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-
-                if (response?.body() != null)
-                    res(response?.body())
-                else {
-                    res(null)
-                }
-            }
-
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                res(null)
-            }
-
-        })
-    }
-
-    override fun update(id: String, body: User, res: (User?) -> Unit) {
-        endpoint.putUserById(id, body).enqueue(object: Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-
-                if (response?.body() != null)
-                    res(response?.body())
-                else {
-                    res(null)
-                }
-            }
-
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                res(null)
-            }
-
-        })
-    }
-
-    override fun create(body: User, res: (User?) -> Unit) {
-        endpoint.postUser(body).enqueue(object: Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-
-                if (response?.body() != null)
-                    res(response?.body())
-                else {
-                    res(null)
-                }
-            }
-
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                res(null)
-            }
-
-        })
-    }
-
-    override fun delete(id: String, res: (User?) -> Unit) {
-        endpoint.deleteUser(id).enqueue(object: Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-
-                if (response?.body() != null)
-                    res(response?.body())
-                else {
-                    res(null)
-                }
-            }
-
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                res(null)
-            }
-
-        })
-    }
-
-    override fun findByEmail(email: String): User? {
-        var userByEmail: User? = null
-
-        findAll { users ->
-            userByEmail = users?.find{
-                it.email == email
-            }
+    override fun create(body: User, returnError: (String?) -> Unit) {
+        fun reverseRegistration(error: String){
+            mAuth.currentUser?.delete()
+            returnError(error)
         }
 
-        return userByEmail
+        if(mAuth != null){
+            mAuth.createUserWithEmailAndPassword(body.email, body.password!!)
+                .addOnSuccessListener {
+                    val uid = it.user?.uid.toString()
+                    body.id = uid
+
+                    if(uid.isNotEmpty()){
+                        database.collection(collectionPath).document(uid).set(body)
+                            .addOnSuccessListener {
+                                returnError(null)
+                            }
+                            .addOnFailureListener { error ->
+                                reverseRegistration(error.localizedMessage!!)
+                            }
+                    }else{
+                        reverseRegistration("User not exists")
+                    }
+                }
+
+                .addOnFailureListener {
+                    reverseRegistration(it.localizedMessage!!)
+                }
+        }
     }
 
-    override fun updatePlan(userId: String, body: User) {
-        this.update(userId, body){}
+    override fun delete(id: String, returnError: (String?) -> Unit) {
+        try {
+            database.collection(collectionPath).document(uid).delete()
+            mAuth.currentUser?.delete()
+            returnError(null)
+        }catch (exception: Exception){
+            returnError(exception.localizedMessage)
+        }
+    }
+
+    override fun updatePLan(userId: String, plan: String, performedTask: (Boolean) -> Unit) {
+        val reference = database.collection(collectionPath).document(uid)
+        reference.update(mapOf("plan" to plan)).addOnCompleteListener {
+            if(it.isSuccessful){
+                performedTask(true)
+            }else{
+                performedTask(false)
+            }
+        }
+    }
+
+    override fun authenticateUser(email: String, password: String, returnUserStatus: (String) -> Unit){
+        if(mAuth != null){
+            mAuth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener {
+                    returnUserStatus("logged")
+                }
+                .addOnFailureListener {
+                    returnUserStatus(it.localizedMessage!!)
+                }
+            }
     }
 }

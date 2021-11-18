@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_yellow_gradient"
-    tools:context=".presenter.fragments.VirtualManagerFragment">
+    tools:context=".view.fragments.VirtualManagerFragment">
 
     <ScrollView
         android:layout_width="match_parent"

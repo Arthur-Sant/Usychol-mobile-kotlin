@@ -1,6 +1,5 @@
-package com.project.usychol.presenter.fragments
+package com.project.usychol.view.fragments
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,14 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.project.usychol.R
 import com.project.usychol.adapters.PatientAdapter
 import com.project.usychol.adapters.ReminderAdapter
 import com.project.usychol.databinding.FragmentDashboardBinding
 import com.project.usychol.domain.entities.Patient
 import com.project.usychol.domain.entities.Reminder
-import com.project.usychol.implementations.PatientImplementation
-import com.project.usychol.implementations.ReminderImplementation
 import com.project.usychol.viewModel.DashboardViewModel
 
 class DashboardFragment : Fragment() {
@@ -39,14 +37,16 @@ class DashboardFragment : Fragment() {
 
         val view: View = binding.root
 
-//        dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
+        dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
-        sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+//        sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
-        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
+//        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
 
-//        dashboardViewModel.getAllPatients(userId!!)
-//        dashboardViewModel.getAllUserReminder()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
+        dashboardViewModel.getAllPatients(userId)
+        dashboardViewModel.getAllUserReminder()
 
         startPatientObservation(userId)
         startuserReminderObservation()
@@ -64,20 +64,15 @@ class DashboardFragment : Fragment() {
     }
 
     private fun startPatientObservation(id: String){
-//        dashboardViewModel.listPatient.observe(viewLifecycleOwner, Observer { listPatient ->
-//            if(listPatient.isNotEmpty()){
-//                renderListPatient(listPatient)
-//            }
-//        })
-
-        PatientImplementation().findAll(id) {
-            if(it != null){
-                renderListPatient(it)
+        dashboardViewModel.listPatient.observe(viewLifecycleOwner, Observer { listPatient ->
+            if(listPatient.isNotEmpty()){
+                println(listPatient)
+                renderListPatient(listPatient)
             }
-        }
+        })
     }
 
-    private fun renderListPatient(listPatient: ArrayList<Patient>){
+    private fun renderListPatient(listPatient: List<Patient>){
         val patientAdapter = PatientAdapter(requireContext(), listPatient, fun (patientId: String){
 
             sharedPreferences.edit {
@@ -95,13 +90,11 @@ class DashboardFragment : Fragment() {
     }
 
     private fun startuserReminderObservation(){
-//        dashboardViewModel.listUserReminder.observe(viewLifecycleOwner, Observer { listReminder ->
-            ReminderImplementation().findAll {
-                if (it != null) {
-                    renderListuserReminder(it)
-                }
+        dashboardViewModel.listUserReminder.observe(viewLifecycleOwner, Observer { listReminder ->
+            if (listReminder != null) {
+                renderListuserReminder(listReminder)
             }
-//        })
+        })
     }
 
     private fun renderListuserReminder(listReminder: List<Reminder>){

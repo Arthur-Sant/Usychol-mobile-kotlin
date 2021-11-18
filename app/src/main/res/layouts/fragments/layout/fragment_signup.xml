@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".presenter.fragments.SignupFragment">
+    tools:context=".view.fragments.SignupFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                     android:layout_marginTop="24dp"
                     app:input_hint="@string/input_birthday_hint"
                     app:input_top_text="@string/input_birthday_text"
-                    app:input_type="@string/input_type_date" />
+                    app:input_type="@string/input_type_text" />
 
                 <com.project.usychol.InputComponent
                     android:id="@+id/inputIdNumber"

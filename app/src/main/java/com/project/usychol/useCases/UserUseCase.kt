@@ -1,29 +1,42 @@
 package com.project.usychol.useCases
 
 import com.project.usychol.data.repositories.UserRepository
-import com.project.usychol.domain.entities.PLan
 import com.project.usychol.domain.entities.User
 
 class UserUseCase(private val userRepository: UserRepository) {
-     fun createUser(user: User): String{
-        return userRepository.create(user).toString()
+     fun createUser(user: User, returnError: (String?) -> Unit){
+        userRepository.create(user){
+            returnError(it)
+        }
     }
 
-    fun findByEmail(email: String): User? {
-        return userRepository.findByEmail(email)
+    fun authenticateUser(email: String, password: String, returnUserStatus: (String) -> Unit){
+        userRepository.authenticateUser(email, password){
+            returnUserStatus(it)
+        }
     }
 
-    fun choosePlan(userId: String, pLan: String){
-        userRepository.updatePlan(userId, pLan)
+    fun choosePlan(userId: String, pLan: String, performedTask: (Boolean) -> Unit){
+        userRepository.updatePlan(userId, pLan){
+            performedTask(it)
+        }
     }
 
-    fun findById(id: String): User? = userRepository.findById(id)
-
-    fun updateUser(user: User){
-        userRepository.update(user)
+    fun findById(id: String, returnUser: (User?) -> Unit){
+        userRepository.findById(id){
+            returnUser(it)
+        }
     }
 
-    fun deleteUser(id: String){
-        userRepository.delete(id)
+    fun updateUser(user: User, returnError: (String?) -> Unit){
+        userRepository.update(user){
+            returnError(it)
+        }
+    }
+
+    fun deleteUser(id: String, returnError: (String?) -> Unit){
+        userRepository.delete(id){
+            returnError(it)
+        }
     }
 }

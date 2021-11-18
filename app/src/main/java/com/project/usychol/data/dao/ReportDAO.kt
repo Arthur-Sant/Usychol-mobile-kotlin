@@ -3,39 +3,14 @@ package com.project.usychol.data.dao
 import com.project.usychol.domain.entities.Report
 
 interface ReportDAO {
-    fun create(
-        userId: String,
-        patientId: String,
-        report: Report,
-        res: (Report?) -> Unit
-    )
+    fun create( report: Report, returnIdOrError: (String) -> Unit)
 
-    fun findById(
-        userId: String,
-        patientId: String,
-        id: String,
-        res: (Report?) -> Unit
-    )
+    fun findById(id: String, returnReport: (Report?) -> Unit)
 
-    fun update(
-        userId: String,
-        patientId: String,
-        id: String,
-        report: Report,
-        res: (Report?) -> Unit
-    )
+    fun update( id: String, report: Report, returnError: (String?) -> Unit)
 
-    fun delete(
-        userId: String,
-        patientId: String,
-        id: String,
-        res: (Report?) -> Unit
-    )
+    fun delete( id: String, returnError: (String?) -> Unit )
 
-    fun findAll(
-        userId: String,
-        patientId: String,
-        res: (ArrayList<Report>?) -> Unit
-    )
+    fun findAll( patientId: String, returnReports: (List<Report>?) -> Unit)
 
 }

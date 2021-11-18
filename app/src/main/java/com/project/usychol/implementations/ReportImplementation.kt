@@ -1,121 +1,66 @@
 package com.project.usychol.implementations
 
-import com.project.usychol.api.interfaces.ReportEndpoint
-import com.project.usychol.api.utils.Connection
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.project.usychol.data.dao.ReportDAO
 import com.project.usychol.domain.entities.Report
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 
 class ReportImplementation(): ReportDAO {
-    private var retrotifClient: Retrofit
-    private var endpoint: ReportEndpoint
+    private val database = Firebase.firestore
+    private val collectionPath = "reports"
 
-    init {
-        retrotifClient = Connection.getRetrofitInstance()
-        endpoint = retrotifClient.create(ReportEndpoint::class.java)
+    override fun create(report: Report, returnIdOrError: (String) -> Unit) {
+        database.collection(collectionPath).add(report)
+            .addOnSuccessListener {
+                val id = it.id
+                returnIdOrError(id)
+            }
+            .addOnFailureListener { error ->
+                returnIdOrError(error.localizedMessage!!)
+            }
     }
 
-    override fun create(userId: String, patientId: String, report: Report, res: (Report?) -> Unit) {
-        endpoint.postReport(userId, patientId, report).enqueue(object: Callback<Report> {
-            override fun onResponse(call: Call<Report>, response: Response<Report>) {
-
-                if (response?.body() != null)
-                    res(response?.body())
-                else {
-                    res(null)
-                }
+    override fun findById(id: String, returnReport: (Report?) -> Unit) {
+        database.collection(collectionPath).document(id).get()
+            .addOnSuccessListener {
+                val user = it.toObject(Report::class.java)
+                returnReport(user)
             }
-
-            override fun onFailure(call: Call<Report>, t: Throwable) {
-                res(null)
+            .addOnFailureListener {
+                returnReport(null)
             }
-
-        })
     }
 
-    override fun findById(userId: String, patientId: String, id: String, res: (Report?) -> Unit) {
-        endpoint.getReportById(userId, patientId, id).enqueue(object: Callback<Report> {
-            override fun onResponse(call: Call<Report>, response: Response<Report>) {
-
-                if (response?.body() != null)
-                    res(response?.body())
-                else {
-                    res(null)
-                }
+    override fun update(id: String, report: Report, returnError: (String?) -> Unit) {
+        database.collection(collectionPath).document(id).set(report)
+            .addOnSuccessListener {
+                returnError(null)
             }
-
-            override fun onFailure(call: Call<Report>, t: Throwable) {
-                res(null)
+            .addOnFailureListener {
+                returnError(it.localizedMessage)
             }
-
-        })
     }
 
-    override fun update(
-        userId: String,
-        patientId: String,
-        id: String,
-        report: Report,
-        res: (Report?) -> Unit
-    ) {
-        endpoint.putReportById(userId, patientId, id, report).enqueue(object: Callback<Report> {
-            override fun onResponse(call: Call<Report>, response: Response<Report>) {
-
-                if (response?.body() != null)
-                    res(response?.body())
-                else {
-                    res(null)
-                }
+    override fun delete(id: String, returnError: (String?) -> Unit) {
+        database.collection(collectionPath).document(id).delete()
+            .addOnSuccessListener {
+                returnError(null)
             }
-
-            override fun onFailure(call: Call<Report>, t: Throwable) {
-                res(null)
+            .addOnFailureListener { error ->
+                returnError(error.localizedMessage)
             }
-
-        })
     }
 
-    override fun delete(userId: String, patientId: String, id: String, res: (Report?) -> Unit) {
-        endpoint.deleteReport(userId, patientId, id).enqueue(object: Callback<Report> {
-            override fun onResponse(call: Call<Report>, response: Response<Report>) {
-
-                if (response?.body() != null)
-                    res(response?.body())
-                else {
-                    res(null)
-                }
+    override fun findAll( patientId: String, returnReports: (List<Report>?) -> Unit) {
+        database.collection(collectionPath)
+            .whereEqualTo("fromPatient", patientId)
+            .get()
+            .addOnSuccessListener {
+                val reports = it.toObjects(Report::class.java).toList()
+                returnReports(reports)
             }
-
-            override fun onFailure(call: Call<Report>, t: Throwable) {
-                res(null)
+            .addOnFailureListener {
+                returnReports(null)
             }
-
-        })
     }
-
-    override fun findAll(
-        userId: String,
-        patientId: String,
-        res: (ArrayList<Report>?) -> Unit
-    ) {
-        endpoint.getReports(userId, patientId).enqueue(object: Callback<ArrayList<Report>> {
-            override fun onResponse(call: Call<ArrayList<Report>>, response: Response<ArrayList<Report>>) {
-                val list = ArrayList<Report>()
-
-                if (response?.body() != null && response.body()!!.size > 0)
-                    list.addAll(response.body()!!.toList())
-
-                res(list)
-            }
-
-            override fun onFailure(call: Call<ArrayList<Report>>, t: Throwable) {
-                res(null)
-            }
-
-        })
-    }
-
 }

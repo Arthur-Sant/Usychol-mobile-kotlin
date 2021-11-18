@@ -5,35 +5,35 @@ import com.project.usychol.domain.entities.Patient
 
 class PatientRepository(private val patientDAO: PatientDAO) {
 
-    fun create(userId: String, patient: Patient){
-        patientDAO.create(userId, patient){}
+    fun create(patient: Patient, returnId: (String?) -> Unit){
+        patientDAO.create(patient){
+                returnId(it)
+        }
     }
 
-    fun findAll(userId: String): List<Patient>? {
-        var patients: ArrayList<Patient>? = ArrayList()
+    fun findAll(userId: String, returnPatients: (List<Patient>?) -> Unit) {
         patientDAO.findAll(userId){
-            patients = it
+            returnPatients(it)
         }
-
-        return patients
     }
 
-    fun findById(userId: String, id: String): Patient?{
-        var patient: Patient? = null
-        patientDAO.findById(userId, id){
-            patient = it
+    fun findById(id: String, returnPatient: (Patient?) -> Unit){
+        patientDAO.findById(id){
+            returnPatient(it)
         }
-
-        return patient
     }
 
-    fun update(userId: String ,patient: Patient){
+    fun update(patient: Patient, returnError: (String?) -> Unit){
         val id = patient.id
-        patientDAO.update(userId, id!!, patient){}
+        patientDAO.update(id!!, patient){
+                returnError(it)
+        }
     }
 
-    fun delete(userId: String, patientId: String){
-        patientDAO.delete(userId, patientId){}
+    fun delete(id: String, returnError: (String?) -> Unit){
+        patientDAO.delete(id){
+            returnError(it)
+        }
     }
 
 }

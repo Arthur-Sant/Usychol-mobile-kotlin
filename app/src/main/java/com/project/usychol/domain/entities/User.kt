@@ -1,6 +1,9 @@
 package com.project.usychol.domain.entities
 
-data class User(
+import com.google.firebase.firestore.DocumentId
+
+class User(
+    @DocumentId
     var id: String?,
     var name: String,
     var crp: String,
@@ -10,9 +13,14 @@ data class User(
     var age: String,
     var plan: String?
 ){
-    init {
-        if(id == null){
-            id = (1..10000).random().toString()
-        }
-    }
+    constructor():this(
+        null,
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null
+    ){}
 }

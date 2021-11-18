@@ -25,24 +25,27 @@ class PatientInformationViewModel : ViewModel() {
     val listPatientReport: LiveData<List<Report>>
         get () = _listPatientReport
 
-    private val _patientName = MutableLiveData<List<String>>()
-    val patientName: LiveData<List<String>>
-    get () = _patientName
+    private val _patientData = MutableLiveData<List<String>>()
+    val patientData: LiveData<List<String>>
+    get () = _patientData
 
-    fun getAllPatientsReports(patientId: String, userId: String) {
-        val reports = reportUseCases.getAllReport(userId, patientId)
+//    fun getAllPatientsReports(patientId: String) {
+//        val reports = reportUseCases.getAllReport(patientId)
+//
+//        if(reports?.size != 0){
+//            _listPatientReport.postValue(reports)
+//        }
+//    }
 
-        if(reports?.size != 0){
-            _listPatientReport.postValue(reports)
+    fun getPatientName(id: String){
+         patientUseCase.getPatientById(id){ patient ->
+            if(patient != null) {
+                val patientInformations = ArrayList<String>()
+                patientInformations.add(patient.name)
+                patientInformations.add(patient.patientSummary)
+                _patientData.postValue(patientInformations)
+            }
         }
-    }
-
-    fun getPatientName(userId: String, id: String){
-        val patient = patientUseCase.getPatientById(userId, id)!!
-        val patientInformations = ArrayList<String>()
-        patientInformations.add(patient.name)
-        patientInformations.add(patient.patientSummary)
-        _patientName.postValue(patientInformations)
     }
 
 }

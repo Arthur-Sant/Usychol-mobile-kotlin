@@ -1,5 +1,7 @@
 package com.project.usychol.viewModel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.usychol.data.repositories.PatientRepository
 import com.project.usychol.domain.entities.Patient
@@ -12,7 +14,15 @@ class RegisterPatientViewModel : ViewModel() {
     private val patientRepository = PatientRepository(patientDAO)
     private val patientUseCase = PatientUseCase(patientRepository)
 
-    fun registerPatient(userId: String, patient: Patient){
-        patientUseCase.createPatient(userId, patient)
+    private var _patientId = MutableLiveData<String?>()
+    val patientId: LiveData<String?>
+        get () = _patientId
+
+    fun registerPatient(patient: Patient){
+        Thread{
+            patientUseCase.createPatient(patient){ id ->
+                _patientId.postValue(id)
+            }
+        }.start()
     }
 }

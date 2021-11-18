@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "703692643790",
+    "firebase_url": "https://usychol-tech-default-rtdb.firebaseio.com",
+    "project_id": "usychol-tech",
+    "storage_bucket": "usychol-tech.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703692643790:android:af0cc98a18d7e7ee105f9f",
+        "android_client_info": {
+          "package_name": "com.project.usychol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703692643790-9mcmvd6991j6e23rooqo4l76r1l40ja3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt2B1lstGqTYfuTWqNHYtEkd5a4tJDi5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703692643790-9mcmvd6991j6e23rooqo4l76r1l40ja3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "703692643790-fs0nsjcdlls6j8titglhv1pg4tcv0fui.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "rafaelPena.USychol"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,17 +1,24 @@
 package com.project.usychol.domain.entities
 
-data class Report(
+import com.google.firebase.firestore.DocumentId
+
+class Report(
+    @DocumentId
     var id: String?,
-    var activies: ArrayList<Activy>?,
+    var activies: ArrayList<String>?,
     var resume: String,
     var startAt: String,
-    var consultationEvaluation: Int,
+    var consultEvaluation: Int,
     var date: String,
     var fromPatient: String
 ){
-    init {
-        if(id == null){
-            id = (1..10000).random().toString()
-        }
-    }
+    constructor():this(
+        null,
+        null,
+        "",
+        "",
+        0,
+        "",
+        ""
+    )
 }

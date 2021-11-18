@@ -1,13 +1,11 @@
 package com.project.usychol.domain.entities
 
-import com.google.gson.annotations.SerializedName
+import com.google.firebase.firestore.DocumentId
 
-data class Patient (
+
+class Patient (
+    @DocumentId
     var id: String?,
-
-    @SerializedName("profilePicture")
-    var image: String?,
-
     var name: String,
     var appointmentCount: Int,
     var patientClass: String,
@@ -17,11 +15,19 @@ data class Patient (
     var maritalStatus: String,
     var age: String?,
     var fromUser: String,
-    var reports: ArrayList<Report>?
+    var profilePicture: String?
 ){
-    init {
-        if(id == null){
-            id = (1..10000).random().toString()
-        }
-    }
+    constructor():this(
+        null,
+        "",
+        0,
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null
+    )
 }

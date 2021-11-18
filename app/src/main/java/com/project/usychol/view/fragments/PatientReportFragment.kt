@@ -1,4 +1,4 @@
-package com.project.usychol.presenter.fragments
+package com.project.usychol.view.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,15 +8,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.usychol.R
 import com.project.usychol.adapters.ActivyAdapter
 import com.project.usychol.databinding.FragmentPatientReportBinding
-import com.project.usychol.domain.entities.Activy
 import com.project.usychol.domain.entities.Report
 import com.project.usychol.implementations.PatientImplementation
 import com.project.usychol.implementations.ReportImplementation
@@ -70,7 +67,7 @@ class PatientReportFragment : Fragment() {
                 patientId
             )
 
-            ReportImplementation().update(userId, patientId, id, report){}
+//            ReportImplementation().update(userId, patientId, id, report){}
         }
 
         return view
@@ -82,16 +79,16 @@ class PatientReportFragment : Fragment() {
         val patientId = sharedPreferences.getString(getString(R.string.salved_patient_id_key), "")!!
 
 //        patientReportViewModel.getReportData(userdId, patientId, id)
-        PatientImplementation().findById(userdId, patientId){
-            binding.tvPatientReportName.text = it?.name
-        }
-
-        ReportImplementation().findById(userdId, patientId, id){
-            binding.tvPatientReportResume.text = it?.resume
-            binding.tvPatientReportDate.text = it?.date
-            startAt = it?.startAt
-            binding.inputPatientReportConsultation.text = it?.consultationEvaluation!!.toEditable()
-        }
+//        PatientImplementation().findById(userdId, patientId){
+//            binding.tvPatientReportName.text = it?.name
+//        }
+//
+//        ReportImplementation().findById(userdId, patientId, id){
+//            binding.tvPatientReportResume.text = it?.resume
+//            binding.tvPatientReportDate.text = it?.date
+//            startAt = it?.startAt
+//            binding.inputPatientReportConsultation.text = it?.consultationEvaluation!!.toEditable()
+//        }
 
     }
 

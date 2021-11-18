@@ -17,29 +17,15 @@ class SiginViewModel : ViewModel() {
     val loginSituation: LiveData<String>
         get () = _loginSituation
 
-    private var _userId = MutableLiveData<String>()
-    val userId: LiveData<String>
-        get () = _userId
+//    private var _userId = MutableLiveData<String>()
+//    val userId: LiveData<String>
+//        get () = _userId
 
     fun loginUser(email: String, password: String){
-        val user = userUseCases.findByEmail(email)
-
-        if(user != null) {
-
-            if (user.email == email && user.password == password) {
-
-                _userId.value = user.id
-
-                when(user.plan) {
-                    null -> _loginSituation.value = "logged in but no plan"
-                    else -> _loginSituation.value = "logged"
-                }
-
-            }else{
-                _loginSituation.value = "not logged"
+        Thread {
+            userUseCases.authenticateUser(email, password) {
+                _loginSituation.postValue(it)
             }
-        }else{
-            _loginSituation.value = "not logged"
-        }
+        }.start()
     }
 }

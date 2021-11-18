@@ -5,20 +5,28 @@ import com.project.usychol.domain.entities.Patient
 
 class PatientUseCase(private val patientRepository: PatientRepository) {
 
-    fun createPatient(userId: String, patient: Patient){
-        patientRepository.create(userId, patient)
+    fun createPatient(patient: Patient, returnId: (String?) -> Unit){
+        patientRepository.create(patient){
+            returnId(it)
+        }
     }
 
-    fun getAllPatients(userId: String): List<Patient>? {
-        return patientRepository.findAll(userId)
+    fun getAllPatients(userId: String, returnPatients: (List<Patient>?) -> Unit){
+        patientRepository.findAll(userId){
+            returnPatients(it)
+        }
     }
 
-    fun getPatientById(userId: String, id: String): Patient?{
-        return patientRepository.findById(userId, id)
+    fun getPatientById(id: String, returnPatient: (Patient?) -> Unit){
+        patientRepository.findById(id){
+            returnPatient(it)
+        }
     }
 
-    fun updatePatientData(userId: String, patient: Patient){
-        patientRepository.update(userId, patient)
+    fun updatePatientData(patient: Patient, returnError: (String?) -> Unit){
+        patientRepository.update(patient){
+            returnError(it)
+        }
     }
 
 }

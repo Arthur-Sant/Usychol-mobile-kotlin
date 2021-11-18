@@ -26,13 +26,12 @@ class ReminderRepository(private val reminderDAO: ReminderDAO) {
         reminderDAO.delete(id){}
     }
 
-    fun findAll(): ArrayList<Reminder>?{
-        var reminders: ArrayList<Reminder>? = null
+    fun findAll(res: (List<Reminder>) -> Unit){
         reminderDAO.findAll {
-            reminders = it
+            if (it != null) {
+                res(it)
+            }
         }
-
-        return reminders
     }
 
 }

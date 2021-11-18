@@ -18,7 +18,7 @@ class ReminderImplementation : ReminderDAO {
         endpoint = retrotifClient.create(ReminderEndpoint::class.java)
     }
 
-    override fun findAll(res: (ArrayList<Reminder>?) -> Unit) {
+    override fun findAll(res: (List<Reminder>?) -> Unit) {
         endpoint.getReminders().enqueue(object: Callback<ArrayList<Reminder>> {
             override fun onResponse(call: Call<ArrayList<Reminder>>, response: Response<ArrayList<Reminder>>) {
                 val list = ArrayList<Reminder>()

@@ -27,7 +27,7 @@ class ReminderAdapter(
         val reminder = listPsychologistReminder[position]
         holder.apply {
             tvReportPatientName.text = "Arthur Santiago"
-            tvReportPatientAge.text = reminder.age.toString()
+            tvReportPatientAge.text = reminder.title
             tvReportPatientTime.text = reminder.startAt
         }
     }

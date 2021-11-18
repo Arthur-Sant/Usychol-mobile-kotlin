@@ -1,4 +1,4 @@
-package com.project.usychol.presenter.fragments
+package com.project.usychol.view.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -9,8 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentPatientProfileBinding
@@ -78,7 +76,6 @@ class PatientProfileFragment : Fragment() {
         binding.btnEditPatientProfile.setOnClickListener {
             val patient = Patient(
                 id,
-                null,
                 inputName.text.toString(),
                 4,
                 selectClass.text.toString(),
@@ -88,10 +85,10 @@ class PatientProfileFragment : Fragment() {
                 selectMaritalStatus.text.toString(),
                 inputBirthday.text.toString(),
                 userId,
-                arrayReport
+                null
             )
 
-            PatientImplementation().update(userId, id, patient){}
+//            PatientImplementation().update(userId, id, patient){}
         }
 
         return view
@@ -109,19 +106,19 @@ class PatientProfileFragment : Fragment() {
         selectMaritalStatus = binding.selectMaritalPatientProfileStatus.editText!!
 
 //        patientProfileViewModel.patient.observe(viewLifecycleOwner, Observer { patient ->
-          PatientImplementation().findById(userId, id){ patient ->
-              if(patient != null) {
-                  tvName.text = patient.name
-                  patientSummary = patient.patientSummary
-                  inputName.text = patient.name.toEditable()
-                  inputBirthday.text = patient.age?.toEditable()
-                  selectClass.text = patient.patientClass.toEditable()
-                  inputMotherName.text = patient.motherName.toEditable()
-                  inputFatherName.text = patient.fatherName.toEditable()
-                  selectMaritalStatus.text = patient.maritalStatus.toEditable()
-                  arrayReport = patient.reports
-              }
-        }
+//          PatientImplementation().findById(userId, id){ patient ->
+//              if(patient != null) {
+//                  tvName.text = patient.name
+//                  patientSummary = patient.patientSummary
+//                  inputName.text = patient.name.toEditable()
+//                  inputBirthday.text = patient.age?.toEditable()
+//                  selectClass.text = patient.patientClass.toEditable()
+//                  inputMotherName.text = patient.motherName.toEditable()
+//                  inputFatherName.text = patient.fatherName.toEditable()
+//                  selectMaritalStatus.text = patient.maritalStatus.toEditable()
+//                  arrayReport = patient.reports
+//              }
+//        }
 
     }
 }

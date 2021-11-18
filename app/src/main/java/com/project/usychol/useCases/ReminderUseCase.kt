@@ -8,8 +8,10 @@ class ReminderUseCase(private val reminderRepository: ReminderRepository) {
         reminderRepository.create(reminder)
     }
 
-    fun findAll(): ArrayList<Reminder>?{
-        return reminderRepository.findAll()
+    fun findAll(res: (List<Reminder>) -> Unit){
+        reminderRepository.findAll(){
+            res(it)
+        }
     }
 
     fun update(reminder: Reminder){

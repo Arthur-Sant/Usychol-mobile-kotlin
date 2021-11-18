@@ -14,13 +14,19 @@ class SignupViewModel: ViewModel() {
     private val userRepository = UserRepository(userDAO)
     private val userUseCases = UserUseCase(userRepository)
 
-    private var _userId = MutableLiveData<String>()
-    val userId: LiveData<String>
-        get () = _userId
+    private var _messageError = MutableLiveData<String>()
+    val messageError: LiveData<String>
+        get () = _messageError
 
     fun registerUser(user: User){
-        userDAO.create(user){
-            _userId.postValue(it?.id.toString())
-        }
+        Thread {
+            userUseCases.createUser(user) { error ->
+                if(error != null){
+                    _messageError.postValue(error)
+                }else{
+                    _messageError.postValue("Successfully registered user")
+                }
+            }
+        }.start()
     }
 }
