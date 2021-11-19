@@ -2,26 +2,28 @@ package com.project.usychol.view.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentPatientProfileBinding
 import com.project.usychol.domain.entities.Patient
-import com.project.usychol.domain.entities.Report
-import com.project.usychol.implementations.PatientImplementation
+import com.project.usychol.shared.DataFormat
 import com.project.usychol.viewModel.PatientProfileViewModel
 
 class PatientProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentPatientProfileBinding
 
-    private lateinit var patientProfileViewModel: PatientProfileViewModel
+    private lateinit var viewModel: PatientProfileViewModel
 
     private lateinit var inputName: EditText
     private lateinit var inputBirthday: EditText
@@ -30,7 +32,6 @@ class PatientProfileFragment : Fragment() {
     private lateinit var inputFatherName: EditText
     private lateinit var selectMaritalStatus: EditText
     private var patientSummary: String? = null
-    private var arrayReport: ArrayList<Report>? = null
 
     override fun onResume() {
         super.onResume()
@@ -61,42 +62,81 @@ class PatientProfileFragment : Fragment() {
          )
 
         val id = sharedPreferences.getString(getString(R.string.salved_patient_id_key), "")!!
-        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
+//        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
 
-//        patientProfileViewModel = ViewModelProvider(this).get(PatientProfileViewModel::class.java)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
-//        patientProfileViewModel.getPatientData(userId, id)
+        viewModel = ViewModelProvider(this).get(PatientProfileViewModel::class.java)
 
-        startObservationPatientData(userId, id)
+        viewModel.getPatientData(id)
+
+        startObservationPatientData()
 
         binding.btnPatientProfileBack.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.patientProfileToPatientInformation)
         }
 
         binding.btnEditPatientProfile.setOnClickListener {
-            val patient = Patient(
-                id,
-                inputName.text.toString(),
-                4,
-                selectClass.text.toString(),
-                inputMotherName.text.toString(),
-                patientSummary.toString(),
-                inputFatherName.text.toString(),
-                selectMaritalStatus.text.toString(),
-                inputBirthday.text.toString(),
-                userId,
-                null
-            )
+            val patient = updatePatient()
 
-//            PatientImplementation().update(userId, id, patient){}
+            if(patient?.name == ""){
+                Toast.makeText(
+                    requireContext(),
+                    "Insira a data do report do modo que foi proposto, mes em " +
+                            "ingles, dia e ano",
+                    Toast.LENGTH_LONG
+                ).show()
+            }else if(patient != null){
+                patient.id = id
+                patient.fromUser= userId
+                viewModel.updatePatientData(patient)
+            }else{
+                Toast.makeText(requireContext(), "fill all fields", Toast.LENGTH_LONG).show()
+            }
         }
+
+        viewModel.updatePatient.observe(viewLifecycleOwner, Observer { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        })
 
         return view
     }
 
-    private fun Any.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this.toString())
+    fun updatePatient(): Patient?{
+        if(inputName.text.toString().isNotEmpty()
+            && inputBirthday.text.toString().isNotEmpty()
+            && inputFatherName.text.toString().isNotEmpty()
+            && inputMotherName.text.toString().isNotEmpty()){
 
-    fun startObservationPatientData(userId: String, id: String){
+            try{
+                val reportCutDate = inputBirthday.text.split(" ")
+                var month = reportCutDate[0]
+                month = DataFormat().getMonth(month)
+                val day = reportCutDate[1].replace(",", "")
+                val year = reportCutDate[2]
+
+                return Patient(
+                    null,
+                    inputName.text.toString(),
+                    4,
+                    selectClass.text.toString(),
+                    inputMotherName.text.toString(),
+                    patientSummary.toString(),
+                    inputFatherName.text.toString(),
+                    selectMaritalStatus.text.toString(),
+                    inputBirthday.text.toString(),
+                    "",
+                    null
+                )
+            }catch (ex: Exception){
+                return Patient()
+            }
+        }else{
+            return null
+        }
+    }
+
+    fun startObservationPatientData(){
         val tvName = binding.tvPatientProfileName
         inputName = binding.inputPatientProfileName.findViewById(R.id.textInput)
         inputBirthday = binding.inputPatientProfileBirthday.findViewById(R.id.textInput)
@@ -105,20 +145,17 @@ class PatientProfileFragment : Fragment() {
         inputFatherName = binding.inputPatientProfileFatherName.findViewById(R.id.textInput)
         selectMaritalStatus = binding.selectMaritalPatientProfileStatus.editText!!
 
-//        patientProfileViewModel.patient.observe(viewLifecycleOwner, Observer { patient ->
-//          PatientImplementation().findById(userId, id){ patient ->
-//              if(patient != null) {
-//                  tvName.text = patient.name
-//                  patientSummary = patient.patientSummary
-//                  inputName.text = patient.name.toEditable()
-//                  inputBirthday.text = patient.age?.toEditable()
-//                  selectClass.text = patient.patientClass.toEditable()
-//                  inputMotherName.text = patient.motherName.toEditable()
-//                  inputFatherName.text = patient.fatherName.toEditable()
-//                  selectMaritalStatus.text = patient.maritalStatus.toEditable()
-//                  arrayReport = patient.reports
-//              }
-//        }
-
+        viewModel.patient.observe(viewLifecycleOwner, Observer { patient ->
+            if (patient != null) {
+                tvName.text = patient.name
+                patientSummary = patient.patientSummary
+                inputName.setText(patient.name)
+                inputBirthday.setText(patient.age)
+                selectClass.setText(patient.patientClass)
+                inputMotherName.setText(patient.motherName)
+                inputFatherName.setText(patient.fatherName)
+                selectMaritalStatus.setText(patient.maritalStatus)
+            }
+        })
     }
 }

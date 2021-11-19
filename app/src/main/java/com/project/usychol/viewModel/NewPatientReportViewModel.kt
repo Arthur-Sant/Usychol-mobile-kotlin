@@ -3,13 +3,9 @@ package com.project.usychol.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.project.usychol.data.repositories.ActivyRepository
 import com.project.usychol.data.repositories.ReportRepository
-import com.project.usychol.domain.entities.Activy
-import com.project.usychol.domain.entities.Report
-import com.project.usychol.implementations.ActivyImplementation
+import com.project.usychol.domain.entities.*
 import com.project.usychol.implementations.ReportImplementation
-import com.project.usychol.useCases.ActivyUseCase
 import com.project.usychol.useCases.ReportUseCase
 
 class NewPatientReportViewModel : ViewModel() {
@@ -18,15 +14,20 @@ class NewPatientReportViewModel : ViewModel() {
     private val reportRepository = ReportRepository(reportDAO)
     private val reportUseCases = ReportUseCase(reportRepository)
 
-    private val activyDAO = ActivyImplementation()
-    private val activyRepository = ActivyRepository(activyDAO)
-    private val activyUseCase = ActivyUseCase(activyRepository)
+//    private val activyDAO = ActivyImplementation()
+//    private val activyRepository = ActivyRepository(activyDAO)
+//    private val activyUseCase = ActivyUseCase(activyRepository)
 
-    private var _listActivy = MutableLiveData<List<String>>()
-    val listActivy: LiveData<List<String>>
-        get () = _listActivy
+    private var _reportId = MutableLiveData<String?>()
+    val reportId: LiveData<String?>
+        get () = _reportId
 
-    fun getAllActivy(){
+
+//    private var _listActivy = MutableLiveData<List<String>>()
+//    val listActivy: LiveData<List<String>>
+//        get () = _listActivy
+
+//    fun getAllActivy(){
 //        val listActivys: List<Activy>? = activyUseCase.getAllActivy()
 //
 //        if(listActivys != null) {
@@ -36,9 +37,13 @@ class NewPatientReportViewModel : ViewModel() {
 //
 //            _listActivy.postValue(listActivyTemplate)
 //        }
-    }
+//    }
 
-    fun createReport(userId: String, patientId: String, report: Report){
-        reportUseCases.createReport(userId, patientId, report)
+    fun createReport(report: Report){
+        Thread {
+            reportUseCases.createReport(report) { id ->
+                _reportId.postValue(id)
+            }
+        }.start()
     }
 }

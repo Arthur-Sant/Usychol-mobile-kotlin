@@ -5,23 +5,33 @@ import com.project.usychol.domain.entities.Report
 
 class ReportUseCase (private val reportRepository: ReportRepository){
 
-    fun createReport(userId: String, patientId: String, report: Report){
-        reportRepository.create(userId, patientId, report)
+    fun createReport(report: Report, returnId: (String?) -> Unit){
+        reportRepository.create(report){
+                returnId(it)
+        }
     }
 
-    fun getReportById(userId: String, patientId: String, id: String): Report? {
-        return reportRepository.findById(userId, patientId, id)
+    fun getReportById(id: String, returnReport: (Report?) -> Unit){
+        reportRepository.findById(id){
+                returnReport(it)
+        }
     }
 
-    fun updateReport(userId: String, patientId: String, id: String, report: Report){
-        reportRepository.update(userId, patientId, id, report)
+    fun updateReport(id: String, report: Report, returnError: (String?) -> Unit){
+        reportRepository.update(id, report){
+                returnError(it)
+        }
     }
 
-    fun delete(userId: String, patientId: String, id: String){
-        reportRepository.delete(userId, patientId, id)
+    fun delete(id: String, returnError: (String?) -> Unit){
+        reportRepository.delete(id){
+            returnError(it)
+        }
     }
 
-    fun getAllReport(userId: String, patientId: String): ArrayList<Report>?{
-        return reportRepository.findAll(userId, patientId)
+    fun getAllReport(patientId: String, returnReports: (List<Report>?) -> Unit){
+        reportRepository.findAll(patientId){
+                returnReports(it)
+        }
     }
 }

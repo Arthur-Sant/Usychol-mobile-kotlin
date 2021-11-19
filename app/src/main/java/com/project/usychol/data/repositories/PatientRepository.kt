@@ -36,4 +36,10 @@ class PatientRepository(private val patientDAO: PatientDAO) {
         }
     }
 
+    fun updatePatientSummary(id: String, summary: String, performedTask: (Boolean) -> Unit){
+        patientDAO.updatePatientSummary(id, summary){
+            performedTask(it)
+        }
+    }
+
 }

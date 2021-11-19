@@ -15,7 +15,7 @@ class ReminderAdapter(
     ) : RecyclerView.Adapter<PsychologistReminderViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PsychologistReminderViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.patients_reminder_list_component,
+            R.layout.action_reminder_list_component,
             parent,
             false
         )
@@ -26,9 +26,9 @@ class ReminderAdapter(
     override fun onBindViewHolder(holder: PsychologistReminderViewHolder, position: Int) {
         val reminder = listPsychologistReminder[position]
         holder.apply {
-            tvReportPatientName.text = "Arthur Santiago"
-            tvReportPatientAge.text = reminder.title
-            tvReportPatientTime.text = reminder.startAt
+            tvReminderAction.text = reminder.title
+            tvReminderActionStart.text = reminder.startAt
+            tvReminderActionEnd.text = reminder.endAt
         }
     }
 

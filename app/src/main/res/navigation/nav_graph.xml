@@ -15,6 +15,9 @@
             app:destination="@id/signinFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/landingToDashboard"
+            app:destination="@id/dashboardFragment" />
     </fragment>
     <fragment
         android:id="@+id/signinFragment"

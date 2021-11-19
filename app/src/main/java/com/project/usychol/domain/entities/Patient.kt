@@ -1,10 +1,8 @@
 package com.project.usychol.domain.entities
 
-import com.google.firebase.firestore.DocumentId
-
+import java.util.*
 
 class Patient (
-    @DocumentId
     var id: String?,
     var name: String,
     var appointmentCount: Int,
@@ -30,4 +28,10 @@ class Patient (
         "",
         null
     )
+
+    init {
+        if(id == null){
+            id = UUID.randomUUID().toString()
+        }
+    }
 }

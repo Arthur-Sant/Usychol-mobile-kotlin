@@ -1,9 +1,8 @@
 package com.project.usychol.domain.entities
 
-import com.google.firebase.firestore.DocumentId
+import java.util.*
 
 class Reminder(
-    @DocumentId
     var id: String?,
     var title: String = "",
     var startAt: String = "",
@@ -17,5 +16,11 @@ class Reminder(
         "",
         null
     )
+
+    init {
+        if(id == null){
+            id = UUID.randomUUID().toString()
+        }
+    }
 }
 

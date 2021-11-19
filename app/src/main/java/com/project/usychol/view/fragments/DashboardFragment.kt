@@ -1,11 +1,13 @@
 package com.project.usychol.view.fragments
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.edit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +22,8 @@ import com.project.usychol.databinding.FragmentDashboardBinding
 import com.project.usychol.domain.entities.Patient
 import com.project.usychol.domain.entities.Reminder
 import com.project.usychol.viewModel.DashboardViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DashboardFragment : Fragment() {
 
@@ -39,7 +43,7 @@ class DashboardFragment : Fragment() {
 
         dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
-//        sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
 //        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
 
@@ -48,8 +52,8 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.getAllPatients(userId)
         dashboardViewModel.getAllUserReminder()
 
-        startPatientObservation(userId)
-        startuserReminderObservation()
+        startPatientObservation()
+        startUserReminderObservation()
 
         binding.btnRegisterPatient.setOnClickListener{
             Navigation.findNavController(view).navigate(R.id.dashboardToRegisterPatient)
@@ -59,14 +63,29 @@ class DashboardFragment : Fragment() {
             Navigation.findNavController(view).navigate(R.id.dashboardToProfile)
         }
 
+        binding.btnCreateReminder.setOnClickListener {
+            val reminder = createReminder()
+            if(reminder != null){
+                dashboardViewModel.createUserReminder(reminder)
+            }else{
+                Toast.makeText(requireContext(), "fill all fields", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        dashboardViewModel.messageCreate.observe(viewLifecycleOwner, Observer { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+
+            binding.etUserReminder.setText("")
+            dashboardViewModel.getAllUserReminder()
+        })
+
         return view
 
     }
 
-    private fun startPatientObservation(id: String){
+    private fun startPatientObservation(){
         dashboardViewModel.listPatient.observe(viewLifecycleOwner, Observer { listPatient ->
             if(listPatient.isNotEmpty()){
-                println(listPatient)
                 renderListPatient(listPatient)
             }
         })
@@ -89,21 +108,44 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    private fun startuserReminderObservation(){
+    private fun startUserReminderObservation(){
         dashboardViewModel.listUserReminder.observe(viewLifecycleOwner, Observer { listReminder ->
             if (listReminder != null) {
-                renderListuserReminder(listReminder)
+                renderListUserReminder(listReminder)
             }
         })
     }
 
-    private fun renderListuserReminder(listReminder: List<Reminder>){
+    private fun renderListUserReminder(listReminder: List<Reminder>){
         val reminderAdapter = ReminderAdapter(requireContext(), listReminder)
 
         binding.recyclerViewUserReminder.apply {
             adapter = reminderAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             itemAnimator = DefaultItemAnimator()
+        }
+    }
+
+    fun createReminder(): Reminder?{
+        val calendar = Calendar.getInstance()
+        calendar.time = Date()
+        calendar.add(Calendar.HOUR, 1)
+        val format = SimpleDateFormat("HH:mm")
+        val reminderTitle = binding.etUserReminder.text.toString()
+        val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        val timeStart = format.format(Date())
+        val timeEnd = format.format(calendar.time)
+
+        return if(reminderTitle.isNotEmpty()){
+            Reminder(
+                null,
+                reminderTitle,
+                "$timeStart PM",
+                "$timeEnd PM",
+                userid
+            )
+        }else{
+            null
         }
     }
 }

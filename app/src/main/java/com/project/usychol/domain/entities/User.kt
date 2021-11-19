@@ -3,7 +3,6 @@ package com.project.usychol.domain.entities
 import com.google.firebase.firestore.DocumentId
 
 class User(
-    @DocumentId
     var id: String?,
     var name: String,
     var crp: String,

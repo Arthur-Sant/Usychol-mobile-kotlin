@@ -40,16 +40,15 @@ class PatientInformationFragment : Fragment() {
         )
 
         val patientId = sharedPreferences.getString(getString(R.string.salved_patient_id_key), "")!!
-        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
 
         viewModel = ViewModelProvider(this).get(PatientInformationViewModel::class.java)
 
-//        viewModel.getAllPatientsReports(patientId!!, userId!!)
+        viewModel.getAllPatientsReports(patientId)
         viewModel.getPatientName(patientId)
 
 
         startObservationPatient()
-//        startObservationPatientReports(userId, patientId)
+        startObservationPatientReports()
 
         binding.btnPatientInformationBack.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.patientInformationToDashboard)
@@ -67,8 +66,11 @@ class PatientInformationFragment : Fragment() {
             Navigation.findNavController(view).navigate(R.id.patientInformationToNewPatientReport)
         }
 
-        binding.btnEditSummary.setOnClickListener {
-            binding.tvPatientSummary.isEnabled = true
+        binding.tvPatientSummary.setOnFocusChangeListener { v, hasFocus ->
+            val summary = binding.tvPatientSummary.text.toString()
+            if(!hasFocus){
+                viewModel.updatePatientSummary(patientId, summary)
+            }
         }
 
         return view
@@ -77,7 +79,7 @@ class PatientInformationFragment : Fragment() {
     private fun startObservationPatient(){
         viewModel.patientData.observe(viewLifecycleOwner, Observer { patient ->
               binding.tvPatientName.text = patient[0]
-              binding.tvPatientSummary.text = patient[1]
+              binding.tvPatientSummary.setText(patient[1])
         })
     }
 

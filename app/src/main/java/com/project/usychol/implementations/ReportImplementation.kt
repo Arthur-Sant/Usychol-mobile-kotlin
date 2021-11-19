@@ -9,14 +9,13 @@ class ReportImplementation(): ReportDAO {
     private val database = Firebase.firestore
     private val collectionPath = "reports"
 
-    override fun create(report: Report, returnIdOrError: (String) -> Unit) {
-        database.collection(collectionPath).add(report)
+    override fun create(report: Report, returnId: (String?) -> Unit) {
+        database.collection(collectionPath).document(report.id!!).set(report)
             .addOnSuccessListener {
-                val id = it.id
-                returnIdOrError(id)
+                returnId(report.id!!)
             }
-            .addOnFailureListener { error ->
-                returnIdOrError(error.localizedMessage!!)
+            .addOnFailureListener {
+                returnId(null)
             }
     }
 

@@ -1,20 +1,17 @@
 package com.project.usychol.view.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentSigninBinding
-import com.project.usychol.implementations.UserImplementation
 import com.project.usychol.viewModel.SiginViewModel
 
 class SigninFragment : Fragment() {
@@ -41,7 +38,13 @@ class SigninFragment : Fragment() {
         }
 
         binding.btnSignin.setOnClickListener{
-            viewModel.loginUser(signinEmail.toString(), signinPassword.toString())
+            if(signinEmail.toString().isNotEmpty()
+                && signinPassword.toString().isNotEmpty()) {
+
+                viewModel.loginUser(signinEmail.toString(), signinPassword.toString())
+            }else{
+                Toast.makeText(requireContext(), "fill all in fields", Toast.LENGTH_LONG).show()
+            }
         }
 
         viewModel.loginSituation.observe(viewLifecycleOwner, Observer { situation ->

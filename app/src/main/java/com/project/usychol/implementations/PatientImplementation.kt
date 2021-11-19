@@ -10,10 +10,9 @@ class PatientImplementation (): PatientDAO {
     private val collectionPath = "patients"
 
     override fun create(patient: Patient, returnId: (String?) -> Unit) {
-        database.collection(collectionPath).add(patient)
+        database.collection(collectionPath).document(patient.id!!).set(patient)
             .addOnSuccessListener {
-                val id = it.id
-                returnId(id)
+                returnId(patient.id)
             }
             .addOnFailureListener {
                 returnId(null)
@@ -61,6 +60,17 @@ class PatientImplementation (): PatientDAO {
             }
             .addOnFailureListener { error ->
                 returnError(error.localizedMessage)
+            }
+    }
+
+    override fun updatePatientSummary(id: String, summary: String, performedTask: (Boolean) -> Unit) {
+        val reference = database.collection(collectionPath).document(id)
+        reference.update(mapOf("patientSummary" to summary))
+            .addOnSuccessListener{
+                performedTask(true)
+            }
+            .addOnFailureListener {
+                performedTask(false)
             }
     }
 }

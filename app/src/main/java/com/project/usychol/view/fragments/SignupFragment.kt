@@ -9,15 +9,14 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.google.android.material.snackbar.Snackbar
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentSignupBinding
 import com.project.usychol.domain.entities.User
+import com.project.usychol.shared.DataFormat
 import com.project.usychol.viewModel.SignupViewModel
 
 
@@ -43,7 +42,15 @@ class SignupFragment : Fragment() {
         binding.btnSignup.setOnClickListener {
             val user: User? = registerUser()
 
-            if(user != null) {
+            if(user?.name == ""){
+                Toast.makeText(
+                    requireContext(),
+                    "Insira a data do report do modo que foi proposto, mes em " +
+                            "ingles, dia e ano",
+                    Toast.LENGTH_LONG
+                ).show()
+
+            }else if(user != null) {
                 viewModel.registerUser(user)
             }else{
                 Toast.makeText(activity, "fill in all fields", Toast.LENGTH_SHORT).show()
@@ -78,6 +85,13 @@ class SignupFragment : Fragment() {
             && userCpf.isNotEmpty() && userCrp.isNotEmpty()
             && userEmail.isNotEmpty() && userPassword.isNotEmpty()) {
 
+            try {
+                val reportCutDate = userBirthday.split(" ")
+                var month = reportCutDate[0]
+                month = DataFormat().getMonth(month)
+                val day = reportCutDate[1].replace(",", "")
+                val year = reportCutDate[2]
+
                 return User(
                     null,
                     userName.toString(),
@@ -88,6 +102,9 @@ class SignupFragment : Fragment() {
                     userBirthday.toString(),
                     null
                 )
+            }catch (ex: Exception){
+                return User()
+            }
         }else{
             return null
         }

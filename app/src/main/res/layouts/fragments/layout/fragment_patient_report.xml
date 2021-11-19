@@ -65,7 +65,7 @@
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvPatientProfileName" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvPatientReportName" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -109,7 +109,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
                 android:layout_marginTop="34dp"
                 android:contentDescription="@string/img_description_user"
                 android:src="@drawable/icon_person"
@@ -121,7 +120,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginLeft="12dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/tv_performed_activities"
                 android:textColor="@color/black_strong_light"
@@ -222,6 +220,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="32dp"
+                android:paddingStart="16dp"
                 android:inputType="number"
                 android:textColor="@color/grey_placeholder"
                 android:textColorHint="@color/grey_placeholder"
@@ -230,7 +229,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView14"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="RtlSymmetry" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btnEditPatientReport"

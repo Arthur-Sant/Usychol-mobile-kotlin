@@ -1,110 +1,45 @@
 package com.project.usychol.implementations
 
-import com.project.usychol.api.interfaces.ReminderEndpoint
-import com.project.usychol.api.utils.Connection
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.project.usychol.data.dao.ReminderDAO
 import com.project.usychol.domain.entities.Reminder
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 
 class ReminderImplementation : ReminderDAO {
-    private var retrotifClient: Retrofit
-    private var endpoint: ReminderEndpoint
+    private val database = Firebase.firestore
+    private val collectionPath = "reminders"
 
-    init {
-        retrotifClient = Connection.getRetrofitInstance()
-        endpoint = retrotifClient.create(ReminderEndpoint::class.java)
-    }
-
-    override fun findAll(res: (List<Reminder>?) -> Unit) {
-        endpoint.getReminders().enqueue(object: Callback<ArrayList<Reminder>> {
-            override fun onResponse(call: Call<ArrayList<Reminder>>, response: Response<ArrayList<Reminder>>) {
-                val list = ArrayList<Reminder>()
-
-                if (response?.body() != null && response.body()!!.size > 0)
-                    list.addAll(response.body()!!.toList())
-
-                res(list)
+    override fun findAll(userId: String, returnReminders: (List<Reminder>?) -> Unit) {
+        database.collection(collectionPath).whereEqualTo("fromUser", userId).get()
+            .addOnSuccessListener {
+                val reminders = it.toObjects(Reminder::class.java).toList()
+                returnReminders(reminders)
             }
-
-            override fun onFailure(call: Call<ArrayList<Reminder>>, t: Throwable) {
-                res(null)
+            .addOnFailureListener {
+                returnReminders(null)
             }
-
-        })
     }
 
     override fun findById(id: String, res: (Reminder?) -> Unit) {
-        endpoint.getReminderById(id).enqueue(object: Callback<Reminder> {
-            override fun onResponse(call: Call<Reminder>, response: Response<Reminder>) {
 
-                if (response?.body() != null)
-                    res(response?.body())
-                else {
-                    res(null)
-                }
-            }
-
-            override fun onFailure(call: Call<Reminder>, t: Throwable) {
-                res(null)
-            }
-
-        })
     }
 
     override fun update(id: String, body: Reminder, res: (Reminder?) -> Unit) {
-        endpoint.putReminderById(id, body).enqueue(object: Callback<Reminder> {
-            override fun onResponse(call: Call<Reminder>, response: Response<Reminder>) {
 
-                if (response?.body() != null)
-                    res(response?.body())
-                else {
-                    res(null)
-                }
-            }
-
-            override fun onFailure(call: Call<Reminder>, t: Throwable) {
-                res(null)
-            }
-
-        })
     }
 
-    override fun create(reminder: Reminder, res: (Reminder?) -> Unit) {
-        endpoint.postReminder(reminder).enqueue(object: Callback<Reminder> {
-            override fun onResponse(call: Call<Reminder>, response: Response<Reminder>) {
-
-                if (response?.body() != null)
-                    res(response?.body())
-                else {
-                    res(null)
-                }
+    override fun create(reminder: Reminder, returnError: (String?) -> Unit) {
+        database.collection(collectionPath).document(reminder.id!!).set(reminder)
+            .addOnSuccessListener {
+                returnError(null)
             }
-
-            override fun onFailure(call: Call<Reminder>, t: Throwable) {
-                res(null)
+            .addOnFailureListener {
+                returnError(it.localizedMessage)
             }
-
-        })
     }
 
     override fun delete(id: String, res: (Reminder?) -> Unit) {
-        endpoint.deleteReminder(id).enqueue(object: Callback<Reminder> {
-            override fun onResponse(call: Call<Reminder>, response: Response<Reminder>) {
 
-                if (response?.body() != null)
-                    res(response?.body())
-                else {
-                    res(null)
-                }
-            }
-
-            override fun onFailure(call: Call<Reminder>, t: Throwable) {
-                res(null)
-            }
-
-        })
     }
 }

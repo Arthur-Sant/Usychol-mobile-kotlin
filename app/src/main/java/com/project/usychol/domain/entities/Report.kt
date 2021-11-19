@@ -1,11 +1,12 @@
 package com.project.usychol.domain.entities
 
 import com.google.firebase.firestore.DocumentId
+import java.util.*
+import kotlin.collections.ArrayList
 
 class Report(
-    @DocumentId
     var id: String?,
-    var activies: ArrayList<String>?,
+    var activies: List<String>?,
     var resume: String,
     var startAt: String,
     var consultEvaluation: Int,
@@ -21,4 +22,10 @@ class Report(
         "",
         ""
     )
+
+    init {
+        if(id == null){
+            id = UUID.randomUUID().toString()
+        }
+    }
 }

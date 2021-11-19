@@ -11,10 +11,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:ellipsize="end"
         android:fontFamily="@font/poppins_regular"
         android:maxLines="1"
@@ -41,21 +39,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
-            android:textColor="@color/grey_label"
+            android:textColor="@color/purple_strong_light"
             android:textSize="11sp"
             tools:text="06:00 PM"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="  -  "/>
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/purple_strong_light"
+            android:layout_marginStart="8dp"
+            android:text="-"/>
 
         <TextView
             android:id="@+id/tvReminderActionEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
-            android:textColor="@color/grey_label"
+            android:textColor="@color/purple_strong_light"
             android:textSize="11sp"
             tools:text="06:00 PM"/>
 
@@ -66,8 +67,7 @@
         android:id="@+id/btnEditRegisteredPatient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="14dp"
-        android:layout_marginRight="14dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/icon_edit_white"
         app:layout_constraintBottom_toTopOf="@+id/line_list"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +78,9 @@
         android:id="@+id/line_list"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/grey_label"
+        android:background="@color/purple_strong_light"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

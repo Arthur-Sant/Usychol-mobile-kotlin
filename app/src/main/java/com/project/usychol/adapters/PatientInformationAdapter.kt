@@ -28,6 +28,7 @@ class PatientInformationAdapter(
 
         holder.apply {
             tvPatientReportDate.text = patientReport.date
+            tvPatientReportTime.text = patientReport.startAt
 
             itemView.setOnClickListener {
                 getPatientReportId(patientReport.id!!)

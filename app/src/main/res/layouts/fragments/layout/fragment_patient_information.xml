@@ -174,7 +174,7 @@
                     android:contentDescription="@string/img_description_edit" />
             </LinearLayout>
 
-            <TextView
+            <EditText
                 android:id="@+id/tvPatientSummary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -182,10 +182,12 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="32dp"
+                android:hint="Enter patient summary, save automatically"
+                android:textColorHint="@color/grey_placeholder"
+                android:background="@drawable/input_patient_summary"
                 android:textColor="@color/black_strong_light"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="14sp"
-                android:enabled="false"
                 app:layout_constraintBottom_toTopOf="@+id/btnAccessPatientProfile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

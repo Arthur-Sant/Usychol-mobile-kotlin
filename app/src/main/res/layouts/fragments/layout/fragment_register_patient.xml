@@ -104,7 +104,7 @@
                     android:layout_marginTop="16dp"
                     app:input_hint="@string/input_birthday_hint"
                     app:input_top_text="@string/input_birthday_text"
-                    app:input_type="@string/input_type_date" />
+                    app:input_type="@string/input_type_text" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -9,26 +9,20 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.edit
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentNewPatientReportBinding
 import com.project.usychol.domain.entities.Report
+import com.project.usychol.shared.DataFormat
 import com.project.usychol.viewModel.NewPatientReportViewModel
 
 class NewPatientReportFragment : Fragment() {
 
     private var _binding: FragmentNewPatientReportBinding? = null
     private val binding get() = _binding!!
-
-    override fun onResume() {
-        super.onResume()
-
-        val listActivyTemplate = resources.getStringArray(R.array.ddl_activy_name)
-        val activyTemplateArrayAdapter = ArrayAdapter(requireContext(),
-            R.layout.drop_down_text_options, listActivyTemplate)
-        binding.ddlNewReportActivyName.setAdapter(activyTemplateArrayAdapter)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,15 +40,21 @@ class NewPatientReportFragment : Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val patientId = sharedPreferences.getString(getString(R.string.salved_patient_id_key), "")
-        val userId = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")
+        val patientId = sharedPreferences.getString(getString(R.string.salved_patient_id_key), "")!!
 
         binding.btnCreateReport.setOnClickListener {
-            val report = createReport(patientId!!)
+            val report = createReport(patientId)
 
-            if(report != null){
-                newPatientReportViewModel.createReport(userId!!, patientId, report)
-                backPatientInformationScreen(view)
+            if(report?.date == "") {
+                Toast.makeText(
+                    requireContext(),
+                    "Insira a data do report do modo que foi proposto, mes em " +
+                            "ingles, dia, ano e hora",
+                    Toast.LENGTH_LONG
+                ).show()
+
+            }else if(report != null){
+                newPatientReportViewModel.createReport(report)
             }else{
                 Toast.makeText(activity, "fill in all fields", Toast.LENGTH_SHORT).show()
             }
@@ -63,6 +63,15 @@ class NewPatientReportFragment : Fragment() {
         binding.btnNewReportBack.setOnClickListener {
             backPatientInformationScreen(view)
         }
+
+        newPatientReportViewModel.reportId.observe(viewLifecycleOwner, Observer { id ->
+            if(id != null){
+                Toast.makeText(requireContext(), "Report created successfully", Toast.LENGTH_SHORT).show()
+                backPatientInformationScreen(view)
+            }else{
+                Toast.makeText(requireContext(), "Could not create report", Toast.LENGTH_SHORT).show()
+            }
+        })
 
         return view
     }
@@ -73,25 +82,37 @@ class NewPatientReportFragment : Fragment() {
 
     private fun createReport(patientId: String): Report?{
 
-        val selectNewReportActivyName = binding.selectNewReportActivyName.editText!!.text
+        val inputActivyNewReport = binding.inputActivyNewReport.findViewById<EditText>(R.id.textInput).text
         val inputResumeNewReport = binding.inputResumeNewReport.text
         val inputConsultationNewReport = binding.inputConsultationNewReport.findViewById<EditText>(R.id.textInput).text
         val inputDayNewReport = binding.inputDayNewReport.findViewById<EditText>(R.id.textInput).text
 
-        return if(inputResumeNewReport.isNotEmpty() && inputConsultationNewReport.isNotEmpty()
+        if(inputResumeNewReport.isNotEmpty() && inputConsultationNewReport.isNotEmpty()
             && inputDayNewReport.isNotEmpty()){
 
-            Report(
-                null,
-                null,
-                inputResumeNewReport.toString(),
-                inputDayNewReport.toString(),
-                inputConsultationNewReport.toString().toInt(),
-                inputDayNewReport.toString(),
-                patientId
-                )
+                try {
+                    val reportCutDate = inputDayNewReport.split(" ")
+                    var month = reportCutDate[0]
+                    month = DataFormat().getMonth(month)
+                    val day = reportCutDate[1].replace(",", "")
+                    val year = reportCutDate[2]
+                    val time = reportCutDate[3]
+                    val dateReport = "$day/$month/$year"
+
+                    return Report(
+                        null,
+                        inputActivyNewReport.split(", "),
+                        inputResumeNewReport.toString(),
+                        time,
+                        inputConsultationNewReport.toString().toInt(),
+                        dateReport,
+                        patientId
+                    )
+                }catch (ex: Exception){
+                    return Report()
+                }
         }else{
-            null
+            return null
         }
     }
 

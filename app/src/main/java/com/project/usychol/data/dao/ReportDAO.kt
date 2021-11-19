@@ -3,7 +3,7 @@ package com.project.usychol.data.dao
 import com.project.usychol.domain.entities.Report
 
 interface ReportDAO {
-    fun create( report: Report, returnIdOrError: (String) -> Unit)
+    fun create( report: Report, returnId: (String?) -> Unit)
 
     fun findById(id: String, returnReport: (Report?) -> Unit)
 

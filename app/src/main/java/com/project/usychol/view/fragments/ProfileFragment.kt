@@ -3,7 +3,6 @@ package com.project.usychol.view.fragments
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +12,12 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentProfileBinding
 import com.project.usychol.domain.entities.User
-import com.project.usychol.implementations.UserImplementation
+import com.project.usychol.shared.DataFormat
 import com.project.usychol.viewModel.ProfileViewModel
 
 class ProfileFragment : Fragment() {
@@ -52,7 +53,10 @@ class ProfileFragment : Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val id = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
+//        val id = sharedPreferences.getString(getString(R.string.salved_user_id_key), "")!!
+
+        val mAuth = FirebaseAuth.getInstance()
+        val id = mAuth.currentUser?.uid.toString()
 
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         viewModel.getDataFromPsychologist(id)
@@ -66,7 +70,17 @@ class ProfileFragment : Fragment() {
 
             btnEditProfile.setOnClickListener {
                 val user = getUserDataModel(id)
-                if(user != null){
+                println(user?.name)
+
+                if(user?.name == ""){
+                    Toast.makeText(
+                        requireContext(),
+                        "Insira a data do report do modo que foi proposto, mes em " +
+                                "ingles, dia e ano",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                }else if(user != null){
                     viewModel.updateUserData(user)
                 }else{
                     Toast.makeText(activity, "fill in all data fields", Toast.LENGTH_SHORT).show()
@@ -80,6 +94,11 @@ class ProfileFragment : Fragment() {
                 }else{
                     Toast.makeText(activity, "fill in all plan fields", Toast.LENGTH_SHORT).show()
                 }
+            }
+
+            btnExitApp.setOnClickListener {
+                mAuth.signOut()
+                Navigation.findNavController(view).navigate(R.id.profileFragmentToSigninFragment)
             }
 
             btnDeleteUser.setOnClickListener {
@@ -105,16 +124,26 @@ class ProfileFragment : Fragment() {
             && inputUserCRPNumber.text.isNotEmpty()
             && inputUserCPF.text.isNotEmpty()) {
 
-            User(
-                id,
-                inputUserName.text.toString(),
-                inputUserCRPNumber.text.toString(),
-                inputUserCPF.text.toString(),
-                inputUserEmail.text.toString(),
-                password,
-                inputUserBirthday.text.toString(),
-                plan
-            )
+            try {
+                val reportCutDate = inputUserBirthday.text.split(" ")
+                var month = reportCutDate[0]
+                month = DataFormat().getMonth(month)
+                val day = reportCutDate[1].replace(",", "")
+                val year = reportCutDate[2]
+
+                User(
+                    id,
+                    inputUserName.text.toString(),
+                    inputUserCRPNumber.text.toString(),
+                    inputUserCPF.text.toString(),
+                    inputUserEmail.text.toString(),
+                    password,
+                    inputUserBirthday.text.toString(),
+                    plan
+                )
+            }catch (ex: Exception){
+                return User()
+            }
         }else{
             null
         }

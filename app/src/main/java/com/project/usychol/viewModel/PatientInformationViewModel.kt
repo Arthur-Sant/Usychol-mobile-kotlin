@@ -29,13 +29,19 @@ class PatientInformationViewModel : ViewModel() {
     val patientData: LiveData<List<String>>
     get () = _patientData
 
-//    fun getAllPatientsReports(patientId: String) {
-//        val reports = reportUseCases.getAllReport(patientId)
-//
-//        if(reports?.size != 0){
-//            _listPatientReport.postValue(reports)
-//        }
-//    }
+//    private val _updatePatientSummary = MutableLiveData<String>()
+//    val updatePatientSummary: LiveData<String>
+//        get () = _updatePatientSummary
+
+    fun getAllPatientsReports(patientId: String) {
+        Thread {
+            reportUseCases.getAllReport(patientId) {
+                if (it != null) {
+                    _listPatientReport.postValue(it)
+                }
+            }
+        }.start()
+    }
 
     fun getPatientName(id: String){
          patientUseCase.getPatientById(id){ patient ->
@@ -46,6 +52,18 @@ class PatientInformationViewModel : ViewModel() {
                 _patientData.postValue(patientInformations)
             }
         }
+    }
+
+    fun updatePatientSummary(id: String, summary: String){
+        Thread{
+            patientUseCase.updatePatientSummary(id, summary){
+//                if(it){
+//                    _updatePatientSummary.postValue("Patient summary successfully updated")
+//                }else{
+//                    _updatePatientSummary.postValue("Unable to update patient summary")
+//                }
+            }
+        }.start()
     }
 
 }

@@ -44,6 +44,8 @@
     <string name="input_consultation_evaluation_text">Consultation evaluation</string>
 
     <string name="input_report_day_text">Report`s day</string>
+    <string name="input_report_hint_date">January 31, 2021 00:00PM</string>
+    <string name="input_report_hint_activy">Activy, Activy, Activy</string>
 
     <string name="input_delivery_day_text">Delivery day</string>
 

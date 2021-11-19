@@ -17,6 +17,12 @@ class PatientUseCase(private val patientRepository: PatientRepository) {
         }
     }
 
+    fun updatePatientSummary(id: String, summary: String, performedTask: (Boolean) -> Unit){
+        patientRepository.updatePatientSummary(id, summary){
+            performedTask(it)
+        }
+    }
+
     fun getPatientById(id: String, returnPatient: (Patient?) -> Unit){
         patientRepository.findById(id){
             returnPatient(it)

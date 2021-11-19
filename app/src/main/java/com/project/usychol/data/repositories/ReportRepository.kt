@@ -4,33 +4,33 @@ import com.project.usychol.data.dao.ReportDAO
 import com.project.usychol.domain.entities.Report
 
 class ReportRepository(private val reportDAO: ReportDAO){
-    fun create(userId: String, patientId: String, report: Report){
-//        reportDAO.create(userId, patientId, report){}
+    fun create(report: Report, returnId: (String?) -> Unit){
+        reportDAO.create(report){
+            returnId(it)
+        }
     }
 
-    fun findById(userId: String, patientId: String, id: String): Report? {
-        var report: Report? = null
-//        reportDAO.findById(userId, patientId, id){
-//            report = it
-//        }
-
-        return report
+    fun findById(id: String, returnReport: (Report?) -> Unit){
+        reportDAO.findById(id){
+            returnReport(it)
+        }
     }
 
-    fun findAll(userId: String, patientId: String): ArrayList<Report>?{
-        var reports: ArrayList<Report>? = null
-//        reportDAO.findAll(userId, patientId){
-//            reports = it
-//        }
-
-        return reports
+    fun findAll(patientId: String, returnReports: (List<Report>?) -> Unit){
+        reportDAO.findAll(patientId){
+            returnReports(it)
+        }
     }
 
-    fun delete(userId: String, patientId: String, id: String){
-//        reportDAO.delete(userId, patientId, id){}
+    fun delete(id: String, returnError: (String?) -> Unit){
+        reportDAO.delete(id){
+            returnError(it)
+        }
     }
 
-    fun update(userId: String, patientId: String, id: String, report: Report){
-//        reportDAO.update(userId, patientId, id, report){}
+    fun update(id: String, report: Report, returnError: (String?) -> Unit){
+        reportDAO.update(id, report){
+            returnError(it)
+        }
     }
 }

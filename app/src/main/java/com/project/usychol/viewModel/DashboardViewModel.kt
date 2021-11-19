@@ -3,6 +3,7 @@ package com.project.usychol.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.project.usychol.data.repositories.PatientRepository
 import com.project.usychol.data.repositories.ReminderRepository
 import com.project.usychol.domain.entities.Patient
@@ -29,6 +30,11 @@ class DashboardViewModel : ViewModel() {
     val listPatient: LiveData<List<Patient>>
     get () = _listPatient
 
+    private val _messageCreate = MutableLiveData<String>()
+    val messageCreate: LiveData<String>
+        get () = _messageCreate
+
+
      fun getAllPatients(userId: String) {
          Thread{
              patientUseCases.getAllPatients(userId){
@@ -39,8 +45,21 @@ class DashboardViewModel : ViewModel() {
 
     fun getAllUserReminder(){
         Thread{
-            reminderUseCases.findAll(){
+            val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
+            reminderUseCases.findAll(userId){
                 _listUserReminder.postValue(it)
+            }
+        }.start()
+    }
+
+    fun createUserReminder(reminder: Reminder){
+        Thread {
+            reminderUseCases.create(reminder) {
+                if (it != null) {
+                    _messageCreate.postValue(it)
+                }else{
+                    _messageCreate.postValue("Reminder created successfully")
+                }
             }
         }.start()
     }

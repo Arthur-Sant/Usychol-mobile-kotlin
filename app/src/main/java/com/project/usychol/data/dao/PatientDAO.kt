@@ -12,4 +12,6 @@ interface PatientDAO {
     fun findById(id: String, returnPatient: (Patient?) -> Unit)
 
     fun delete(id: String, returnError: (String?) -> Unit)
+
+    fun updatePatientSummary(id: String, summary: String, performedTask: (Boolean) -> Unit)
 }

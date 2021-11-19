@@ -128,9 +128,15 @@
         <entry key="..\:/ESCOLA/3 ano/DevAnd/2 trimestre/Usychol/app/src/main/res/layouts/fragments/layout/fragment_signup.xml" value="0.22" />
         <entry key="..\:/ESCOLA/3 ano/DevAnd/2 trimestre/Usychol/app/src/main/res/layouts/fragments/layout/fragment_virtual_manager.xml" value="0.1" />
         <entry key="..\:/ESCOLA/3 ano/DevAnd/2 trimestre/Usychol/app/src/main/res/layouts/fragments/layout/swws.xml" value="0.1" />
+        <entry key="..\:/ESCOLA/3 ano/DevAnd/3 trismestre/Usychol/app/src/main/res/drawables/shapes/drawable/input_patient_summary.xml" value="0.1125" />
+        <entry key="..\:/ESCOLA/3 ano/DevAnd/3 trismestre/Usychol/app/src/main/res/layouts/components/list/layout/action_reminder_list_component.xml" value="0.33" />
+        <entry key="..\:/ESCOLA/3 ano/DevAnd/3 trismestre/Usychol/app/src/main/res/layouts/components/list/layout/patient_information_list_component.xml" value="0.33" />
+        <entry key="..\:/ESCOLA/3 ano/DevAnd/3 trismestre/Usychol/app/src/main/res/layouts/components/list/layout/patients_reminder_list_component.xml" value="0.25" />
+        <entry key="..\:/ESCOLA/3 ano/DevAnd/3 trismestre/Usychol/app/src/main/res/layouts/fragments/layout/fragment_dashboard.xml" value="0.1" />
         <entry key="..\:/ESCOLA/3 ano/DevAnd/3 trismestre/Usychol/app/src/main/res/layouts/fragments/layout/fragment_new_patient_report.xml" value="0.103125" />
+        <entry key="..\:/ESCOLA/3 ano/DevAnd/3 trismestre/Usychol/app/src/main/res/layouts/fragments/layout/fragment_patient_information.xml" value="0.1" />
         <entry key="..\:/ESCOLA/3 ano/DevAnd/3 trismestre/Usychol/app/src/main/res/layouts/fragments/layout/fragment_patient_report.xml" value="0.1" />
-        <entry key="..\:/ESCOLA/3 ano/DevAnd/3 trismestre/Usychol/app/src/main/res/layouts/fragments/layout/fragment_profile.xml" value="0.21615720524017468" />
+        <entry key="..\:/ESCOLA/3 ano/DevAnd/3 trismestre/Usychol/app/src/main/res/layouts/fragments/layout/fragment_profile.xml" value="0.22" />
       </map>
     </option>
   </component>

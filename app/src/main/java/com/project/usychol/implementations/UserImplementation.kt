@@ -10,9 +10,10 @@ class UserImplementation(): UserDAO {
     private val mAuth = FirebaseAuth.getInstance()
     private val database = Firebase.firestore
     private val collectionPath = "users"
-    private val uid = mAuth.currentUser?.uid.toString()
 
     override fun findById(id: String, returnUser: (User?) -> Unit) {
+        val uid = mAuth.currentUser?.uid.toString()
+
         database.collection(collectionPath).document(uid).get()
             .addOnSuccessListener {
                 val user = it.toObject(User::class.java)
@@ -24,6 +25,8 @@ class UserImplementation(): UserDAO {
     }
 
     override fun update(id: String, body: User, returnError: (String?) -> Unit) {
+        val uid = mAuth.currentUser?.uid.toString()
+
         database.collection(collectionPath).document(uid).set(body)
             .addOnSuccessListener {
                 returnError(null)
@@ -45,7 +48,7 @@ class UserImplementation(): UserDAO {
                     val uid = it.user?.uid.toString()
                     body.id = uid
 
-                    if(uid.isNotEmpty()){
+                        if(uid.isNotEmpty()){
                         database.collection(collectionPath).document(uid).set(body)
                             .addOnSuccessListener {
                                 returnError(null)
@@ -66,23 +69,26 @@ class UserImplementation(): UserDAO {
 
     override fun delete(id: String, returnError: (String?) -> Unit) {
         try {
+            val uid = mAuth.currentUser?.uid.toString()
             database.collection(collectionPath).document(uid).delete()
             mAuth.currentUser?.delete()
             returnError(null)
         }catch (exception: Exception){
-            returnError(exception.localizedMessage)
+            return returnError(exception.localizedMessage)
         }
     }
 
     override fun updatePLan(userId: String, plan: String, performedTask: (Boolean) -> Unit) {
+        val uid = mAuth.currentUser?.uid.toString()
+
         val reference = database.collection(collectionPath).document(uid)
-        reference.update(mapOf("plan" to plan)).addOnCompleteListener {
-            if(it.isSuccessful){
+        reference.update(mapOf("plan" to plan))
+            .addOnSuccessListener{
                 performedTask(true)
-            }else{
+            }
+            .addOnFailureListener {
                 performedTask(false)
             }
-        }
     }
 
     override fun authenticateUser(email: String, password: String, returnUserStatus: (String) -> Unit){

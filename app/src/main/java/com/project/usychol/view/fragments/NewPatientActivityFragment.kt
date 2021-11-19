@@ -45,7 +45,7 @@ class NewPatientActivityFragment : Fragment() {
             val activy: Activy? = createActivy()
 
             if(activy != null){
-                newPatientActivyViewHolder.createActivy(activy)
+//                newPatientActivyViewHolder.createActivy(activy)
                 backPatientInformationScreen()
             }else{
                 Toast.makeText(activity, "fill in all fields", Toast.LENGTH_SHORT).show()

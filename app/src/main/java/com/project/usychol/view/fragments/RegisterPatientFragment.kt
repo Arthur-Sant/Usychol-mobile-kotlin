@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.edit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.project.usychol.R
 import com.project.usychol.databinding.FragmentRegisterPatientBinding
 import com.project.usychol.domain.entities.Patient
+import com.project.usychol.shared.DataFormat
 import com.project.usychol.viewModel.RegisterPatientViewModel
 
 class RegisterPatientFragment : Fragment() {
@@ -64,7 +66,15 @@ class RegisterPatientFragment : Fragment() {
         binding.btnCreatePatient.setOnClickListener {
             val patient = registerPatient(userId)
 
-            if(patient != null){
+            if(patient?.name == ""){
+                Toast.makeText(
+                    requireContext(),
+                    "Insira a data do report do modo que foi proposto, mes em " +
+                            "ingles, dia e ano",
+                    Toast.LENGTH_LONG
+                ).show()
+
+            } else if(patient != null){
                 viewModel.registerPatient(patient)
             }else{
                 Toast.makeText(activity, "fill in all fields", Toast.LENGTH_SHORT).show()
@@ -74,6 +84,9 @@ class RegisterPatientFragment : Fragment() {
 
         viewModel.patientId.observe(viewLifecycleOwner, Observer { id ->
             if(id != null){
+                sharedPreferences.edit {
+                    putString(getString(R.string.salved_patient_id_key), id)
+                }
                 backToDashboardScreen(view)
                 Toast.makeText(requireContext(), "Patient registered successfully", Toast.LENGTH_SHORT).show()
             }else{
@@ -96,19 +109,29 @@ class RegisterPatientFragment : Fragment() {
         && !selectPatientClass.isNullOrEmpty() && !inputPatientMotherName.isNullOrEmpty()
             && !inputPatientFatherName.isNullOrEmpty() && !selectMaritalPatientClass.isNullOrEmpty()) {
 
-            return Patient(
-                null,
-                inputPatientName.toString(),
-                0,
-                selectPatientClass.toString(),
-                inputPatientMotherName.toString(),
-                "opaaaaaa",
-                inputPatientFatherName.toString(),
-                selectMaritalPatientClass.toString(),
-                inputPatientBirthday.toString(),
-                userId,
-                null
-            )
+                try {
+                    val reportCutDate = inputPatientBirthday.split(" ")
+                    var month = reportCutDate[0]
+                    month = DataFormat().getMonth(month)
+                    val day = reportCutDate[1].replace(",", "")
+                    val year = reportCutDate[2]
+
+                    return Patient(
+                        null,
+                        inputPatientName.toString(),
+                        0,
+                        selectPatientClass.toString(),
+                        inputPatientMotherName.toString(),
+                        "",
+                        inputPatientFatherName.toString(),
+                        selectMaritalPatientClass.toString(),
+                        inputPatientBirthday.toString(),
+                        userId,
+                        null
+                    )
+                }catch (ex: Exception){
+                    return Patient()
+                }
         }else{
             return null
         }

@@ -18,13 +18,28 @@ class PatientProfileViewModel : ViewModel() {
     val patient: LiveData<Patient>
     get() = _patient
 
-//    fun getPatientData( userId: String, id: String){
-//        val patientData: Patient? = patientUseCase.getPatientById(userId, id)
-//        _patient.postValue(patientData!!)
-//    }
-//
-//    fun updatePatientData(userId: String, patient: Patient){
-//        patientUseCase.updatePatientData(userId ,patient)
-//    }
+    private var _updatePatient = MutableLiveData<String>()
+    val updatePatient: LiveData<String>
+        get() = _updatePatient
+
+    fun getPatientData( id: String){
+        Thread {
+            patientUseCase.getPatientById(id) {
+                if (it != null) {
+                    _patient.postValue(it)
+                }
+            }
+        }.start()
+    }
+
+    fun updatePatientData(patient: Patient){
+        patientUseCase.updatePatientData(patient){
+            if(it != null){
+                _updatePatient.postValue(it)
+            }else{
+                _updatePatient.postValue("Patient updated successfully")
+            }
+        }
+    }
 
 }

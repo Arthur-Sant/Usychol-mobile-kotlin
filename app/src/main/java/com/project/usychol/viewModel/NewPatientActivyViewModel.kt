@@ -12,8 +12,8 @@ class NewPatientActivyViewModel : ViewModel(){
     private val activyRepository = ActivyRepository(activyDAO)
     private val activyUseCase = ActivyUseCase(activyRepository)
 
-    fun createActivy(activy: Activy){
-        activyUseCase.createActivy(activy)
-    }
+//    fun createActivy(activy: Activy){
+//        activyUseCase.createActivy(activy)
+//    }
 
 }
